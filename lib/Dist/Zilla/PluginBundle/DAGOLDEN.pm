@@ -9,51 +9,104 @@ use Moose 0.99;
 use Moose::Autobox;
 use namespace::autoclean 0.09;
 
-use Dist::Zilla 2;
-with 'Dist::Zilla::Role::PluginBundle';
+use Dist::Zilla 2.101040; # DZRPB::Easy
 
-use Dist::Zilla::PluginBundle::Filter;
-use Dist::Zilla::PluginBundle::Git;
+use Dist::Zilla::PluginBundle::Basic ();
+use Dist::Zilla::PluginBundle::Filter ();
+use Dist::Zilla::PluginBundle::Git ();
 
-sub bundle_config {
-  my ($self, $section) = @_;
-  my $class = (ref $self) || $self;
+use Dist::Zilla::Plugin::BumpVersionFromGit ();
+use Dist::Zilla::Plugin::CheckExtraTests ();
+use Dist::Zilla::Plugin::CompileTests ();
+use Dist::Zilla::Plugin::MetaNoIndex ();
+use Dist::Zilla::Plugin::MetaProvides::Package ();
+use Dist::Zilla::Plugin::MinimumPerl ();
+use Dist::Zilla::Plugin::PodSpellingTests ();
+use Dist::Zilla::Plugin::PodWeaver ();
+use Dist::Zilla::Plugin::TaskWeaver ();
+use Dist::Zilla::Plugin::PortabilityTests ();
+use Dist::Zilla::Plugin::Prepender ();
+use Dist::Zilla::Plugin::ReadmeFromPod ();
+use Dist::Zilla::Plugin::Repository ();
 
-  my $arg = $section->{payload};
-  my $is_task = $arg->{task};
+with 'Dist::Zilla::Role::PluginBundle::Easy';
 
-  my @plugins = Dist::Zilla::PluginBundle::Filter->bundle_config({
-      name    => $section->{name} . '/@Classic',
-      payload => {
-        bundle => '@Classic',
-        remove => [ qw(
-          PodVersion 
-          PodCoverageTests
-        ) ],
-      },
-    });
+has is_task => (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => sub { $_[0]->payload->{is_task} },
+);
 
-  my $prefix = 'Dist::Zilla::Plugin::';
-  my @extra = map {[ "$section->{name}/$_->[0]" => "$prefix$_->[0]" => $_->[1] ]}
-  (
-    [ AutoPrereq  => {} ],
-    [ MetaConfig   => { } ],
-    [ MetaJSON     => { } ],
-    [ NextRelease  => { } ],
-    [ ($is_task ? 'TaskWeaver' : 'PodWeaver') => { config_plugin => '@RJBS' } ],
-    [ Repository   => { } ],
+has autoprereq => (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => sub { 
+    exists $_[0]->payload->{autoprereq} ? $_[0]->payload->{autoprereq} : 1
+  },
+);
+
+sub configure {
+  my $self = shift;
+
+  # @Basic minus stuff replaced below 
+  $self->add_bundle( 
+    Filter => {
+      bundle => '@Basic',
+      remove => [qw/Readme ExtraTests/],
+    }
   );
 
-  push @plugins, @extra;
+  $self->add_plugins (
 
-  push @plugins, Dist::Zilla::PluginBundle::Git->bundle_config({
-    name    => "$section->{name}/\@Git",
-    payload => {
-      tag_format => '%v',
-    },
-  });
+  # version number
+    [ BumpVersionFromGit => { version_regexp => '^release-(.+)$' } ],
 
-  return @plugins;
+  # file modifications
+    'PkgVersion',         # core
+    'NextRelease',        # core
+    'Prepender',
+
+  # other generated files
+    'ReadmeFromPod',
+
+  # xt tests
+    'MetaTests',          # core
+    'PodSyntaxTests',     # core
+    'PodCoverageTests',   # core
+    'PodSpellingTests',
+    'PortabilityTests',
+    [ CompileTests => { fake_home => 1 } ],
+
+  # metadata
+    'MinimumPerl',
+    'MetaProvides::Package',
+    [ Repository => { git_remote => 'github' } ],
+    [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
+
+  # before release
+    'CheckExtraTests',
+  );
+
+  if ( $self->autoprereq ) {
+    $self->add_plugins('TaskWeaver');
+  }
+
+  if ($self->is_task) {
+    $self->add_plugins('TaskWeaver');
+  } else {
+    $self->add_plugins('PodWeaver');
+  }
+
+  # git integration -- do this late
+  $self->add_bundle(
+    Git => {
+      tag_format => 'release-%v',
+      push_to => [qw/ origin github /],
+    }
+  );
+
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -62,8 +115,7 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-=for Pod::Coverage::TrustPod
-  bundle_config
+=for Pod::Coverage configure
 
 =begin wikidoc
 
