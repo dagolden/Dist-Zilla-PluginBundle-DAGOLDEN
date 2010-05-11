@@ -99,12 +99,13 @@ sub configure {
     $self->add_plugins('PodWeaver');
   }
 
-  # git integration -- do this late
-  $self->add_bundle(
-    Git => {
-      tag_format => 'release-%v',
-      push_to => [qw/ origin github /],
-    }
+  # git integration -- do this manually to get multi-values right
+  # and do it late to make sure checks happen after all files are munged
+  $self->add_plugins(
+    'Git::Check',
+    'Git::Commit',
+    [ 'Git::Tag' => { tag_format => 'release-%v' } ],
+    [ 'Git::Push' => { push_to => [ qw/origin github/ ] } ],
   );
 
 }
