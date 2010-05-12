@@ -11,7 +11,6 @@ use namespace::autoclean 0.09;
 
 use Dist::Zilla 2.101040; # DZRPB::Easy
 
-use Dist::Zilla::PluginBundle::Basic ();
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
 
@@ -47,65 +46,100 @@ has autoprereq => (
   },
 );
 
+has tag_format => (
+  is      => 'ro',
+  isa     => 'Str',
+  lazy    => 1,
+  default => sub {
+    exists $_[0]->payload->{tag_format} ? $_[0]->payload->{tag_format} : 'release-%v',
+  },
+);
+
+has version_regexp => (
+  is      => 'ro',
+  isa     => 'Str',
+  lazy    => 1,
+  default => sub {
+    exists $_[0]->payload->{version_regexp} ? $_[0]->payload->{version_regexp} : '^release-(.+)$',
+  },
+);
+
+has git_remote => (
+  is      => 'ro',
+  isa     => 'Str',
+  lazy    => 1,
+  default => sub {
+    exists $_[0]->payload->{git_remote} ? $_[0]->payload->{git_remote} : 'origin',
+  },
+);
+
+
 sub configure {
   my $self = shift;
 
-  # @Basic minus stuff replaced below
-  $self->add_bundle(
-    Filter => {
-      bundle => '@Basic',
-      remove => [qw/Readme ExtraTests/],
-    }
-  );
+  my @push_to = ('origin');
+  push @push_to, $self->git_remote if $self->git_remote ne 'origin';
 
   $self->add_plugins (
 
   # version number
-    [ BumpVersionFromGit => { version_regexp => '^release-(.+)$' } ],
+    [ BumpVersionFromGit => { version_regexp => $self->version_regexp } ],
 
-  # file modifications
+  # gather and prune
+    'GatherDir',          # core
+    'PruneCruft',         # core
+    'ManifestSkip',       # core
+
+  # file munging
     'PkgVersion',         # core
     'NextRelease',        # core
     'Prepender',
+    ( $self->is_task ? 'TaskWeaver' : 'PodWeaver' ),
 
-  # other generated files
+  # generated distribution files
     'ReadmeFromPod',
+    'License',            # core
 
-  # xt tests
+  # generated t/ tests
+    [ CompileTests => { fake_home => 1 } ],
+
+  # generated xt/ tests
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
     'PodSpellingTests',
     'PortabilityTests',
-    [ CompileTests => { fake_home => 1 } ],
 
   # metadata
     'MinimumPerl',
+    ( $self->autoprereq ? 'AutoPrereq' : () ),
     'MetaProvides::Package',
-    [ Repository => { git_remote => 'github' } ],
+    [ Repository => { git_remote => $self->git_remote } ],
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
+    'MetaYAML',           # core
+
+  # build system
+    'ExecDir',            # core
+    'ShareDir',           # core
+    'MakeMaker',          # core
+
+  # manifest -- must come after all generated files
+    'Manifest',           # core
 
   # before release
-    'CheckExtraTests',
-  );
-
-  if ( $self->autoprereq ) {
-    $self->add_plugins('AutoPrereq');
-  }
-
-  if ($self->is_task) {
-    $self->add_plugins('TaskWeaver');
-  } else {
-    $self->add_plugins('PodWeaver');
-  }
-
-  # git integration -- do this manually to get multi-values right
-  # and do it late to make sure checks happen after all files are munged
-  $self->add_plugins(
     'Git::Check',
+    'CheckExtraTests',
+    'TestRelease',        # core
+    'ConfirmRelease',     # core
+
+  # release
+    'UploadToCPAN',       # core
+
+  # after release
     'Git::Commit',
-    [ 'Git::Tag' => { tag_format => 'release-%v' } ],
-    [ 'Git::Push' => { push_to => [ qw/origin github/ ] } ],
+    [ 'Git::Tag' => { tag_format => $self->tag_format } ],
+    [ 'Git::Push' => { push_to => \@push_to } ],
+
   );
 
 }
@@ -130,14 +164,14 @@ __END__
 This is a [Dist::Zilla] PluginBundle.  It is roughly equivalent to the
 following dist.ini:
 
-  [@Filter]
-  bundle = @Basic
-  remove = Readme
-  remove = ExtraTests
-
   ; version provider
   [BumpVersionFromGit]
   version_regexp = ^release-(.+)$
+
+  ; choose files to include
+  [GatherDir]
+  [PruneCruft]
+  [ManifestSkip]
 
   ; file modifications
   [PkgVersion]
@@ -145,8 +179,13 @@ following dist.ini:
   [Prepender]
   [PodWeaver]
 
-  ; other generated files
+  ; generated files
+  [License]
   [ReadmeFromPod]
+
+  ; t tests
+  [CompileTests]
+  fake_home = 1
 
   ; xt tests
   [MetaTests]
@@ -155,44 +194,44 @@ following dist.ini:
   [PodSpellingTests]
   [PortabilityTests]
 
-  ; t tests
-  [CompileTests]
-  fake_home = 1
-
   ; metadata
   [AutoPrereq]
   [MinimumPerl]
   [MetaProvides::Package]
-
   [Repository]
-  git_remote = github
-
+  git_remote = origin
   [MetaNoIndex]
   directory = t
   directory = xt
   directory = examples
   directory = corpus
+  [MetaYAML]
+
+  ; build system
+  [ExecDir]
+  [ShareDir]
+  [MakeMaker]
+
+  ; manifest (after all generated files)
+  [Manifest]
 
   ; before release
-  [CheckExtraTests]
-
-  ; git integration
   [Git::Check]
-  [Git::Commit]
+  [CheckExtraTests]
+  [TestRelease]
+  [ConfirmRelease]
 
+  ; releaser
+  [UploadToCPAN]
+
+  ; after release
+  [Git::Commit]
   [Git::Tag]
   tag_format = release-%v
-
   [Git::Push]
   push_to = origin
-  push_to = github
 
 = USAGE
-
-  # in dist.ini
-  [@DAGOLDEN]
-  ; is_task = 0
-  ; autoprereq = 1
 
 To use this PluginBundle, just add it to your dist.ini.  You can provide
 the following options:
@@ -201,10 +240,19 @@ the following options:
 Default is 0.
 * {autoprereq} -- this indicates whether AutoPrereq should be used or not.
 Default is 1.
+* {tag_format} -- given to {Git::Tag}.  Default is 'release-%v' to be more
+robust than just the version number when parsing versions for
+{BumpVersionFromGit}
+* {version_regexp} -- given to {BumpVersionFromGit}.  Default
+is '^release-(.+)$'
+* {git_remote} -- given to {Repository}.  Defaults to 'origin'.  If set to
+something other than 'origin', it is also added as a {push_to} argument for
+{Git::Push}
 
 = SEE ALSO
 
 * [Dist::Zilla]
+* [Dist::Zilla::Plugin::PodWeaver]
 * [Dist::Zilla::Plugin::TaskWeaver]
 
 =end wikidoc
