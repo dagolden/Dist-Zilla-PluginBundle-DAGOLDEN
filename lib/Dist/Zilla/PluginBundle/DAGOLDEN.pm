@@ -42,7 +42,7 @@ has autoprereq => (
   is      => 'ro',
   isa     => 'Bool',
   lazy    => 1,
-  default => sub { 
+  default => sub {
     exists $_[0]->payload->{autoprereq} ? $_[0]->payload->{autoprereq} : 1
   },
 );
@@ -50,8 +50,8 @@ has autoprereq => (
 sub configure {
   my $self = shift;
 
-  # @Basic minus stuff replaced below 
-  $self->add_bundle( 
+  # @Basic minus stuff replaced below
+  $self->add_bundle(
     Filter => {
       bundle => '@Basic',
       remove => [qw/Readme ExtraTests/],
@@ -122,20 +122,90 @@ __END__
 
 = SYNOPSIS
 
-  use Dist::Zilla::PluginBundle::DAGOLDEN;
+  # in dist.ini
+  [@DAGOLDEN]
 
 = DESCRIPTION
 
-This module might be cool, but you'd never know it from the lack
-of documentation.
+This is a [Dist::Zilla] PluginBundle.  It is roughly equivalent to the
+following dist.ini:
+
+  [@Filter]
+  bundle = @Basic
+  remove = Readme
+  remove = ExtraTests
+
+  ; version provider
+  [BumpVersionFromGit]
+  version_regexp = ^release-(.+)$
+
+  ; file modifications
+  [PkgVersion]
+  [NextRelease]
+  [Prepender]
+  [PodWeaver]
+
+  ; other generated files
+  [ReadmeFromPod]
+
+  ; xt tests
+  [MetaTests]
+  [PodSyntaxTests]
+  [PodCoverageTests]
+  [PodSpellingTests]
+  [PortabilityTests]
+
+  ; t tests
+  [CompileTests]
+  fake_home = 1
+
+  ; metadata
+  [AutoPrereq]
+  [MinimumPerl]
+  [MetaProvides::Package]
+
+  [Repository]
+  git_remote = github
+
+  [MetaNoIndex]
+  directory = t
+  directory = xt
+  directory = examples
+  directory = corpus
+
+  ; before release
+  [CheckExtraTests]
+
+  ; git integration
+  [Git::Check]
+  [Git::Commit]
+
+  [Git::Tag]
+  tag_format = release-%v
+
+  [Git::Push]
+  push_to = origin
+  push_to = github
 
 = USAGE
 
-Good luck!
+  # in dist.ini
+  [@DAGOLDEN]
+  ; is_task = 0
+  ; autoprereq = 1
+
+To use this PluginBundle, just add it to your dist.ini.  You can provide
+the following options:
+
+* {is_task} -- this indicates whether TaskWeaver or PodWeaver should be used.
+Default is 0.
+* {autoprereq} -- this indicates whether AutoPrereq should be used or not.
+Default is 1.
 
 = SEE ALSO
 
-Maybe other modules do related things.
+* [Dist::Zilla]
+* [Dist::Zilla::Plugin::TaskWeaver]
 
 =end wikidoc
 
