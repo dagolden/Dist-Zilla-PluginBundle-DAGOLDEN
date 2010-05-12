@@ -15,6 +15,7 @@ use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
 
 use Dist::Zilla::Plugin::BumpVersionFromGit ();
+use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CompileTests ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
@@ -128,6 +129,7 @@ sub configure {
 
   # before release
     'Git::Check',
+    'CheckChangesHasContent',
     'CheckExtraTests',
     'TestRelease',        # core
     'ConfirmRelease',     # core
@@ -217,6 +219,7 @@ following dist.ini:
 
   ; before release
   [Git::Check]
+  [CheckChangesHasContent]
   [CheckExtraTests]
   [TestRelease]
   [ConfirmRelease]
