@@ -90,7 +90,7 @@ sub configure {
   );
 
   if ( $self->autoprereq ) {
-    $self->add_plugins('TaskWeaver');
+    $self->add_plugins('AutoPrereq');
   }
 
   if ($self->is_task) {
