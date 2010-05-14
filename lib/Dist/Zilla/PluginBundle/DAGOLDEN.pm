@@ -115,7 +115,7 @@ sub configure {
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
-    'PodSpellingTests',
+# XXX    'PodSpellingTests',
     'PortabilityTests',
 
   # metadata
