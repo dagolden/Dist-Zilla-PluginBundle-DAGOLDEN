@@ -159,6 +159,11 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
+
+=for stopwords
+autoprereq dagolden fakerelease pluginbundle podweaver
+taskweaver uploadtocpan dist ini
+
 =for Pod::Coverage configure
 
 =begin wikidoc
