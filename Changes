@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.006     2010-05-14 10:36:01 EST5EDT
+
     - fixes git commit/tag ordering; now commits dirty files
       after release, then tags, then updates Changes for next
       version and does a final commit before pushing
