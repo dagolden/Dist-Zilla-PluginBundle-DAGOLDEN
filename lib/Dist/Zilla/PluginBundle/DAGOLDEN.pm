@@ -31,6 +31,13 @@ use Dist::Zilla::Plugin::Repository ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
+has fake_release (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => sub { $_[0]->payload->{fake_release} },
+);
+
 has is_task => (
   is      => 'ro',
   isa     => 'Bool',
@@ -135,7 +142,7 @@ sub configure {
     'ConfirmRelease',     # core
 
   # release
-    'UploadToCPAN',       # core
+    ( $self->fake_release ? 'FakeRelease' : 'UploadToCPAN'),       # core
 
   # after release
     'Git::Commit',
@@ -251,6 +258,8 @@ is '^release-(.+)$'
 * {git_remote} -- given to {Repository}.  Defaults to 'origin'.  If set to
 something other than 'origin', it is also added as a {push_to} argument for
 {Git::Push}
+* {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for
+testing a dist.ini without risking a real release.
 
 = SEE ALSO
 
