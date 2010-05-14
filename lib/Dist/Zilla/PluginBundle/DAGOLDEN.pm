@@ -45,12 +45,12 @@ has is_task => (
   default => sub { $_[0]->payload->{is_task} },
 );
 
-has autoprereq => (
+has auto_prereq => (
   is      => 'ro',
   isa     => 'Bool',
   lazy    => 1,
   default => sub {
-    exists $_[0]->payload->{autoprereq} ? $_[0]->payload->{autoprereq} : 1
+    exists $_[0]->payload->{auto_prereq} ? $_[0]->payload->{auto_prereq} : 1
   },
 );
 
@@ -120,7 +120,7 @@ sub configure {
 
   # metadata
     'MinimumPerl',
-    ( $self->autoprereq ? 'AutoPrereq' : () ),
+    ( $self->auto_prereq ? 'AutoPrereq' : () ),
     'MetaProvides::Package',
     [ Repository => { git_remote => $self->git_remote } ],
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
@@ -248,7 +248,7 @@ the following options:
 
 * {is_task} -- this indicates whether TaskWeaver or PodWeaver should be used.
 Default is 0.
-* {autoprereq} -- this indicates whether AutoPrereq should be used or not.
+* {auto_prereq} -- this indicates whether AutoPrereq should be used or not.
 Default is 1.
 * {tag_format} -- given to {Git::Tag}.  Default is 'release-%v' to be more
 robust than just the version number when parsing versions for
