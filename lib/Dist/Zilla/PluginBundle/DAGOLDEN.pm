@@ -31,7 +31,7 @@ use Dist::Zilla::Plugin::Repository ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
-has fake_release (
+has fake_release => (
   is      => 'ro',
   isa     => 'Bool',
   lazy    => 1,
