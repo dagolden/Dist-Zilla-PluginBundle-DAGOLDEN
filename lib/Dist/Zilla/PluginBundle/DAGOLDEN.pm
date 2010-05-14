@@ -114,7 +114,7 @@ sub configure {
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
-# XXX    'PodSpellingTests',
+#    'PodSpellingTests', # XXX disabled until stopwords and weaving fixed
     'PortabilityTests',
 
   # metadata
@@ -146,10 +146,15 @@ sub configure {
   # after release
   # Note -- NextRelease is here to get the ordering right with
   # git actions.  It is *also* a file munger that acts earlier
+
+    [ 'Git::Commit' => 'Commit_Dirty_Files' ], # Changes and/or dist.ini
     [ 'Git::Tag' => { tag_format => $self->tag_format } ],
-    [ 'Git::Commit' => 'Early_Commit' ],
+
+    # bumps Changes
     'NextRelease',        # core (also munges files)
-    [ 'Git::Commit' => 'Late_Commit' => { commit_msg => "bump Changes" } ],
+
+    [ 'Git::Commit' => 'Commit_Changes' => { commit_msg => "bump Changes" } ],
+
     [ 'Git::Push' => { push_to => \@push_to } ],
 
   );
@@ -192,7 +197,6 @@ following dist.ini:
 
   ; file modifications
   [PkgVersion]
-  [NextRelease]
   [Prepender]
   [PodWeaver]
 
@@ -208,20 +212,22 @@ following dist.ini:
   [MetaTests]
   [PodSyntaxTests]
   [PodCoverageTests]
-  [PodSpellingTests]
   [PortabilityTests]
 
   ; metadata
   [AutoPrereq]
   [MinimumPerl]
   [MetaProvides::Package]
+
   [Repository]
   git_remote = origin
+
   [MetaNoIndex]
   directory = t
   directory = xt
   directory = examples
   directory = corpus
+
   [MetaYAML]
 
   ; build system
@@ -243,9 +249,14 @@ following dist.ini:
   [UploadToCPAN]
 
   ; after release
-  [Git::Commit]
+  [Git::Commit / Commit_Dirty_Files]
+
   [Git::Tag]
   tag_format = release-%v
+
+  [NextRelease]
+  [Git::Commit / Commit_Changes]
+
   [Git::Push]
   push_to = origin
 
