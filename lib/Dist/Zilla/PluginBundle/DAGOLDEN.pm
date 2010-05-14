@@ -147,7 +147,7 @@ sub configure {
   # Note -- NextRelease is here to get the ordering right with
   # git actions.  It is *also* a file munger that acts earlier
     [ 'Git::Tag' => { tag_format => $self->tag_format } ],
-    'Git::Commit',
+    [ 'Git::Commit' => 'Early_Commit' ],
     'NextRelease',        # core (also munges files)
     [ 'Git::Commit' => 'Late_Commit' => { commit_msg => "bump Changes" } ],
     [ 'Git::Push' => { push_to => \@push_to } ],
