@@ -2,4 +2,31 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.006     2010-05-14 10:36:01 EST5EDT
+
+    - fixes git commit/tag ordering; now commits dirty files
+      after release, then tags, then updates Changes for next
+      version and does a final commit before pushing
+
+    - Pod spelling tests disabled pending fixes to stopwords and
+      Pod::Weaver
+
+0.005     2010-05-14 10:07:40 EST5EDT
+
+    - fifth draft
+
+0.004     2010-05-14 09:33:45 EST5EDT
+
+    - fourth draft
+
+0.003     2010-05-14 09:30:05 EST5EDT
+
+    - third draft
+
+0.002     2010-05-14 07:00:04 EST5EDT
+
+    - second draft
+
+0.001     2010-05-14 06:57:53 EST5EDT
+
     - first draft

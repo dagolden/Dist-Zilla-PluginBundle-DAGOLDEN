@@ -31,6 +31,13 @@ use Dist::Zilla::Plugin::Repository ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
+has fake_release => (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => sub { $_[0]->payload->{fake_release} },
+);
+
 has is_task => (
   is      => 'ro',
   isa     => 'Bool',
@@ -38,12 +45,12 @@ has is_task => (
   default => sub { $_[0]->payload->{is_task} },
 );
 
-has autoprereq => (
+has auto_prereq => (
   is      => 'ro',
   isa     => 'Bool',
   lazy    => 1,
   default => sub {
-    exists $_[0]->payload->{autoprereq} ? $_[0]->payload->{autoprereq} : 1
+    exists $_[0]->payload->{auto_prereq} ? $_[0]->payload->{auto_prereq} : 1
   },
 );
 
@@ -93,7 +100,6 @@ sub configure {
 
   # file munging
     'PkgVersion',         # core
-    'NextRelease',        # core
     'Prepender',
     ( $self->is_task ? 'TaskWeaver' : 'PodWeaver' ),
 
@@ -108,12 +114,12 @@ sub configure {
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
-    'PodSpellingTests',
+#    'PodSpellingTests', # XXX disabled until stopwords and weaving fixed
     'PortabilityTests',
 
   # metadata
     'MinimumPerl',
-    ( $self->autoprereq ? 'AutoPrereq' : () ),
+    ( $self->auto_prereq ? 'AutoPrereq' : () ),
     'MetaProvides::Package',
     [ Repository => { git_remote => $self->git_remote } ],
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
@@ -135,11 +141,20 @@ sub configure {
     'ConfirmRelease',     # core
 
   # release
-    'UploadToCPAN',       # core
+    ( $self->fake_release ? 'FakeRelease' : 'UploadToCPAN'),       # core
 
   # after release
-    'Git::Commit',
+  # Note -- NextRelease is here to get the ordering right with
+  # git actions.  It is *also* a file munger that acts earlier
+
+    [ 'Git::Commit' => 'Commit_Dirty_Files' ], # Changes and/or dist.ini
     [ 'Git::Tag' => { tag_format => $self->tag_format } ],
+
+    # bumps Changes
+    'NextRelease',        # core (also munges files)
+
+    [ 'Git::Commit' => 'Commit_Changes' => { commit_msg => "bump Changes" } ],
+
     [ 'Git::Push' => { push_to => \@push_to } ],
 
   );
@@ -151,6 +166,11 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
+
+
+=for stopwords
+autoprereq dagolden fakerelease pluginbundle podweaver
+taskweaver uploadtocpan dist ini
 
 =for Pod::Coverage configure
 
@@ -177,7 +197,6 @@ following dist.ini:
 
   ; file modifications
   [PkgVersion]
-  [NextRelease]
   [Prepender]
   [PodWeaver]
 
@@ -193,20 +212,22 @@ following dist.ini:
   [MetaTests]
   [PodSyntaxTests]
   [PodCoverageTests]
-  [PodSpellingTests]
   [PortabilityTests]
 
   ; metadata
   [AutoPrereq]
   [MinimumPerl]
   [MetaProvides::Package]
+
   [Repository]
   git_remote = origin
+
   [MetaNoIndex]
   directory = t
   directory = xt
   directory = examples
   directory = corpus
+
   [MetaYAML]
 
   ; build system
@@ -228,9 +249,14 @@ following dist.ini:
   [UploadToCPAN]
 
   ; after release
-  [Git::Commit]
+  [Git::Commit / Commit_Dirty_Files]
+
   [Git::Tag]
   tag_format = release-%v
+
+  [NextRelease]
+  [Git::Commit / Commit_Changes]
+
   [Git::Push]
   push_to = origin
 
@@ -241,7 +267,7 @@ the following options:
 
 * {is_task} -- this indicates whether TaskWeaver or PodWeaver should be used.
 Default is 0.
-* {autoprereq} -- this indicates whether AutoPrereq should be used or not.
+* {auto_prereq} -- this indicates whether AutoPrereq should be used or not.
 Default is 1.
 * {tag_format} -- given to {Git::Tag}.  Default is 'release-%v' to be more
 robust than just the version number when parsing versions for
@@ -251,6 +277,8 @@ is '^release-(.+)$'
 * {git_remote} -- given to {Repository}.  Defaults to 'origin'.  If set to
 something other than 'origin', it is also added as a {push_to} argument for
 {Git::Push}
+* {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for
+testing a dist.ini without risking a real release.
 
 = SEE ALSO
 
