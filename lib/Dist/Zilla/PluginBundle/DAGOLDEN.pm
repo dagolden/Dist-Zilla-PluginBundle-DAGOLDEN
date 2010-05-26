@@ -27,7 +27,7 @@ use Dist::Zilla::Plugin::TaskWeaver ();
 use Dist::Zilla::Plugin::PortabilityTests ();
 use Dist::Zilla::Plugin::Prepender ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
-use Dist::Zilla::Plugin::Repository ();
+use Dist::Zilla::Plugin::Repository 0.13 ();  # version 2 Meta Spec
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
