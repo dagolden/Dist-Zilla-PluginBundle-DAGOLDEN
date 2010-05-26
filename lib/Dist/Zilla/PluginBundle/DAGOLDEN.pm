@@ -9,7 +9,7 @@ use Moose 0.99;
 use Moose::Autobox;
 use namespace::autoclean 0.09;
 
-use Dist::Zilla 2.101040; # DZRPB::Easy
+use Dist::Zilla 3.101450; # Use CPAN::Meta
 
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
@@ -124,6 +124,7 @@ sub configure {
     [ Repository => { git_remote => $self->git_remote } ],
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
     'MetaYAML',           # core
+    'MetaJSON',           # core
 
   # build system
     'ExecDir',            # core
@@ -229,6 +230,7 @@ following dist.ini:
   directory = corpus
 
   [MetaYAML]
+  [MetaJSON]
 
   ; build system
   [ExecDir]
