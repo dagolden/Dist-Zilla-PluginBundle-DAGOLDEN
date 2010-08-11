@@ -44,4 +44,4 @@ sub mvp_bundle_config {
 
 1;
 
-
+=for Pod::Coverage mvp_bundle_config
