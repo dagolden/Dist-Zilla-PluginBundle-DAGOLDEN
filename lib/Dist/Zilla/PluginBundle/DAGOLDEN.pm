@@ -23,11 +23,13 @@ use Dist::Zilla::Plugin::MetaProvides::Package ();
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::PodSpellingTests ();
 use Dist::Zilla::Plugin::PodWeaver ();
+use Pod::Weaver::Plugin::WikiDoc ();
 use Dist::Zilla::Plugin::TaskWeaver ();
 use Dist::Zilla::Plugin::PortabilityTests ();
 use Dist::Zilla::Plugin::Prepender ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
 use Dist::Zilla::Plugin::Repository ();
+
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
