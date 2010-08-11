@@ -72,6 +72,13 @@ has version_regexp => (
   },
 );
 
+has weaver_config => (
+  is      => 'ro',
+  isa     => 'Str',
+  lazy    => 1,
+  default => sub { $_[0]->payload->{weaver_config} || '@DAGOLDEN' },
+);
+
 has git_remote => (
   is      => 'ro',
   isa     => 'Str',
@@ -101,7 +108,10 @@ sub configure {
   # file munging
     'PkgVersion',         # core
     'Prepender',
-    ( $self->is_task ? 'TaskWeaver' : 'PodWeaver' ),
+    ( $self->is_task  
+      ?  'TaskWeaver' 
+      : [ 'PodWeaver' => { config_plugin => $self->weaver_config } ] 
+    ),
 
   # generated distribution files
     'ReadmeFromPod',
@@ -199,6 +209,7 @@ following dist.ini:
   [PkgVersion]
   [Prepender]
   [PodWeaver]
+
 
   ; generated files
   [License]

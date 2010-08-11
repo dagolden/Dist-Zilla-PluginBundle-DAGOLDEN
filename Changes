@@ -2,6 +2,12 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - add Pod::Weaver::PluginBundle::DAGOLDEN (which is @RJBS plus wikidoc)
+
+0.007
+
+    - prereq bumps
+
 0.006     2010-05-14 10:36:01 EST5EDT
 
     - fixes git commit/tag ordering; now commits dirty files
