@@ -136,6 +136,7 @@ sub configure {
     [ Repository => { git_remote => $self->git_remote } ],
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
     'MetaYAML',           # core
+    'MetaJSON',           # core
 
   # build system
     'ExecDir',            # core
@@ -211,6 +212,7 @@ following dist.ini:
   [PkgVersion]
   [Prepender]
   [PodWeaver]
+  config_plugin = @DAGOLDEN
 
 
   ; generated files
@@ -242,6 +244,7 @@ following dist.ini:
   directory = corpus
 
   [MetaYAML]
+  [MetaJSON]
 
   ; build system
   [ExecDir]
@@ -292,6 +295,7 @@ something other than 'origin', it is also added as a {push_to} argument for
 {Git::Push}
 * {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for
 testing a dist.ini without risking a real release.
+* {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
 
 = SEE ALSO
 
