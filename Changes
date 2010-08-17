@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.009     2010-08-17 08:04:05 EST5EDT
+
     - set a minimum TaskWeaver prereq to work with Dist::Zilla 2.X
 
 0.008     2010-08-11 17:50:46 EST5EDT
