@@ -8,9 +8,14 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
     - add Pod::Weaver::PluginBundle::DAGOLDEN (which is @RJBS plus wikidoc)
 
-0.007
+0.007     2010-05-26 12:49:30 America/New_York
 
-    - prereq bumps
+    - bump Dist::Zilla prereq to 3.101450
+
+    - bump Dist::Zilla::Plugin::Repository prereq to 0.13 for CPAN Meta
+      spec version 2 compatibility
+
+    - add MetaJSON plugin
 
 0.006     2010-05-14 10:36:01 EST5EDT
 

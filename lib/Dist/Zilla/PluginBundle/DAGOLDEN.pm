@@ -9,7 +9,7 @@ use Moose 0.99;
 use Moose::Autobox;
 use namespace::autoclean 0.09;
 
-use Dist::Zilla 2.101040; # DZRPB::Easy
+use Dist::Zilla 3.101450; # Use CPAN::Meta
 
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
@@ -27,7 +27,7 @@ use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
 use Dist::Zilla::Plugin::PortabilityTests ();
 use Dist::Zilla::Plugin::Prepender ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
-use Dist::Zilla::Plugin::Repository ();
+use Dist::Zilla::Plugin::Repository 0.13 ();  # version 2 Meta Spec
 
 use Pod::Weaver::Plugin::WikiDoc ();
 
