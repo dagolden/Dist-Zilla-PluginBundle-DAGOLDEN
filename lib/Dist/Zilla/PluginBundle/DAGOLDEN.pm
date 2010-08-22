@@ -18,6 +18,7 @@ use Dist::Zilla::Plugin::BumpVersionFromGit ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CompileTests ();
+use Dist::Zilla::Plugin::GithubMeta 0.10 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package ();
 use Dist::Zilla::Plugin::MinimumPerl ();
@@ -133,7 +134,8 @@ sub configure {
     'MinimumPerl',
     ( $self->auto_prereq ? 'AutoPrereq' : () ),
     'MetaProvides::Package',
-    [ Repository => { git_remote => $self->git_remote } ],
+    [ Repository => { git_remote => $self->git_remote }, github_http => 0 ],
+    'GithubMeta',         # overrides Repository if github based
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
     'MetaYAML',           # core
     'MetaJSON',           # core
@@ -214,7 +216,6 @@ following dist.ini:
   [PodWeaver]
   config_plugin = @DAGOLDEN
 
-
   ; generated files
   [License]
   [ReadmeFromPod]
@@ -236,6 +237,11 @@ following dist.ini:
 
   [Repository]
   git_remote = origin
+  github_http = 0
+
+  ; overrides [Repository] if repository is on github
+  [GithubMeta]
+  remote = origin
 
   [MetaNoIndex]
   directory = t
