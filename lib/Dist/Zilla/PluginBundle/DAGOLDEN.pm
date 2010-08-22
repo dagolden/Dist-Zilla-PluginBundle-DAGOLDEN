@@ -135,7 +135,8 @@ sub configure {
     ( $self->auto_prereq ? 'AutoPrereq' : () ),
     'MetaProvides::Package',
     [ Repository => { git_remote => $self->git_remote }, github_http => 0 ],
-    'GithubMeta',         # overrides Repository if github based
+    # overrides Repository if github based
+    [ GithubMeta => { remote => $self->git_remote } ], 
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
     'MetaYAML',           # core
     'MetaJSON',           # core
