@@ -9,7 +9,7 @@ use Moose 0.99;
 use Moose::Autobox;
 use namespace::autoclean 0.09;
 
-use Dist::Zilla 3.101450; # Use CPAN::Meta
+use Dist::Zilla 4.102341; # authordeps
 
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
@@ -132,7 +132,7 @@ sub configure {
 
   # metadata
     'MinimumPerl',
-    ( $self->auto_prereq ? 'AutoPrereq' : () ),
+    ( $self->auto_prereq ? 'AutoPrereqs' : () ),
     'MetaProvides::Package',
     [ Repository => { git_remote => $self->git_remote, github_http => 0 } ],
     # overrides Repository if github based
@@ -232,7 +232,7 @@ following dist.ini:
   [PortabilityTests]
 
   ; metadata
-  [AutoPrereq]
+  [AutoPrereqs]
   [MinimumPerl]
   [MetaProvides::Package]
 
