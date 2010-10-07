@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.010     2010-10-07 13:42:21 EST5EDT
+
     - adds GithubMeta to override Repository if repo is on github
 
     - replaces AutoPrereq (deprecated) with AutoPrereqs
