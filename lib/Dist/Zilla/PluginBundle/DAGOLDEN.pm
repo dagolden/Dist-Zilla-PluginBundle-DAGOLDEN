@@ -14,7 +14,7 @@ use Dist::Zilla 4.102341; # authordeps
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
 
-use Dist::Zilla::Plugin::BumpVersionFromGit ();
+use Dist::Zilla::Plugin::Git::NextVersion ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CompileTests ();
@@ -101,7 +101,7 @@ sub configure {
   $self->add_plugins (
 
   # version number
-    [ BumpVersionFromGit => { version_regexp => $self->version_regexp } ],
+    [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ],
 
   # gather and prune
     'GatherDir',          # core
@@ -203,7 +203,7 @@ This is a [Dist::Zilla] PluginBundle.  It is roughly equivalent to the
 following dist.ini:
 
   ; version provider
-  [BumpVersionFromGit]
+  [Git::NextVersion]
   version_regexp = ^release-(.+)$
 
   ; choose files to include
@@ -294,8 +294,8 @@ Default is 0.
 Default is 1.
 * {tag_format} -- given to {Git::Tag}.  Default is 'release-%v' to be more
 robust than just the version number when parsing versions for
-{BumpVersionFromGit}
-* {version_regexp} -- given to {BumpVersionFromGit}.  Default
+{Git::NextVersion}
+* {version_regexp} -- given to {Git::NextVersion}.  Default
 is '^release-(.+)$'
 * {git_remote} -- given to {Repository}.  Defaults to 'origin'.  If set to
 something other than 'origin', it is also added as a {push_to} argument for
