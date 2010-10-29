@@ -203,84 +203,91 @@ This is a [Dist::Zilla] PluginBundle.  It is roughly equivalent to the
 following dist.ini:
 
   ; version provider
-  [Git::NextVersion]
+  [Git::NextVersion]  ; get version from last release tag
   version_regexp = ^release-(.+)$
 
   ; choose files to include
-  [GatherDir]
-  [PruneCruft]
-  [ManifestSkip]
+  [GatherDir]         ; everything under top dir
+  [PruneCruft]        ; default stuff to skip
+  [ManifestSkip]      ; if -f MANIFEST.SKIP, skip those, too
 
   ; file modifications
-  [PkgVersion]
-  [Prepender]
-  [PodWeaver]
-  config_plugin = @DAGOLDEN
+  [PkgVersion]        ; add $VERSION = ... to all files
+  [Prepender]         ; prepend a copyright statement to all files
+  [PodWeaver]         ; generate Pod
+  config_plugin = @DAGOLDEN ; my own plugin allows Pod::WikiDoc
 
   ; generated files
-  [License]
-  [ReadmeFromPod]
+  [License]           ; boilerplate license
+  [ReadmeFromPod]     ; from Pod (runs after PodWeaver)
 
   ; t tests
-  [CompileTests]
-  fake_home = 1
+  [CompileTests]      ; make sure .pm files all compile
+  fake_home = 1       ; fakes $ENV{HOME} just in case
 
   ; xt tests
-  [MetaTests]
-  [PodSyntaxTests]
-  [PodCoverageTests]
-  [PortabilityTests]
+  [MetaTests]         ; xt/release/meta-yaml.t
+  [PodSyntaxTests]    ; xt/release/pod-syntax.t
+  [PodCoverageTests]  ; xt/release/pod-coverage.t
+  [PortabilityTests]  ; xt/release/portability.t (of file name)
 
   ; metadata
-  [AutoPrereqs]
-  [MinimumPerl]
-  [MetaProvides::Package]
+  [AutoPrereqs]       ; find prereqs from code
+  [MinimumPerl]       ; determine minimum perl version
+  [MetaProvides::Package] ; add 'provides' to META files
 
-  [Repository]
-  git_remote = origin
-  github_http = 0
+  [Repository]        ; set 'repository' in META
+  git_remote = origin ;   - remote to choose
+  github_http = 0     ;   - for github, use git:// not http://
 
   ; overrides [Repository] if repository is on github
   [GithubMeta]
-  remote = origin
+  remote = origin     ; better than [Repository]; sets homepage, too
 
-  [MetaNoIndex]
+  [MetaNoIndex]       ; sets 'no_index' in META
   directory = t
   directory = xt
   directory = examples
   directory = corpus
 
-  [MetaYAML]
-  [MetaJSON]
+  [MetaYAML]          ; generate META.yml (v1.4)
+  [MetaJSON]          ; generate META.json (v2)
 
   ; build system
-  [ExecDir]
-  [ShareDir]
-  [MakeMaker]
+  [ExecDir]           ; include 'bin/*' as executables
+  [ShareDir]          ; include 'share/' for File::ShareDir
+  [MakeMaker]         ; create Makefile.PL
 
   ; manifest (after all generated files)
-  [Manifest]
+  [Manifest]          ; create MANIFEST
 
   ; before release
-  [Git::Check]
-  [CheckChangesHasContent]
-  [CheckExtraTests]
-  [TestRelease]
-  [ConfirmRelease]
+  [Git::Check]        ; ensure all files checked in
+  [CheckChangesHasContent] ; ensure Changes has been updated
+  [CheckExtraTests]   ; ensure xt/ tests pass
+  [TestRelease]       ; ensure t/ tests pass
+  [ConfirmRelease]    ; prompt before uploading
 
   ; releaser
-  [UploadToCPAN]
+  [UploadToCPAN]      ; uploads to CPAN
 
   ; after release
-  [Git::Commit / Commit_Dirty_Files]
+  [Git::Commit / Commit_Dirty_Files] ; commit Changes (as released)
 
-  [Git::Tag]
+  [Git::Tag]          ; tag repo with custom tag
   tag_format = release-%v
 
-  [NextRelease]
-  [Git::Commit / Commit_Changes]
+  ; NextRelease acts *during* pre-release to write $VERSION and
+  ; timestamp to Changes and  *after* release to add a new {{$NEXT}}
+  ; section, so to act at the right time after release, it must actually
+  ; come after Commit_Dirty_Files but before Commit_Changes in the
+  ; dist.ini.  It will still act during pre-release as usual
 
-  [Git::Push]
+  [NextRelease]
+
+  [Git::Commit / Commit_Changes] ; commit Changes (for new dev)
+
+  [Git::Push]         ; push repo to remote
   push_to = origin
 
 = USAGE
