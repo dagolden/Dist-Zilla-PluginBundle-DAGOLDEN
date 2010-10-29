@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.012     2010-10-29 16:42:37 EST5EDT
+
     - annotate example dist.ini in documents (suggeston from Tim Bunce)
 
 0.011     2010-10-10 22:47:05 EST5EDT
