@@ -111,9 +111,9 @@ sub configure {
   # file munging
     'PkgVersion',         # core
     'Prepender',
-    ( $self->is_task  
-      ?  'TaskWeaver' 
-      : [ 'PodWeaver' => { config_plugin => $self->weaver_config } ] 
+    ( $self->is_task
+      ?  'TaskWeaver'
+      : [ 'PodWeaver' => { config_plugin => $self->weaver_config } ]
     ),
 
   # generated distribution files
@@ -136,7 +136,7 @@ sub configure {
     'MetaProvides::Package',
     [ Repository => { git_remote => $self->git_remote, github_http => 0 } ],
     # overrides Repository if github based
-    [ GithubMeta => { remote => $self->git_remote } ], 
+    [ GithubMeta => { remote => $self->git_remote } ],
     [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
     'MetaYAML',           # core
     'MetaJSON',           # core
