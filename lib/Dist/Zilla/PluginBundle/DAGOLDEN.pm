@@ -20,7 +20,7 @@ use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CompileTests ();
 use Dist::Zilla::Plugin::GithubMeta 0.10 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
-use Dist::Zilla::Plugin::MetaProvides::Package ();
+use Dist::Zilla::Plugin::MetaProvides::Package 1.11044404 ();
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::PodSpellingTests ();
 use Dist::Zilla::Plugin::PodWeaver ();
@@ -133,11 +133,15 @@ sub configure {
   # metadata
     'MinimumPerl',
     ( $self->auto_prereq ? 'AutoPrereqs' : () ),
-    'MetaProvides::Package',
     [ Repository => { git_remote => $self->git_remote, github_http => 0 } ],
     # overrides Repository if github based
     [ GithubMeta => { remote => $self->git_remote } ],
-    [ MetaNoIndex => { directory => [qw/t xt examples corpus/] } ],
+    [ MetaNoIndex => { 
+        directory => [qw/t xt examples corpus/],
+        'package' => [qw/DB/]
+      } 
+    ],
+    ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
     'MetaYAML',           # core
     'MetaJSON',           # core
 
@@ -234,7 +238,6 @@ following dist.ini:
   ; metadata
   [AutoPrereqs]       ; find prereqs from code
   [MinimumPerl]       ; determine minimum perl version
-  [MetaProvides::Package] ; add 'provides' to META files
 
   [Repository]        ; set 'repository' in META
   git_remote = origin ;   - remote to choose
@@ -249,6 +252,10 @@ following dist.ini:
   directory = xt
   directory = examples
   directory = corpus
+  package = DB        ; just in case
+
+  [MetaProvides::Package] ; add 'provides' to META files
+  meta_noindex = 1        ; respect prior no_index directives
 
   [MetaYAML]          ; generate META.yml (v1.4)
   [MetaJSON]          ; generate META.json (v2)
