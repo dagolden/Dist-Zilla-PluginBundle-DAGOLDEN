@@ -28,7 +28,7 @@ use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
 use Dist::Zilla::Plugin::PortabilityTests ();
 use Dist::Zilla::Plugin::Prepender ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
-use Dist::Zilla::Plugin::Repository 0.13 ();  # version 2 Meta Spec
+use Dist::Zilla::Plugin::Repository 0.17 ();  # safe for missing github
 
 use Pod::Weaver::Plugin::WikiDoc ();
 
