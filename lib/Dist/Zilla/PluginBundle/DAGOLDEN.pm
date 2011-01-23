@@ -30,8 +30,6 @@ use Dist::Zilla::Plugin::Prepender ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
 use Dist::Zilla::Plugin::Repository 0.17 ();  # safe for missing github
 
-use Pod::Weaver::Plugin::WikiDoc ();
-
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
 has fake_release => (

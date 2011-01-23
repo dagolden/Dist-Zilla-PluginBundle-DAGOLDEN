@@ -4,6 +4,11 @@ package Pod::Weaver::PluginBundle::DAGOLDEN;
 # ABSTRACT: DAGOLDEN's default Pod::Weaver config
 
 use Pod::Weaver::Config::Assembler;
+
+# Dependencies
+use Pod::Weaver::Plugin::WikiDoc ();
+use Pod::Elemental::Transformer::List 0.101620 ();
+
 sub _exp { Pod::Weaver::Config::Assembler->expand_package($_[0]) }
 
 sub mvp_bundle_config {
