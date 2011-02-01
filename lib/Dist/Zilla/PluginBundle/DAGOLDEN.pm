@@ -15,6 +15,7 @@ use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
 
 use Dist::Zilla::Plugin::Git::NextVersion ();
+use Dist::Zilla::Plugin::Bugtracker 1.102670 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CompileTests ();
@@ -140,6 +141,7 @@ sub configure {
       } 
     ],
     ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
+    ['Bugtracker'],
     'MetaYAML',           # core
     'MetaJSON',           # core
 
@@ -251,6 +253,8 @@ following dist.ini:
   directory = examples
   directory = corpus
   package = DB        ; just in case
+
+  [Bugtracker]        ; defaults to RT
 
   [MetaProvides::Package] ; add 'provides' to META files
   meta_noindex = 1        ; respect prior no_index directives
