@@ -18,6 +18,7 @@ use Dist::Zilla::Plugin::Git::NextVersion ();
 use Dist::Zilla::Plugin::Bugtracker 1.102670 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
+use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::CompileTests ();
 use Dist::Zilla::Plugin::GithubMeta 0.10 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
@@ -155,6 +156,7 @@ sub configure {
 
   # before release
     'Git::Check',
+    'CheckPrereqsIndexed',
     'CheckChangesHasContent',
     'CheckExtraTests',
     'TestRelease',        # core
@@ -272,6 +274,7 @@ following dist.ini:
 
   ; before release
   [Git::Check]        ; ensure all files checked in
+  [CheckPrereqsIndexed]    ; ensure prereqs are on CPAN
   [CheckChangesHasContent] ; ensure Changes has been updated
   [CheckExtraTests]   ; ensure xt/ tests pass
   [TestRelease]       ; ensure t/ tests pass
