@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.017     2011-02-06 21:57:53 EST5EDT
+
     - added Dist::Zilla::Plugin::CheckPrereqsIndexed
 
 0.016     2011-01-31 22:14:12 EST5EDT
