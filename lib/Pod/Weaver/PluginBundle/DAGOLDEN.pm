@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 package Pod::Weaver::PluginBundle::DAGOLDEN;
-# ABSTRACT: DAGOLDEN's default Pod::Weaver config
+# VERSION
 
 use Pod::Weaver::Config::Assembler;
 
@@ -61,6 +61,9 @@ sub mvp_bundle_config {
 
   return @plugins;
 }
+
+# ABSTRACT: DAGOLDEN's default Pod::Weaver config
+# COPYRIGHT
 
 1;
 
