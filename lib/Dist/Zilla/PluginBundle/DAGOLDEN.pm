@@ -14,24 +14,24 @@ use Dist::Zilla 4.102341; # authordeps
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
 
-use Dist::Zilla::Plugin::Git::NextVersion ();
 use Dist::Zilla::Plugin::Bugtracker 1.102670 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::CompileTests ();
+use Dist::Zilla::Plugin::Git::NextVersion ();
 use Dist::Zilla::Plugin::GithubMeta 0.10 ();
+use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.11044404 ();
 use Dist::Zilla::Plugin::MinimumPerl ();
+use Dist::Zilla::Plugin::OurPkgVersion 0.001008 ();
 use Dist::Zilla::Plugin::PodSpellingTests ();
 use Dist::Zilla::Plugin::PodWeaver ();
-use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
 use Dist::Zilla::Plugin::PortabilityTests ();
-use Dist::Zilla::Plugin::OurPkgVersion 0.001008 ();
-use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
-use Dist::Zilla::Plugin::Repository 0.17 ();  # safe for missing github
+use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
+use Dist::Zilla::Plugin::Test::Version ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
@@ -130,6 +130,7 @@ sub configure {
     'PodCoverageTests',   # core
 #    'PodSpellingTests', # XXX disabled until stopwords and weaving fixed
     'PortabilityTests',
+    'Test::Version',
 
   # metadata
     'MinimumPerl',
@@ -238,6 +239,7 @@ following dist.ini:
   [PodSyntaxTests]    ; xt/release/pod-syntax.t
   [PodCoverageTests]  ; xt/release/pod-coverage.t
   [PortabilityTests]  ; xt/release/portability.t (of file name)
+  [Test::Version]     ; xt/release/test-version.t
 
   ; metadata
   [AutoPrereqs]       ; find prereqs from code
