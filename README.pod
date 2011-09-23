@@ -24,6 +24,9 @@ following dist.ini:
  
    ; choose files to include
    [GatherDir]         ; everything under top dir
+   exclude_filename = README.pod   ; skip this generated file
+   exclude_filename = META.json    ; skip this generated file
+ 
    [PruneCruft]        ; default stuff to skip
    [ManifestSkip]      ; if -f MANIFEST.SKIP, skip those, too
  
@@ -36,6 +39,10 @@ following dist.ini:
    ; generated files
    [License]           ; boilerplate license
    [ReadmeFromPod]     ; from Pod (runs after PodWeaver)
+   [ReadmeAnyFromPod]  ; create README.pod in repo directory
+   type = pod
+   filename = README.pod
+   location = root
  
    ; t tests
    [CompileTests]      ; make sure .pm files all compile
@@ -75,6 +82,10 @@ following dist.ini:
  
    ; manifest (after all generated files)
    [Manifest]          ; create MANIFEST
+ 
+   ; copy META.json back to repo dis
+   [CopyFilesFromBuild]
+   copy = META.json
  
    ; before release
    [Git::Check]        ; ensure all files checked in
