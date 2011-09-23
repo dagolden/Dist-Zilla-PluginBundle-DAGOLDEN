@@ -1,0 +1,201 @@
+=pod
+
+=head1 NAME
+
+Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN does it
+
+=head1 VERSION
+
+version 0.020
+
+=head1 SYNOPSIS
+
+   # in dist.ini
+   [@DAGOLDEN]
+
+=head1 DESCRIPTION
+
+This is a L<Dist::Zilla> PluginBundle.  It is roughly equivalent to the
+following dist.ini:
+
+   ; version provider
+   [Git::NextVersion]  ; get version from last release tag
+   version_regexp = ^release-(.+)$
+ 
+   ; choose files to include
+   [GatherDir]         ; everything under top dir
+   [PruneCruft]        ; default stuff to skip
+   [ManifestSkip]      ; if -f MANIFEST.SKIP, skip those, too
+ 
+   ; file modifications
+   [OurPkgVersion]     ; add $VERSION = ... to all files
+   [InsertCopyright    ; add copyright at "# COPYRIGHT"
+   [PodWeaver]         ; generate Pod
+   config_plugin = @DAGOLDEN ; my own plugin allows Pod::WikiDoc
+ 
+   ; generated files
+   [License]           ; boilerplate license
+   [ReadmeFromPod]     ; from Pod (runs after PodWeaver)
+ 
+   ; t tests
+   [CompileTests]      ; make sure .pm files all compile
+   fake_home = 1       ; fakes $ENV{HOME} just in case
+ 
+   ; xt tests
+   [MetaTests]         ; xt/release/meta-yaml.t
+   [PodSyntaxTests]    ; xt/release/pod-syntax.t
+   [PodCoverageTests]  ; xt/release/pod-coverage.t
+   [PortabilityTests]  ; xt/release/portability.t (of file name)
+   [Test::Version]     ; xt/release/test-version.t
+ 
+   ; metadata
+   [AutoPrereqs]       ; find prereqs from code
+   [MinimumPerl]       ; determine minimum perl version
+   [GithubMeta]
+ 
+   [MetaNoIndex]       ; sets 'no_index' in META
+   directory = t
+   directory = xt
+   directory = examples
+   directory = corpus
+   package = DB        ; just in case
+ 
+   [Bugtracker]        ; defaults to RT
+ 
+   [MetaProvides::Package] ; add 'provides' to META files
+   meta_noindex = 1        ; respect prior no_index directives
+ 
+   [MetaYAML]          ; generate META.yml (v1.4)
+   [MetaJSON]          ; generate META.json (v2)
+ 
+   ; build system
+   [ExecDir]           ; include 'bin/*' as executables
+   [ShareDir]          ; include 'share/' for File::ShareDir
+   [MakeMaker]         ; create Makefile.PL
+ 
+   ; manifest (after all generated files)
+   [Manifest]          ; create MANIFEST
+ 
+   ; before release
+   [Git::Check]        ; ensure all files checked in
+   [CheckPrereqsIndexed]    ; ensure prereqs are on CPAN
+   [CheckChangesHasContent] ; ensure Changes has been updated
+   [CheckExtraTests]   ; ensure xt/ tests pass
+   [TestRelease]       ; ensure t/ tests pass
+   [ConfirmRelease]    ; prompt before uploading
+ 
+   ; releaser
+   [UploadToCPAN]      ; uploads to CPAN
+ 
+   ; after release
+   [Git::Commit / Commit_Dirty_Files] ; commit Changes (as released)
+ 
+   [Git::Tag]          ; tag repo with custom tag
+   tag_format = release-%v
+ 
+   ; NextRelease acts *during* pre-release to write $VERSION and
+   ; timestamp to Changes and  *after* release to add a new {{$NEXT}}
+   ; section, so to act at the right time after release, it must actually
+   ; come after Commit_Dirty_Files but before Commit_Changes in the
+   ; dist.ini.  It will still act during pre-release as usual
+ 
+   [NextRelease]
+ 
+   [Git::Commit / Commit_Changes] ; commit Changes (for new dev)
+ 
+   [Git::Push]         ; push repo to remote
+   push_to = origin
+
+=for stopwords autoprereq dagolden fakerelease pluginbundle podweaver
+taskweaver uploadtocpan dist ini
+
+=for Pod::Coverage configure
+
+=head1 USAGE
+
+To use this PluginBundle, just add it to your dist.ini.  You can provide
+the following options:
+
+=over
+
+=item *
+
+C<<< is_task >>> -- this indicates whether TaskWeaver or PodWeaver should be used.
+Default is 0.
+
+=item *
+
+C<<< auto_prereq >>> -- this indicates whether AutoPrereq should be used or not.
+Default is 1.
+
+=item *
+
+C<<< tag_format >>> -- given to C<<< Git::Tag >>>.  Default is 'release-%v' to be more
+robust than just the version number when parsing versions for
+C<<< Git::NextVersion >>>
+
+=item *
+
+C<<< version_regexp >>> -- given to C<<< Git::NextVersion >>>.  Default
+is '^release-(.+)$'
+
+=item *
+
+C<<< fake_release >>> -- swaps FakeRelease for UploadToCPAN. Mostly useful for
+testing a dist.ini without risking a real release.
+
+=item *
+
+C<<< weaver_config >>> -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
+
+=back
+
+=head1 SEE ALSO
+
+=over
+
+=item *
+
+L<Dist::Zilla>
+
+=item *
+
+L<Dist::Zilla::Plugin::PodWeaver>
+
+=item *
+
+L<Dist::Zilla::Plugin::TaskWeaver>
+
+=back
+
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
+
+=head1 SUPPORT
+
+=head2 Bugs / Feature Requests
+
+Please report any bugs or feature requests by email to C<bug-dist-zilla-pluginbundle-dagolden at rt.cpan.org>, or through
+the web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-PluginBundle-DAGOLDEN>. You will be automatically notified of any
+progress on the request by the system.
+
+=head2 Source Code
+
+This is open source software.  The code repository is available for
+public review and contribution under the terms of the license.
+
+L<https://github.com/dagolden/dist-zilla-pluginbundle-dagolden>
+
+  git clone https://github.com/dagolden/dist-zilla-pluginbundle-dagolden.git
+
+=head1 AUTHOR
+
+David Golden <dagolden@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2011 by David Golden.
+
+This is free software, licensed under:
+
+  The Apache License, Version 2.0, January 2004
+
