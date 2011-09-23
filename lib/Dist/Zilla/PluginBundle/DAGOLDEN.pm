@@ -169,7 +169,11 @@ sub configure {
     'Manifest',           # core
 
   # before release
-    'Git::Check',
+    [ 'Git::Check' =>
+      {
+        allow_dirty => [qw/README.pod META.json/]
+      }
+    ],
     'CheckPrereqsIndexed',
     'CheckChangesHasContent',
     'CheckExtraTests',
@@ -183,7 +187,12 @@ sub configure {
   # Note -- NextRelease is here to get the ordering right with
   # git actions.  It is *also* a file munger that acts earlier
 
-    [ 'Git::Commit' => 'Commit_Dirty_Files' ], # Changes and/or dist.ini
+    # commit dirty Changes, dist.ini, README.pod, META.json
+    [ 'Git::Commit' => 'Commit_Dirty_Files' =>
+      {
+        allow_dirty => [qw/README.pod META.json/]
+      }
+    ],
     [ 'Git::Tag' => { tag_format => $self->tag_format } ],
 
     # bumps Changes
