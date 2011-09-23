@@ -9,7 +9,7 @@ use Moose 0.99;
 use Moose::Autobox;
 use namespace::autoclean 0.09;
 
-use Dist::Zilla 4.102341; # authordeps
+use Dist::Zilla 4.3; # authordeps
 
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git ();
@@ -19,6 +19,7 @@ use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::CompileTests ();
+use Dist::Zilla::Plugin::CopyFilesFromBuild ();
 use Dist::Zilla::Plugin::Git::NextVersion ();
 use Dist::Zilla::Plugin::GithubMeta 0.10 ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
@@ -29,6 +30,7 @@ use Dist::Zilla::Plugin::OurPkgVersion 0.001008 ();
 use Dist::Zilla::Plugin::PodSpellingTests ();
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::PortabilityTests ();
+use Dist::Zilla::Plugin::ReadmeAnyFromPod ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
 use Dist::Zilla::Plugin::Test::Version ();
@@ -105,7 +107,7 @@ sub configure {
     [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ],
 
   # gather and prune
-    'GatherDir',          # core
+    [ GatherDir => { exclude_filename => [qw/README.pod META.json/] }], # core
     'PruneCruft',         # core
     'ManifestSkip',       # core
 
@@ -120,6 +122,12 @@ sub configure {
   # generated distribution files
     'ReadmeFromPod',
     'License',            # core
+    [ ReadmeAnyFromPod => { # generate in root for github, etc.
+        type => 'pod',
+        filename => 'README.pod',
+        location => 'root',
+      }
+    ],
 
   # generated t/ tests
     [ CompileTests => { fake_home => 1 } ],
@@ -150,6 +158,12 @@ sub configure {
     'ExecDir',            # core
     'ShareDir',           # core
     'MakeMaker',          # core
+
+  # copy files from build back to root for inclusion in VCS
+  [ CopyFilesFromBuild => {
+      copy => 'META.json',
+    }
+  ],
 
   # manifest -- must come after all generated files
     'Manifest',           # core
@@ -217,6 +231,9 @@ following dist.ini:
 
   ; choose files to include
   [GatherDir]         ; everything under top dir
+  exclude_filename = README.pod   ; skip this generated file
+  exclude_filename = META.json    ; skip this generated file
+
   [PruneCruft]        ; default stuff to skip
   [ManifestSkip]      ; if -f MANIFEST.SKIP, skip those, too
 
@@ -229,6 +246,10 @@ following dist.ini:
   ; generated files
   [License]           ; boilerplate license
   [ReadmeFromPod]     ; from Pod (runs after PodWeaver)
+  [ReadmeAnyFromPod]  ; create README.pod in repo directory
+  type = pod
+  filename = README.pod
+  location = root
 
   ; t tests
   [CompileTests]      ; make sure .pm files all compile
@@ -268,6 +289,10 @@ following dist.ini:
 
   ; manifest (after all generated files)
   [Manifest]          ; create MANIFEST
+
+  ; copy META.json back to repo dis
+  [CopyFilesFromBuild]
+  copy = META.json
 
   ; before release
   [Git::Check]        ; ensure all files checked in
