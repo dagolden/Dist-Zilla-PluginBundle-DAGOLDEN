@@ -171,7 +171,7 @@ sub configure {
   # before release
     [ 'Git::Check' =>
       {
-        allow_dirty => [qw/README.pod META.json/]
+        allow_dirty => [qw/dist.ini Changes README.pod META.json/]
       }
     ],
     'CheckPrereqsIndexed',
@@ -190,7 +190,7 @@ sub configure {
     # commit dirty Changes, dist.ini, README.pod, META.json
     [ 'Git::Commit' => 'Commit_Dirty_Files' =>
       {
-        allow_dirty => [qw/README.pod META.json/]
+        allow_dirty => [qw/dist.ini Changes README.pod META.json/]
       }
     ],
     [ 'Git::Tag' => { tag_format => $self->tag_format } ],
