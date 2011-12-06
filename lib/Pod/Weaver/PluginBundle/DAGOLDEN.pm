@@ -17,6 +17,12 @@ This is open source software.  The code repository is available for
 public review and contribution under the terms of the license.
 END
 
+my $bugtracker_content = <<'END';
+Please report any bugs or feature requests through the online
+L<issue tracker|{WEB}>.  You will be automatically notified of
+any progress on your issue.
+END
+
 sub mvp_bundle_config {
   my @plugins;
   push @plugins, (
@@ -50,6 +56,7 @@ sub mvp_bundle_config {
         perldoc => 0,
         websites => 'none',
         bugs => 'metadata',
+        bugs_content => $bugtracker_content,
         repository_link => 'both',
         repository_content => $repo_intro
       }
@@ -84,8 +91,9 @@ following weaver.ini:
   perldoc = 0
   websites = none
   bugs = metadata
+  bugs_content = ... stuff (web only, email omitted) ...
   repository_link = both
-  repository_content = ...stuff...
+  repository_content = ... stuff ...
 
   [-Transformer]
   transfomer = List
