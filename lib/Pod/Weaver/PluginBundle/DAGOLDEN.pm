@@ -18,9 +18,9 @@ public review and contribution under the terms of the license.
 END
 
 my $bugtracker_content = <<'END';
-Please report any bugs or feature requests through the online
-L<issue tracker|{WEB}>.  You will be automatically notified of
-any progress on your issue.
+Please report any bugs or feature requests through the issue tracker
+at {WEB}.
+You will be notified automatically of any progress on your issue.
 END
 
 sub mvp_bundle_config {
