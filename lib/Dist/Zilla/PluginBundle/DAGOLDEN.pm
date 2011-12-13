@@ -245,7 +245,7 @@ __END__
 autoprereq dagolden fakerelease pluginbundle podweaver
 taskweaver uploadtocpan dist ini
 
-=for Pod::Coverage configure
+=for Pod::Coverage configure mvp_multivalue_args
 
 =begin wikidoc
 
