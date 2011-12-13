@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - re-enable Test::PodSpelling and added own 'stopwords' option as
+      passthrough and 'no_spellcheck' to disable
+    - Added Test::Perl::Critic and added 'no_critic' option to disable
+
 0.021     2011-12-07 10:49:46 EST5EDT
 
     - make bugtracker pod section only list web link, not email; this

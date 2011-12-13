@@ -27,7 +27,8 @@ use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.11044404 ();
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::OurPkgVersion 0.001008 ();
-use Dist::Zilla::Plugin::PodSpellingTests ();
+use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
+use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::PortabilityTests ();
 use Dist::Zilla::Plugin::ReadmeAnyFromPod ();
@@ -37,11 +38,34 @@ use Dist::Zilla::Plugin::Test::Version ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 
+sub mvp_multivalue_args { qw/stopwords/ }
+
+has stopwords => (
+  is      => 'ro',
+  isa     => 'ArrayRef',
+  lazy    => 1,
+  default => sub {
+    exists $_[0]->payload->{stopwords} ? $_[0]->payload->{stopwords} : []
+  },
+);
+
 has fake_release => (
   is      => 'ro',
   isa     => 'Bool',
   lazy    => 1,
   default => sub { $_[0]->payload->{fake_release} },
+);
+
+has no_critic => (
+  is      => 'ro',
+  isa     => 'Bool',
+  default => 0,
+);
+
+has no_spellcheck => (
+  is      => 'ro',
+  isa     => 'Bool',
+  default => 0,
 );
 
 has is_task => (
@@ -133,10 +157,11 @@ sub configure {
     [ CompileTests => { fake_home => 1 } ],
 
   # generated xt/ tests
+    [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ],  
+    'Test::Perl::Critic',  
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
-#    'PodSpellingTests', # XXX disabled until stopwords and weaving fixed
     'PortabilityTests',
     'Test::Version',
 
@@ -265,6 +290,8 @@ following dist.ini:
   fake_home = 1       ; fakes $ENV{HOME} just in case
 
   ; xt tests
+  [Test::PodSpelling] ; xt/author/pod-spell.t
+  [Test::Perl::Critic]; xt/author/critic.t
   [MetaTests]         ; xt/release/meta-yaml.t
   [PodSyntaxTests]    ; xt/release/pod-syntax.t
   [PodCoverageTests]  ; xt/release/pod-coverage.t
@@ -350,6 +377,9 @@ is '^release-(.+)$'
 * {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for
 testing a dist.ini without risking a real release.
 * {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
+* {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
+* {no_critic} -- omit Test::Perl::Critic tests
+* {no_spellcheck} -- omit Test::PodSpelling tests
 
 = SEE ALSO
 

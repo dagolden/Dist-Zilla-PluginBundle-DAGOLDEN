@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.021
+version 0.022
 
 =head1 SYNOPSIS
 
@@ -49,6 +49,8 @@ following dist.ini:
    fake_home = 1       ; fakes $ENV{HOME} just in case
  
    ; xt tests
+   [Test::PodSpelling] ; xt/author/pod-spell.t
+   [Test::Perl::Critic]; xt/author/critic.t
    [MetaTests]         ; xt/release/meta-yaml.t
    [PodSyntaxTests]    ; xt/release/pod-syntax.t
    [PodCoverageTests]  ; xt/release/pod-coverage.t
@@ -158,6 +160,18 @@ testing a dist.ini without risking a real release.
 =item *
 
 C<<< weaver_config >>> -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
+
+=item *
+
+C<<< stopwords >>> -- add stopword for Test::PodSpelling (can be repeated)
+
+=item *
+
+C<<< no_critic >>> -- omit Test::Perl::Critic tests
+
+=item *
+
+C<<< no_spellcheck >>> -- omit Test::PodSpelling tests
 
 =back
 
