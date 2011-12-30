@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.023     2011-12-30 15:29:54 EST5EDT
+
     - change PortabilityTests and CompileTests to the newer Test::* naming
       scheme
 
