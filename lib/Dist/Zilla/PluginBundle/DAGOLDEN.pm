@@ -18,7 +18,7 @@ use Dist::Zilla::Plugin::Bugtracker 1.102670 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
-use Dist::Zilla::Plugin::CompileTests ();
+use Dist::Zilla::Plugin::Test::Compile ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild ();
 use Dist::Zilla::Plugin::Git::NextVersion ();
 use Dist::Zilla::Plugin::GithubMeta 0.10 ();
@@ -30,7 +30,7 @@ use Dist::Zilla::Plugin::OurPkgVersion 0.001008 ();
 use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::PodWeaver ();
-use Dist::Zilla::Plugin::PortabilityTests ();
+use Dist::Zilla::Plugin::Test::Portability ();
 use Dist::Zilla::Plugin::ReadmeAnyFromPod ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
@@ -154,7 +154,7 @@ sub configure {
     ],
 
   # generated t/ tests
-    [ CompileTests => { fake_home => 1 } ],
+    [ 'Test::Compile' => { fake_home => 1 } ],
 
   # generated xt/ tests
     [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ],  
@@ -162,7 +162,7 @@ sub configure {
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
-    'PortabilityTests',
+    'Test::Portability',
     'Test::Version',
 
   # metadata

@@ -2,6 +2,9 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - change PortabilityTests and CompileTests to the newer Test::* naming
+      scheme
+
 0.022     2011-12-13 17:26:28 EST5EDT
 
     - re-enable Test::PodSpelling and added own 'stopwords' option as
