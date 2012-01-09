@@ -157,8 +157,8 @@ sub configure {
     [ 'Test::Compile' => { fake_home => 1 } ],
 
   # generated xt/ tests
-    [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ],  
-    'Test::Perl::Critic',  
+    [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ],
+    'Test::Perl::Critic',
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
@@ -169,10 +169,10 @@ sub configure {
     'MinimumPerl',
     ( $self->auto_prereq ? 'AutoPrereqs' : () ),
     [ GithubMeta => { remote => $self->git_remote } ],
-    [ MetaNoIndex => { 
+    [ MetaNoIndex => {
         directory => [qw/t xt examples corpus/],
         'package' => [qw/DB/]
-      } 
+      }
     ],
     ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
     ['Bugtracker'],
