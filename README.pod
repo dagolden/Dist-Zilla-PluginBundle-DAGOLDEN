@@ -59,6 +59,8 @@ following dist.ini:
  
    ; metadata
    [AutoPrereqs]       ; find prereqs from code
+   skip = ^t::lib
+ 
    [MinimumPerl]       ; determine minimum perl version
    [GithubMeta]
  

@@ -167,7 +167,10 @@ sub configure {
 
   # metadata
     'MinimumPerl',
-    ( $self->auto_prereq ? 'AutoPrereqs' : () ),
+    ( $self->auto_prereq
+      ? [ 'AutoPrereqs' => { skip => "^t::lib" } ]
+      : ()
+    ),
     [ GithubMeta => { remote => $self->git_remote } ],
     [ MetaNoIndex => {
         directory => [qw/t xt examples corpus/],
@@ -300,6 +303,8 @@ following dist.ini:
 
   ; metadata
   [AutoPrereqs]       ; find prereqs from code
+  skip = ^t::lib
+
   [MinimumPerl]       ; determine minimum perl version
   [GithubMeta]
 
