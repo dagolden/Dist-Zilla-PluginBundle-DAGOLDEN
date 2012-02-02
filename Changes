@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.024     2012-02-02 16:26:21 EST5EDT
+
     - make sure t::lib::* doesn't wind up in prereqs
 
 0.023     2011-12-30 15:29:54 EST5EDT
