@@ -21,8 +21,7 @@
          "corpus"
       ],
       "package" : [
-         "DB",
-         "t::lib"
+         "DB"
       ]
    },
    "prereqs" : {
