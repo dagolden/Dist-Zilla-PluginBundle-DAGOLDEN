@@ -3,6 +3,7 @@ use warnings;
 package Pod::Weaver::PluginBundle::DAGOLDEN;
 # VERSION
 
+use Pod::Weaver 3.101635; # fixed ABSTRACT scanning
 use Pod::Weaver::Config::Assembler;
 
 # Dependencies

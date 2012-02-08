@@ -60,6 +60,7 @@
             "Moose" : "0.99",
             "Moose::Autobox" : 0,
             "Pod::Elemental::Transformer::List" : "0.101620",
+            "Pod::Weaver" : "3.101635",
             "Pod::Weaver::Config::Assembler" : 0,
             "Pod::Weaver::Plugin::WikiDoc" : 0,
             "Pod::Weaver::Section::Support" : "1.001",
@@ -82,11 +83,11 @@
    "provides" : {
       "Dist::Zilla::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Dist/Zilla/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.025"
+         "version" : "0.026"
       },
       "Pod::Weaver::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Pod/Weaver/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.025"
+         "version" : "0.026"
       }
    },
    "release_status" : "stable",
@@ -102,6 +103,6 @@
          "web" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden"
       }
    },
-   "version" : "0.025"
+   "version" : "0.026"
 }
 
