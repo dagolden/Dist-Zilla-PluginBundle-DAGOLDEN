@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.025     2012-02-07 22:35:18 EST5EDT
+
     - bump MetaProvides::Package prereq to get bug fixed version of it
 
 0.024     2012-02-02 16:26:21 EST5EDT
