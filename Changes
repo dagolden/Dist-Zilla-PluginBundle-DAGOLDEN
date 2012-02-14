@@ -2,6 +2,9 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - add Pod::Wordlist::hanekomu as explicit prereq so I can control
+      the minimum version allowed
+
 0.026     2012-02-07 22:44:41 EST5EDT
 
     - bump Pod::Weaver prereq to 3.101635
