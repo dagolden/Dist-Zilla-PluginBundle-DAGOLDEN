@@ -118,6 +118,13 @@ has git_remote => (
   },
 );
 
+has no_rt => (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => 0,
+);
+
 
 sub configure {
   my $self = shift;
@@ -171,7 +178,7 @@ sub configure {
       ? [ 'AutoPrereqs' => { skip => "^t::lib" } ]
       : ()
     ),
-    [ GithubMeta => { remote => $self->git_remote } ],
+    [ GithubMeta => { remote => $self->git_remote, issues => 1 } ],
     [ MetaNoIndex => {
         directory => [qw/t xt examples corpus/],
         'package' => [qw/DB/]
