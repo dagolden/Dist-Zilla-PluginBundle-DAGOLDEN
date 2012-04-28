@@ -121,7 +121,8 @@ has git_remote => (
 has no_bugtracker => (
   is      => 'ro',
   isa     => 'Bool',
-  default => 0,
+  lazy    => 1,
+  default => sub { $_[0]->payload->{no_bugtracker} || 0 },
 );
 
 
