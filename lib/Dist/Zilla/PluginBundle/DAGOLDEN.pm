@@ -118,10 +118,9 @@ has git_remote => (
   },
 );
 
-has no_rt => (
+has no_bugtracker => (
   is      => 'ro',
   isa     => 'Bool',
-  lazy    => 1,
   default => 0,
 );
 
@@ -185,7 +184,7 @@ sub configure {
       }
     ],
     ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
-    ['Bugtracker'],
+    $self->no_bugtracker ? () : ['Bugtracker'],
     'MetaYAML',           # core
     'MetaJSON',           # core
 
