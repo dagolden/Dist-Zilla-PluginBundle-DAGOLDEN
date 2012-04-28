@@ -313,6 +313,7 @@ following dist.ini:
 
   [MinimumPerl]       ; determine minimum perl version
   [GithubMeta]
+  issues = 1
 
   [MetaNoIndex]       ; sets 'no_index' in META
   directory = t
@@ -396,6 +397,8 @@ testing a dist.ini without risking a real release.
 * {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
+* {no_bugtracker} -- omit [Bugtracker].  The issue tracker becomes Github
+instead of RT.
 
 = SEE ALSO
 
