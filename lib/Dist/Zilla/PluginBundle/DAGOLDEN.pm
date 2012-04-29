@@ -185,7 +185,7 @@ sub configure {
       }
     ],
     ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
-    $self->no_bugtracker ? () : ['Bugtracker'],
+    ($self->no_bugtracker ? () : ['Bugtracker']),
     'MetaYAML',           # core
     'MetaJSON',           # core
 
