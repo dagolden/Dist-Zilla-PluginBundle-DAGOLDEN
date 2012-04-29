@@ -2,6 +2,9 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - added 'no_bugtracker' option to omit Bugtracker, which defaults
+      the bugtracker back to GithubMeta [thank you Eric Johnson]
+
 0.027     2012-02-14 15:16:40 EST5EDT
 
     - add Pod::Wordlist::hanekomu as explicit prereq so I can control

@@ -314,7 +314,7 @@ following dist.ini:
 
   [MinimumPerl]       ; determine minimum perl version
   [GithubMeta]
-  issues = 1
+  issues = 1          ; c.f. no_bugtracker
 
   [MetaNoIndex]       ; sets 'no_index' in META
   directory = t
