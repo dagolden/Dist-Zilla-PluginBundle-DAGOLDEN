@@ -118,6 +118,13 @@ has git_remote => (
   },
 );
 
+has no_bugtracker => (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => sub { $_[0]->payload->{no_bugtracker} || 0 },
+);
+
 
 sub configure {
   my $self = shift;
@@ -171,14 +178,14 @@ sub configure {
       ? [ 'AutoPrereqs' => { skip => "^t::lib" } ]
       : ()
     ),
-    [ GithubMeta => { remote => $self->git_remote } ],
+    [ GithubMeta => { remote => $self->git_remote, issues => 1 } ],
     [ MetaNoIndex => {
         directory => [qw/t xt examples corpus/],
         'package' => [qw/DB/]
       }
     ],
     ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
-    ['Bugtracker'],
+    $self->no_bugtracker ? () : ['Bugtracker'],
     'MetaYAML',           # core
     'MetaJSON',           # core
 
@@ -307,6 +314,7 @@ following dist.ini:
 
   [MinimumPerl]       ; determine minimum perl version
   [GithubMeta]
+  issues = 1
 
   [MetaNoIndex]       ; sets 'no_index' in META
   directory = t
@@ -390,6 +398,8 @@ testing a dist.ini without risking a real release.
 * {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
+* {no_bugtracker} -- omit [Bugtracker].  The issue tracker becomes Github
+instead of RT.
 
 = SEE ALSO
 
