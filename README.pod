@@ -23,7 +23,7 @@ following dist.ini:
    version_regexp = ^release-(.+)$
  
    ; choose files to include
-   [GatherDir]         ; everything under top dir
+   [Git::GatherDir]         ; everything from git ls-files
    exclude_filename = README.pod   ; skip this generated file
    exclude_filename = META.json    ; skip this generated file
  

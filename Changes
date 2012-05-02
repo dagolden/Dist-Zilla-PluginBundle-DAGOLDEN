@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - switched from GatherDir to Git::GatherDir (minimum version 1.121010)
+
 0.028     2012-04-28 23:20:40 America/New_York
 
     - added 'no_bugtracker' option to omit Bugtracker, which defaults

@@ -12,7 +12,7 @@ use namespace::autoclean 0.09;
 use Dist::Zilla 4.3; # authordeps
 
 use Dist::Zilla::PluginBundle::Filter ();
-use Dist::Zilla::PluginBundle::Git ();
+use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
 use Dist::Zilla::Plugin::Bugtracker 1.102670 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
@@ -138,7 +138,7 @@ sub configure {
     [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ],
 
   # gather and prune
-    [ GatherDir => { exclude_filename => [qw/README.pod META.json/] }], # core
+    [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod META.json/] }], # core
     'PruneCruft',         # core
     'ManifestSkip',       # core
 
@@ -274,7 +274,7 @@ following dist.ini:
   version_regexp = ^release-(.+)$
 
   ; choose files to include
-  [GatherDir]         ; everything under top dir
+  [Git::GatherDir]         ; everything from git ls-files
   exclude_filename = README.pod   ; skip this generated file
   exclude_filename = META.json    ; skip this generated file
 
