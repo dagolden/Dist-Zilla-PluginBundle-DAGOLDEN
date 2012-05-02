@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.029     2012-05-02 17:36:29 America/New_York
+
     - switched from GatherDir to Git::GatherDir (minimum version 1.121010)
 
 0.028     2012-04-28 23:20:40 America/New_York
