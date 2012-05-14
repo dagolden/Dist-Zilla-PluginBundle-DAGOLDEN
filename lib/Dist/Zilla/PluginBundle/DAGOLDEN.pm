@@ -61,7 +61,7 @@ has no_critic => (
   isa     => 'Bool',
   lazy    => 1,
   default => sub {
-    exists $_[0]->payload->{no_critic} ? $_[0]->payload->{no_critic} : 0 
+    exists $_[0]->payload->{no_critic} ? $_[0]->payload->{no_critic} : 0
   },
 );
 
@@ -70,9 +70,9 @@ has no_spellcheck => (
   isa     => 'Bool',
   lazy    => 1,
   default => sub {
-    exists $_[0]->payload->{no_spellcheck} 
-         ? $_[0]->payload->{no_spellcheck} 
-         : 0 
+    exists $_[0]->payload->{no_spellcheck}
+         ? $_[0]->payload->{no_spellcheck}
+         : 0
   },
 );
 
@@ -172,8 +172,8 @@ sub configure {
     [ 'Test::Compile' => { fake_home => 1 } ],
 
   # generated xt/ tests
-    ( $self->no_spellcheck 
-        ? () 
+    ( $self->no_spellcheck
+        ? ()
         : [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ] ),
     'Test::Perl::Critic',
     'MetaTests',          # core
