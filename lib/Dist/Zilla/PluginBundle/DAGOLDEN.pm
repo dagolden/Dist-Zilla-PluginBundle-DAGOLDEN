@@ -172,9 +172,9 @@ sub configure {
     [ 'Test::Compile' => { fake_home => 1 } ],
 
   # generated xt/ tests
-    $self->no_spellcheck 
+    ( $self->no_spellcheck 
         ? () 
-        : [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ],
+        : [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ] ),
     'Test::Perl::Critic',
     'MetaTests',          # core
     'PodSyntaxTests',     # core
