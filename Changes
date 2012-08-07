@@ -5,6 +5,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
     - bumped OurPkgVersion prereq to 0.004 for "# TRIAL VERSION" comment
       support for use with --trial packages
 
+0.030     2012-05-14 19:59:48 America/New_York
+
+    - fixes to no_critic and no_spellchedk [Eric Johnson]
+
 0.029     2012-05-02 17:36:29 America/New_York
 
     - switched from GatherDir to Git::GatherDir (minimum version 1.121010)
