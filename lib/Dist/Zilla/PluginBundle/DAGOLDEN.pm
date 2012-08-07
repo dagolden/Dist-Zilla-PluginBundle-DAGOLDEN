@@ -26,7 +26,7 @@ use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides DB/main/private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
-use Dist::Zilla::Plugin::OurPkgVersion 0.001008 ();
+use Dist::Zilla::Plugin::OurPkgVersion 0.004 (); # TRIAL comment support
 use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::PodWeaver ();
