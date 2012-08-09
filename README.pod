@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.031
+version 0.032
 
 =head1 SYNOPSIS
 
@@ -62,8 +62,6 @@ following dist.ini:
    skip = ^t::lib
  
    [MinimumPerl]       ; determine minimum perl version
-   [GithubMeta]
-   issues = 1          ; c.f. no_bugtracker
  
    [MetaNoIndex]       ; sets 'no_index' in META
    directory = t
@@ -72,7 +70,10 @@ following dist.ini:
    directory = corpus
    package = DB        ; just in case
  
-   [Bugtracker]        ; defaults to RT
+   [AutoMetaResources] ; set META resources
+   bugtracker.rt      = 1
+   repository.github  = user:dagolden
+   homepage           = https://metacpan.org/release/%{dist}
  
    [MetaProvides::Package] ; add 'provides' to META files
    meta_noindex = 1        ; respect prior no_index directives
@@ -99,6 +100,7 @@ following dist.ini:
    allow_dirty = README.pod
    allow_dirty = META.json
  
+   [CheckMetaResources]     ; ensure META has 'resources' data
    [CheckPrereqsIndexed]    ; ensure prereqs are on CPAN
    [CheckChangesHasContent] ; ensure Changes has been updated
    [CheckExtraTests]   ; ensure xt/ tests pass
@@ -183,10 +185,15 @@ C<<< no_spellcheck >>> -- omit Test::PodSpelling tests
 
 =item *
 
-C<<< no_bugtracker >>> -- omit L<Bugtracker>.  The issue tracker becomes Github
-instead of RT.
+C<<< no_bugtracker >>> -- DEPRECATED
 
 =back
+
+This PluginBundle now supports ConfigSlicer, so you can pass in options to the
+plugins used like this:
+
+   [@DAGOLDEN]
+   ExecDir.dir = scripts ; overrides ExecDir
 
 =head1 SEE ALSO
 
