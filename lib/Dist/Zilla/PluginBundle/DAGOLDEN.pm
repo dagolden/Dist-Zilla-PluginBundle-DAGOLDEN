@@ -14,29 +14,30 @@ use Dist::Zilla 4.3; # authordeps
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
-use Dist::Zilla::Plugin::Bugtracker 1.102670 ();
+use Dist::Zilla::Plugin::AutoMetaResources ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests ();
+use Dist::Zilla::Plugin::CheckMetaResources 0.001 ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
-use Dist::Zilla::Plugin::Test::Compile ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild ();
 use Dist::Zilla::Plugin::Git::NextVersion ();
-use Dist::Zilla::Plugin::GithubMeta 0.10 ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides DB/main/private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::OurPkgVersion 0.004 (); # TRIAL comment support
-use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
-use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::PodWeaver ();
-use Dist::Zilla::Plugin::Test::Portability ();
 use Dist::Zilla::Plugin::ReadmeAnyFromPod 0.120051 ();
 use Dist::Zilla::Plugin::ReadmeFromPod ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
+use Dist::Zilla::Plugin::Test::Compile ();
+use Dist::Zilla::Plugin::Test::Perl::Critic ();
+use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
+use Dist::Zilla::Plugin::Test::Portability ();
 use Dist::Zilla::Plugin::Test::Version ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
+with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
 
 sub mvp_multivalue_args { qw/stopwords/ }
 
@@ -126,13 +127,12 @@ has git_remote => (
   },
 );
 
-has no_bugtracker => (
+has no_bugtracker => ( # XXX deprecated
   is      => 'ro',
   isa     => 'Bool',
   lazy    => 1,
-  default => sub { $_[0]->payload->{no_bugtracker} || 0 },
+  default => 0,
 );
-
 
 sub configure {
   my $self = shift;
@@ -188,14 +188,19 @@ sub configure {
       ? [ 'AutoPrereqs' => { skip => "^t::lib" } ]
       : ()
     ),
-    [ GithubMeta => { remote => $self->git_remote, issues => 1 } ],
     [ MetaNoIndex => {
         directory => [qw/t xt examples corpus/],
         'package' => [qw/DB/]
       }
     ],
     ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
-    ($self->no_bugtracker ? () : ['Bugtracker']),
+    [ AutoMetaResources => {
+        'repository.github' => [ {user => 'dagolden'} ],
+        'bugtracker.rt'     => 1,
+        'homepage'          => 'https://metacpan.org/release/%{dist}',
+      }
+    ],
+
     'MetaYAML',           # core
     'MetaJSON',           # core
 
@@ -219,6 +224,7 @@ sub configure {
         allow_dirty => [qw/dist.ini Changes README.pod META.json/]
       }
     ],
+    'CheckMetaResources',
     'CheckPrereqsIndexed',
     'CheckChangesHasContent',
     'CheckExtraTests',
@@ -323,8 +329,6 @@ following dist.ini:
   skip = ^t::lib
 
   [MinimumPerl]       ; determine minimum perl version
-  [GithubMeta]
-  issues = 1          ; c.f. no_bugtracker
 
   [MetaNoIndex]       ; sets 'no_index' in META
   directory = t
@@ -333,7 +337,10 @@ following dist.ini:
   directory = corpus
   package = DB        ; just in case
 
-  [Bugtracker]        ; defaults to RT
+  [AutoMetaResources] ; set META resources
+  bugtracker.rt      = 1
+  repository.github  = user:dagolden
+  homepage           = https://metacpan.org/release/%{dist}
 
   [MetaProvides::Package] ; add 'provides' to META files
   meta_noindex = 1        ; respect prior no_index directives
@@ -360,6 +367,7 @@ following dist.ini:
   allow_dirty = README.pod
   allow_dirty = META.json
 
+  [CheckMetaResources]     ; ensure META has 'resources' data
   [CheckPrereqsIndexed]    ; ensure prereqs are on CPAN
   [CheckChangesHasContent] ; ensure Changes has been updated
   [CheckExtraTests]   ; ensure xt/ tests pass
@@ -408,8 +416,13 @@ testing a dist.ini without risking a real release.
 * {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
-* {no_bugtracker} -- omit [Bugtracker].  The issue tracker becomes Github
-instead of RT.
+* {no_bugtracker} -- DEPRECATED
+
+This PluginBundle now supports ConfigSlicer, so you can pass in options to the
+plugins used like this:
+
+  [@DAGOLDEN]
+  ExecDir.dir = scripts ; overrides ExecDir
 
 = SEE ALSO
 

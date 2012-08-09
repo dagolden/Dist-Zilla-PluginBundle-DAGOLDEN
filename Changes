@@ -2,6 +2,15 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - bumped Pod::Wordlist::hanekomu prereq version
+
+    - deprecated 'bugtracker' option
+
+    - replaced GithubMeta and Bugtracker with less dynamic
+      AutoMetaResources plugin
+
+    - added Config::Slicer support
+
 0.031     2012-08-06 21:15:39 America/New_York
 
     - bumped OurPkgVersion prereq to 0.004 for "# TRIAL VERSION" comment
