@@ -195,7 +195,7 @@ sub configure {
     ],
     ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
     [ AutoMetaResources => {
-        'repository.github' => [ {user => 'dagolden'} ],
+        'repository.github' => 'user:dagolden',
         'bugtracker.rt'     => 1,
         'homepage'          => 'https://metacpan.org/release/%{dist}',
       }
