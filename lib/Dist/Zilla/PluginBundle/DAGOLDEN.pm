@@ -424,6 +424,15 @@ plugins used like this:
   [@DAGOLDEN]
   ExecDir.dir = scripts ; overrides ExecDir
 
+= COMMON PATTERNS
+
+== use github instead of RT
+
+  [@DAGOLDEN]
+  :version = 0.32
+  AutoMetaResources.bugtracker.github = user:dagolden
+  AutoMetaResources.bugtracker.rt = 0
+
 = SEE ALSO
 
 * [Dist::Zilla]

@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.032
+version 0.033
 
 =head1 SYNOPSIS
 
@@ -194,6 +194,15 @@ plugins used like this:
 
    [@DAGOLDEN]
    ExecDir.dir = scripts ; overrides ExecDir
+
+=head1 COMMON PATTERNS
+
+=head2 use github instead of RT
+
+   [@DAGOLDEN]
+   :version = 0.32
+   AutoMetaResources.bugtracker.github = user:dagolden
+   AutoMetaResources.bugtracker.rt = 0
 
 =head1 SEE ALSO
 
