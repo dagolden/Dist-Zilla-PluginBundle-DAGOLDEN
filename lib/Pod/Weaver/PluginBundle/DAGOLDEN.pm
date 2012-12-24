@@ -97,7 +97,7 @@ following weaver.ini:
   repository_content = ... stuff ...
 
   [-Transformer]
-  transfomer = List
+  transformer = List
 
 = USAGE
 
