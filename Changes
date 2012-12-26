@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - fixed typo [BOOK]
+
 0.033     2012-09-28 13:01:07 America/New_York
 
     - document how to use AutoMetaResources for github to remind myself
