@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.035     2013-01-16 15:20:10 America/New_York
+
     - don't check files for multiple dots
 
 0.034     2012-12-26 11:49:57 America/New_York
