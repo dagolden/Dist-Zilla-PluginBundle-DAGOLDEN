@@ -33,6 +33,7 @@ use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
 use Dist::Zilla::Plugin::Test::Compile ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
+use Test::Portability::Files 0.06 (); # buggy before that
 use Dist::Zilla::Plugin::Test::Portability ();
 use Dist::Zilla::Plugin::Test::Version ();
 
@@ -179,7 +180,7 @@ sub configure {
     'MetaTests',          # core
     'PodSyntaxTests',     # core
     'PodCoverageTests',   # core
-    'Test::Portability',
+    [ 'Test::Portability' => { options => "test_one_dot = 0" } ],
     'Test::Version',
 
   # metadata
@@ -322,6 +323,7 @@ following dist.ini:
   [PodSyntaxTests]    ; xt/release/pod-syntax.t
   [PodCoverageTests]  ; xt/release/pod-coverage.t
   [Test::Portability] ; xt/release/portability.t (of file name)
+  options = test_one_dot = 0
   [Test::Version]     ; xt/release/test-version.t
 
   ; metadata
