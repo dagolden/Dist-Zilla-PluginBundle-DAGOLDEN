@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.035
+version 0.036
 
 =head1 SYNOPSIS
 
@@ -183,6 +183,10 @@ C<<< no_critic >>> -- omit Test::Perl::Critic tests
 =item *
 
 C<<< no_spellcheck >>> -- omit Test::PodSpelling tests
+
+=item *
+
+C<<< no_coverage >>> -- omit PodCoverage tests
 
 =item *
 
