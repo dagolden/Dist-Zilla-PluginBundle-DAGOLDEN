@@ -78,6 +78,17 @@ has no_spellcheck => (
   },
 );
 
+has no_coverage => (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => sub {
+    exists $_[0]->payload->{no_coverage}
+         ? $_[0]->payload->{no_coverage}
+         : 0
+  },
+);
+
 has is_task => (
   is      => 'ro',
   isa     => 'Bool',
@@ -179,7 +190,10 @@ sub configure {
     'Test::Perl::Critic',
     'MetaTests',          # core
     'PodSyntaxTests',     # core
-    'PodCoverageTests',   # core
+    ( $self->no_coverage
+        ? ()
+        : ('PodCoverageTests') # core
+    ),
     [ 'Test::Portability' => { options => "test_one_dot = 0" } ],
     'Test::Version',
 
@@ -418,6 +432,7 @@ testing a dist.ini without risking a real release.
 * {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
+* {no_coverage} -- omit PodCoverage tests
 * {no_bugtracker} -- DEPRECATED
 
 This PluginBundle now supports ConfigSlicer, so you can pass in options to the
