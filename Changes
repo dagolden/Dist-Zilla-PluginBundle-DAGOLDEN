@@ -2,6 +2,9 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    - Replace buggy ReadmeFromPod with another invocation of
+      ReadmeAnyFromPod
+
 0.038     2013-02-11 12:16:15 America/New_York
 
     - Add [Test::ReportPrereqs]
