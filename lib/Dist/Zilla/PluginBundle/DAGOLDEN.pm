@@ -182,6 +182,7 @@ sub configure {
 
   # generated t/ tests
     [ 'Test::Compile' => { fake_home => 1 } ],
+    'Test::ReportPrereqs',
 
   # generated xt/ tests
     ( $self->no_spellcheck
@@ -329,6 +330,8 @@ following dist.ini:
   ; t tests
   [Test::Compile]     ; make sure .pm files all compile
   fake_home = 1       ; fakes $ENV{HOME} just in case
+
+  [Test::ReportPrereqs] ; show prereqs in automated test output
 
   ; xt tests
   [Test::PodSpelling] ; xt/author/pod-spell.t

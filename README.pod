@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.037
+version 0.038
 
 =head1 SYNOPSIS
 
@@ -47,6 +47,8 @@ following dist.ini:
    ; t tests
    [Test::Compile]     ; make sure .pm files all compile
    fake_home = 1       ; fakes $ENV{HOME} just in case
+ 
+   [Test::ReportPrereqs] ; show prereqs in automated test output
  
    ; xt tests
    [Test::PodSpelling] ; xt/author/pod-spell.t
