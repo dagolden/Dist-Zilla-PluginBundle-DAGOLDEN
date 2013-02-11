@@ -59,6 +59,13 @@ has fake_release => (
   default => sub { $_[0]->payload->{fake_release} },
 );
 
+has no_git_gather => (
+  is      => 'ro',
+  isa     => 'Bool',
+  lazy    => 1,
+  default => sub { $_[0]->payload->{no_git_gather} },
+);
+
 has no_critic => (
   is      => 'ro',
   isa     => 'Bool',
@@ -159,7 +166,10 @@ sub configure {
     [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ],
 
   # gather and prune
-    [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod META.json/] }], # core
+    ( $self->no_git_gather
+        ? [ 'GatherDir' => { exclude_filename => [qw/README.pod META.json/] }] # core
+        : [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod META.json/] }]
+    ),
     'PruneCruft',         # core
     'ManifestSkip',       # core
 
@@ -434,6 +444,7 @@ is '^release-(.+)$'
 testing a dist.ini without risking a real release.
 * {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
 * {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
+* {no_git_gather} -- use GatherDir instead of Git::GatherDir
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
 * {no_coverage} -- omit PodCoverage tests
