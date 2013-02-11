@@ -1,11 +1,15 @@
+use 5.008001;
 use strict;
 use warnings;
+use Test::More 0.96;
 
-use Test::More 0.88; END { done_testing }
-use Test::Exception 0.29;
+use Test::DZil;
 
-# Work around buffering that can show diags out of order
-Test::More->builder->failure_output(*STDOUT) if $ENV{HARNESS_VERBOSE};
+my $tzil = Builder->from_config(
+  { dist_root => 'corpus/DZ1' },
+);
 
-require_ok( 'Dist::Zilla::PluginBundle::DAGOLDEN' );
+ok($tzil->build, "build dist with \@DAGOLDEN");
 
+done_testing;
+# COPYRIGHT
