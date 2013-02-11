@@ -180,6 +180,10 @@ C<<< stopwords >>> -- add stopword for Test::PodSpelling (can be repeated)
 
 =item *
 
+C<<< no_git_gather >>> -- use GatherDir instead of Git::GatherDir
+
+=item *
+
 C<<< no_critic >>> -- omit Test::Perl::Critic tests
 
 =item *
