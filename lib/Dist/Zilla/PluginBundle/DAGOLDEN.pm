@@ -35,6 +35,7 @@ use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
 use Test::Portability::Files 0.06 (); # buggy before that
 use Dist::Zilla::Plugin::Test::Portability ();
+use Dist::Zilla::Plugin::Test::ReportPrereqs ();
 use Dist::Zilla::Plugin::Test::Version ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
