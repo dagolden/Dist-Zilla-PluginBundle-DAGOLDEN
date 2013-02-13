@@ -58,11 +58,11 @@ has fake_release => (
   default => sub { $_[0]->payload->{fake_release} },
 );
 
-has no_git_gather => (
+has no_git => (
   is      => 'ro',
   isa     => 'Bool',
   lazy    => 1,
-  default => sub { $_[0]->payload->{no_git_gather} },
+  default => sub { $_[0]->payload->{no_git} },
 );
 
 has no_critic => (
@@ -162,10 +162,13 @@ sub configure {
   $self->add_plugins (
 
   # version number
-    [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ],
+  ( $self->no_git
+      ? 'AutoVersion'
+      : [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ]
+    ),
 
   # gather and prune
-    ( $self->no_git_gather
+    ( $self->no_git
         ? [ 'GatherDir' => { exclude_filename => [qw/README.pod META.json/] }] # core
         : [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod META.json/] }]
     ),
@@ -245,11 +248,10 @@ sub configure {
     'Manifest',           # core
 
   # before release
-    [ 'Git::Check' =>
-      {
-        allow_dirty => [qw/dist.ini Changes README.pod META.json/]
-      }
-    ],
+  ( $self->no_git
+      ? ()
+      : [ 'Git::Check' => { allow_dirty => [qw/dist.ini Changes README.pod META.json/] } ]
+),
     'CheckMetaResources',
     'CheckPrereqsIndexed',
     'CheckChangesHasContent',
@@ -265,19 +267,25 @@ sub configure {
   # git actions.  It is *also* a file munger that acts earlier
 
     # commit dirty Changes, dist.ini, README.pod, META.json
-    [ 'Git::Commit' => 'Commit_Dirty_Files' =>
-      {
-        allow_dirty => [qw/dist.ini Changes README.pod META.json/]
-      }
-    ],
-    [ 'Git::Tag' => { tag_format => $self->tag_format } ],
+  ( $self->no_git
+      ? ()
+      : (
+          [ 'Git::Commit' => 'Commit_Dirty_Files' => { allow_dirty => [qw/dist.ini Changes README.pod META.json/] } ],
+            [ 'Git::Tag' => { tag_format => $self->tag_format } ], 
+        )
+    ),
 
     # bumps Changes
     'NextRelease',        # core (also munges files)
 
-    [ 'Git::Commit' => 'Commit_Changes' => { commit_msg => "bump Changes" } ],
+  ( $self->no_git
+      ? ()
+      : (
+        [ 'Git::Commit' => 'Commit_Changes' => { commit_msg => "bump Changes" } ],
 
-    [ 'Git::Push' => { push_to => \@push_to } ],
+        [ 'Git::Push' => { push_to => \@push_to } ],
+    )
+),
 
   );
 
@@ -443,11 +451,15 @@ is '^release-(.+)$'
 testing a dist.ini without risking a real release.
 * {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
 * {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
-* {no_git_gather} -- use GatherDir instead of Git::GatherDir
+* {no_git} -- bypass all git-dependent plugins
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
 * {no_coverage} -- omit PodCoverage tests
 * {no_bugtracker} -- DEPRECATED
+
+When running without git, C<GatherDir> is used instead of C<Git::GatherDir>,
+C<AutoVersion> is used instead of C<Git::NextVersion>, and all git check and
+commit operations are disabled.
 
 This PluginBundle now supports ConfigSlicer, so you can pass in options to the
 plugins used like this:
