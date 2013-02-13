@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+
 package Dist::Zilla::PluginBundle::DAGOLDEN;
 # VERSION
 
@@ -14,13 +15,13 @@ use Dist::Zilla 4.3; # authordeps
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
-use Dist::Zilla::Plugin::AutoMetaResources ();
+use Dist::Zilla::Plugin::AutoMetaResources      ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
-use Dist::Zilla::Plugin::CheckExtraTests ();
-use Dist::Zilla::Plugin::CheckMetaResources 0.001 ();
+use Dist::Zilla::Plugin::CheckExtraTests        ();
+use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild ();
-use Dist::Zilla::Plugin::Git::NextVersion ();
+use Dist::Zilla::Plugin::Git::NextVersion   ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides DB/main/private packages
@@ -28,14 +29,14 @@ use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::OurPkgVersion 0.004 (); # TRIAL comment support
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::ReadmeAnyFromPod 0.120051 ();
-use Dist::Zilla::Plugin::TaskWeaver 0.101620 ();
-use Dist::Zilla::Plugin::Test::Compile ();
+use Dist::Zilla::Plugin::TaskWeaver 0.101620       ();
+use Dist::Zilla::Plugin::Test::Compile      ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
 use Test::Portability::Files 0.06 (); # buggy before that
-use Dist::Zilla::Plugin::Test::Portability ();
+use Dist::Zilla::Plugin::Test::Portability   ();
 use Dist::Zilla::Plugin::Test::ReportPrereqs ();
-use Dist::Zilla::Plugin::Test::Version ();
+use Dist::Zilla::Plugin::Test::Version       ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
@@ -43,251 +44,271 @@ with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
 sub mvp_multivalue_args { qw/stopwords/ }
 
 has stopwords => (
-  is      => 'ro',
-  isa     => 'ArrayRef',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{stopwords} ? $_[0]->payload->{stopwords} : []
-  },
+    is      => 'ro',
+    isa     => 'ArrayRef',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{stopwords} ? $_[0]->payload->{stopwords} : [];
+    },
 );
 
 has fake_release => (
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => sub { $_[0]->payload->{fake_release} },
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub { $_[0]->payload->{fake_release} },
 );
 
 has no_git => (
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => sub { $_[0]->payload->{no_git} },
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub { $_[0]->payload->{no_git} },
 );
 
 has no_critic => (
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{no_critic} ? $_[0]->payload->{no_critic} : 0
-  },
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{no_critic} ? $_[0]->payload->{no_critic} : 0;
+    },
 );
 
 has no_spellcheck => (
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{no_spellcheck}
-         ? $_[0]->payload->{no_spellcheck}
-         : 0
-  },
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{no_spellcheck}
+          ? $_[0]->payload->{no_spellcheck}
+          : 0;
+    },
 );
 
 has no_coverage => (
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{no_coverage}
-         ? $_[0]->payload->{no_coverage}
-         : 0
-  },
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{no_coverage}
+          ? $_[0]->payload->{no_coverage}
+          : 0;
+    },
 );
 
 has is_task => (
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => sub { $_[0]->payload->{is_task} },
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub { $_[0]->payload->{is_task} },
 );
 
 has auto_prereq => (
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{auto_prereq} ? $_[0]->payload->{auto_prereq} : 1
-  },
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{auto_prereq} ? $_[0]->payload->{auto_prereq} : 1;
+    },
 );
 
 has tag_format => (
-  is      => 'ro',
-  isa     => 'Str',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{tag_format} ? $_[0]->payload->{tag_format} : 'release-%v',
-  },
+    is      => 'ro',
+    isa     => 'Str',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{tag_format} ? $_[0]->payload->{tag_format} : 'release-%v',;
+    },
 );
 
 has version_regexp => (
-  is      => 'ro',
-  isa     => 'Str',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{version_regexp} ? $_[0]->payload->{version_regexp} : '^release-(.+)$',
-  },
+    is      => 'ro',
+    isa     => 'Str',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{version_regexp}
+          ? $_[0]->payload->{version_regexp}
+          : '^release-(.+)$',
+          ;
+    },
 );
 
 has weaver_config => (
-  is      => 'ro',
-  isa     => 'Str',
-  lazy    => 1,
-  default => sub { $_[0]->payload->{weaver_config} || '@DAGOLDEN' },
+    is      => 'ro',
+    isa     => 'Str',
+    lazy    => 1,
+    default => sub { $_[0]->payload->{weaver_config} || '@DAGOLDEN' },
 );
 
 has git_remote => (
-  is      => 'ro',
-  isa     => 'Str',
-  lazy    => 1,
-  default => sub {
-    exists $_[0]->payload->{git_remote} ? $_[0]->payload->{git_remote} : 'origin',
-  },
+    is      => 'ro',
+    isa     => 'Str',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{git_remote} ? $_[0]->payload->{git_remote} : 'origin',;
+    },
 );
 
 has no_bugtracker => ( # XXX deprecated
-  is      => 'ro',
-  isa     => 'Bool',
-  lazy    => 1,
-  default => 0,
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => 0,
 );
 
 sub configure {
-  my $self = shift;
+    my $self = shift;
 
-  my @push_to = ('origin');
-  push @push_to, $self->git_remote if $self->git_remote ne 'origin';
+    my @push_to = ('origin');
+    push @push_to, $self->git_remote if $self->git_remote ne 'origin';
 
-  $self->add_plugins (
+    $self->add_plugins(
 
-  # version number
-  ( $self->no_git
-      ? 'AutoVersion'
-      : [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ]
-    ),
+        # version number
+        (
+            $self->no_git
+            ? 'AutoVersion'
+            : [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ]
+        ),
 
-  # gather and prune
-    ( $self->no_git
-        ? [ 'GatherDir' => { exclude_filename => [qw/README.pod META.json/] }] # core
-        : [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod META.json/] }]
-    ),
-    'PruneCruft',         # core
-    'ManifestSkip',       # core
+        # gather and prune
+        (
+            $self->no_git
+            ? [ 'GatherDir' => { exclude_filename => [qw/README.pod META.json/] } ] # core
+            : [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod META.json/] } ]
+        ),
+        'PruneCruft',                                                               # core
+        'ManifestSkip',                                                             # core
 
-  # file munging
-    'OurPkgVersion',
-    'InsertCopyright',
-    ( $self->is_task
-      ?  'TaskWeaver'
-      : [ 'PodWeaver' => { config_plugin => $self->weaver_config } ]
-    ),
+        # file munging
+        'OurPkgVersion',
+        'InsertCopyright',
+        (
+            $self->is_task
+            ? 'TaskWeaver'
+            : [ 'PodWeaver' => { config_plugin => $self->weaver_config } ]
+        ),
 
-  # generated distribution files
-    'ReadmeAnyFromPod',     # in build dir
-    [ ReadmeAnyFromPod => ReadmeInRoot => { # also generate in root for github, etc.
-        type => 'pod',
-        filename => 'README.pod',
-        location => 'root',
-      }
-    ],
-    'License',            # core
+        # generated distribution files
+        'ReadmeAnyFromPod', # in build dir
+        [
+            ReadmeAnyFromPod => ReadmeInRoot => { # also generate in root for github, etc.
+                type     => 'pod',
+                filename => 'README.pod',
+                location => 'root',
+            }
+        ],
+        'License',                                # core
 
-  # generated t/ tests
-    [ 'Test::Compile' => { fake_home => 1 } ],
-    'Test::ReportPrereqs',
+        # generated t/ tests
+        [ 'Test::Compile' => { fake_home => 1 } ],
+        'Test::ReportPrereqs',
 
-  # generated xt/ tests
-    ( $self->no_spellcheck
-        ? ()
-        : [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ] ),
-    'Test::Perl::Critic',
-    'MetaTests',          # core
-    'PodSyntaxTests',     # core
-    ( $self->no_coverage
-        ? ()
-        : ('PodCoverageTests') # core
-    ),
-    [ 'Test::Portability' => { options => "test_one_dot = 0" } ],
-    'Test::Version',
+        # generated xt/ tests
+        (
+            $self->no_spellcheck
+            ? ()
+            : [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ]
+        ),
+        'Test::Perl::Critic',
+        'MetaTests',      # core
+        'PodSyntaxTests', # core
+        (
+            $self->no_coverage
+            ? ()
+            : ('PodCoverageTests') # core
+        ),
+        [ 'Test::Portability' => { options => "test_one_dot = 0" } ],
+        'Test::Version',
 
-  # metadata
-    'MinimumPerl',
-    ( $self->auto_prereq
-      ? [ 'AutoPrereqs' => { skip => "^t::lib" } ]
-      : ()
-    ),
-    [ MetaNoIndex => {
-        directory => [qw/t xt examples corpus/],
-        'package' => [qw/DB/]
-      }
-    ],
-    ['MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
-    [ AutoMetaResources => {
-        'repository.github' => 'user:dagolden',
-        'bugtracker.rt'     => 1,
-        'homepage'          => 'https://metacpan.org/release/%{dist}',
-      }
-    ],
+        # metadata
+        'MinimumPerl',
+        (
+            $self->auto_prereq
+            ? [ 'AutoPrereqs' => { skip => "^t::lib" } ]
+            : ()
+        ),
+        [
+            MetaNoIndex => {
+                directory => [qw/t xt examples corpus/],
+                'package' => [qw/DB/]
+            }
+        ],
+        [ 'MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
+        [
+            AutoMetaResources => {
+                'repository.github' => 'user:dagolden',
+                'bugtracker.rt'     => 1,
+                'homepage'          => 'https://metacpan.org/release/%{dist}',
+            }
+        ],
 
-    'MetaYAML',           # core
-    'MetaJSON',           # core
+        'MetaYAML',                                           # core
+        'MetaJSON',                                           # core
 
-  # build system
-    'ExecDir',            # core
-    'ShareDir',           # core
-    'MakeMaker',          # core
+        # build system
+        'ExecDir',                                            # core
+        'ShareDir',                                           # core
+        'MakeMaker',                                          # core
 
-  # copy files from build back to root for inclusion in VCS
-  [ CopyFilesFromBuild => {
-      copy => 'META.json',
-    }
-  ],
+        # copy files from build back to root for inclusion in VCS
+        [
+            CopyFilesFromBuild => {
+                copy => 'META.json',
+            }
+        ],
 
-  # manifest -- must come after all generated files
-    'Manifest',           # core
+        # manifest -- must come after all generated files
+        'Manifest',                                           # core
 
-  # before release
-  ( $self->no_git
-      ? ()
-      : [ 'Git::Check' => { allow_dirty => [qw/dist.ini Changes README.pod META.json/] } ]
-),
-    'CheckMetaResources',
-    'CheckPrereqsIndexed',
-    'CheckChangesHasContent',
-    'CheckExtraTests',
-    'TestRelease',        # core
-    'ConfirmRelease',     # core
+        # before release
+        (
+            $self->no_git
+            ? ()
+            : [ 'Git::Check' => { allow_dirty => [qw/dist.ini Changes README.pod META.json/] } ]
+        ),
+        'CheckMetaResources',
+        'CheckPrereqsIndexed',
+        'CheckChangesHasContent',
+        'CheckExtraTests',
+        'TestRelease',                                        # core
+        'ConfirmRelease',                                     # core
 
-  # release
-    ( $self->fake_release ? 'FakeRelease' : 'UploadToCPAN'),       # core
+        # release
+        ( $self->fake_release ? 'FakeRelease' : 'UploadToCPAN' ), # core
 
-  # after release
-  # Note -- NextRelease is here to get the ordering right with
-  # git actions.  It is *also* a file munger that acts earlier
+        # after release
+        # Note -- NextRelease is here to get the ordering right with
+        # git actions.  It is *also* a file munger that acts earlier
 
-    # commit dirty Changes, dist.ini, README.pod, META.json
-  ( $self->no_git
-      ? ()
-      : (
-          [ 'Git::Commit' => 'Commit_Dirty_Files' => { allow_dirty => [qw/dist.ini Changes README.pod META.json/] } ],
-            [ 'Git::Tag' => { tag_format => $self->tag_format } ], 
-        )
-    ),
+        # commit dirty Changes, dist.ini, README.pod, META.json
+        (
+            $self->no_git
+            ? ()
+            : (
+                [
+                    'Git::Commit' => 'Commit_Dirty_Files' =>
+                      { allow_dirty => [qw/dist.ini Changes README.pod META.json/] }
+                ],
+                [ 'Git::Tag' => { tag_format => $self->tag_format } ],
+            )
+        ),
 
-    # bumps Changes
-    'NextRelease',        # core (also munges files)
+        # bumps Changes
+        'NextRelease', # core (also munges files)
 
-  ( $self->no_git
-      ? ()
-      : (
-        [ 'Git::Commit' => 'Commit_Changes' => { commit_msg => "bump Changes" } ],
+        (
+            $self->no_git
+            ? ()
+            : (
+                [ 'Git::Commit' => 'Commit_Changes' => { commit_msg => "bump Changes" } ],
 
-        [ 'Git::Push' => { push_to => \@push_to } ],
-    )
-),
+                [ 'Git::Push' => { push_to => \@push_to } ],
+            )
+        ),
 
-  );
+    );
 
 }
 
