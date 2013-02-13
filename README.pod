@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.039
+version 0.040
 
 =head1 SYNOPSIS
 
@@ -180,7 +180,7 @@ C<<< stopwords >>> -- add stopword for Test::PodSpelling (can be repeated)
 
 =item *
 
-C<<< no_git_gather >>> -- use GatherDir instead of Git::GatherDir
+C<<< no_git >>> -- bypass all git-dependent plugins
 
 =item *
 
@@ -199,6 +199,10 @@ C<<< no_coverage >>> -- omit PodCoverage tests
 C<<< no_bugtracker >>> -- DEPRECATED
 
 =back
+
+When running without git, CE<lt>GatherDirE<gt> is used instead of CE<lt>Git::GatherDirE<gt>,
+CE<lt>AutoVersionE<gt> is used instead of CE<lt>Git::NextVersionE<gt>, and all git check and
+commit operations are disabled.
 
 This PluginBundle now supports ConfigSlicer, so you can pass in options to the
 plugins used like this:

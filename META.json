@@ -88,7 +88,9 @@
             "File::Find" : "0",
             "File::Spec::Functions" : "0",
             "File::Temp" : "0",
+            "File::pushd" : "0",
             "List::Util" : "0",
+            "Path::Tiny" : "0",
             "Test::DZil" : "0",
             "Test::More" : "0.96",
             "perl" : "5.008001"
@@ -98,11 +100,11 @@
    "provides" : {
       "Dist::Zilla::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Dist/Zilla/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.039"
+         "version" : "0.040"
       },
       "Pod::Weaver::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Pod/Weaver/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.039"
+         "version" : "0.040"
       }
    },
    "release_status" : "stable",
@@ -118,6 +120,6 @@
          "web" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden"
       }
    },
-   "version" : "0.039"
+   "version" : "0.040"
 }
 
