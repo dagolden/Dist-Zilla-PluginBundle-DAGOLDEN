@@ -211,7 +211,11 @@ sub configure {
             ? ()
             : [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ]
         ),
-        'Test::Perl::Critic',
+        (
+            $self->no_critic
+            ? ()
+            : ('Test::Perl::Critic')
+        ),
         'MetaTests',      # core
         'PodSyntaxTests', # core
         (
