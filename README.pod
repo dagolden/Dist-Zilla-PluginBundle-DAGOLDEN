@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.041
+version 0.042
 
 =head1 SYNOPSIS
 
@@ -21,6 +21,9 @@ following dist.ini:
    ; version provider
    [Git::NextVersion]  ; get version from last release tag
    version_regexp = ^release-(.+)$
+ 
+   ; collect contributors list
+   [ContributorsFromGit]
  
    ; choose files to include
    [Git::GatherDir]         ; everything from git ls-files
@@ -259,6 +262,24 @@ L<https://github.com/dagolden/dist-zilla-pluginbundle-dagolden>
 =head1 AUTHOR
 
 David Golden <dagolden@cpan.org>
+
+=head1 CONTRIBUTORS
+
+=over 4
+
+=item *
+
+Christian Walde <walde.christian@googlemail.com>
+
+=item *
+
+Eric Johnson <eric.git@iijo.org>
+
+=item *
+
+Philippe Bruhat (BooK) <book@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

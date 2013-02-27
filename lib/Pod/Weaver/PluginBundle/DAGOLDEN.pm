@@ -11,6 +11,7 @@ use Pod::Weaver::Config::Assembler;
 use Pod::Weaver::Plugin::WikiDoc ();
 use Pod::Elemental::Transformer::List 0.101620 ();
 use Pod::Weaver::Section::Support 1.001        ();
+use Pod::Weaver::Section::Contributors 0.001   ();
 
 sub _exp { Pod::Weaver::Config::Assembler->expand_package( $_[0] ) }
 
@@ -70,6 +71,7 @@ sub mvp_bundle_config {
             }
         ],
         [ '@DAGOLDEN/Authors', _exp('Authors'), {} ],
+        [ '@DAGOLDEN/Contributors', _exp('Contributors'), {} ],
         [ '@DAGOLDEN/Legal',   _exp('Legal'),   {} ],
         [ '@DAGOLDEN/List', _exp('-Transformer'), { 'transformer' => 'List' } ],
       );
@@ -103,6 +105,8 @@ following weaver.ini:
   repository_link = both
   repository_content = ... stuff ...
 
+  [Contributors]
+
   [-Transformer]
   transformer = List
 
@@ -111,11 +115,21 @@ following weaver.ini:
 This PluginBundle is used automatically with the C<@DAGOLDEN> [Dist::Zilla]
 plugin bundle.
 
+It also has region collectors for:
+
+* =construct
+* =attr
+* =method
+* =func
+* =usage
+
 = SEE ALSO
 
 * [Pod::Weaver]
 * [Pod::Weaver::Plugin::WikiDoc]
 * [Pod::Elemental::Transformer::List]
+* [Pod::Section::Contributors]
+* [Pod::Section::Support]
 * [Dist::Zilla::Plugin::PodWeaver]
 
 =end wikidoc

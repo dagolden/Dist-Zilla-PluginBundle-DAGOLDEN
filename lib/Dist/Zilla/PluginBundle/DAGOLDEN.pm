@@ -20,6 +20,7 @@ use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests        ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
+use Dist::Zilla::Plugin::ContributorsFromGit 0.004 ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild ();
 use Dist::Zilla::Plugin::Git::NextVersion   ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
@@ -170,6 +171,13 @@ sub configure {
             $self->no_git
             ? 'AutoVersion'
             : [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ]
+        ),
+
+        # contributors
+        (
+            $self->no_git
+            ? ()
+            : 'ContributorsFromGit'
         ),
 
         # gather and prune
@@ -347,6 +355,9 @@ following dist.ini:
   ; version provider
   [Git::NextVersion]  ; get version from last release tag
   version_regexp = ^release-(.+)$
+
+  ; collect contributors list
+  [ContributorsFromGit]
 
   ; choose files to include
   [Git::GatherDir]         ; everything from git ls-files
