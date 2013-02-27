@@ -117,11 +117,11 @@ plugin bundle.
 
 It also has region collectors for:
 
-* =construct
-* =attr
-* =method
-* =func
-* =usage
+* construct
+* attr
+* method
+* func
+* usage
 
 = SEE ALSO
 
