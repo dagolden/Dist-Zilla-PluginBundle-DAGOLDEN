@@ -6,7 +6,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.042
+version 0.043
 
 =head1 SYNOPSIS
 
@@ -50,6 +50,9 @@ following dist.ini:
    ; t tests
    [Test::Compile]     ; make sure .pm files all compile
    fake_home = 1       ; fakes $ENV{HOME} just in case
+ 
+   [Test::MinimumPerl]
+   max_target_perl = 5.010
  
    [Test::ReportPrereqs] ; show prereqs in automated test output
  
