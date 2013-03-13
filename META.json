@@ -73,6 +73,7 @@
             "Pod::Elemental::Transformer::List" : "0.101620",
             "Pod::Weaver" : "3.101635",
             "Pod::Weaver::Config::Assembler" : "0",
+            "Pod::Weaver::Plugin::Encoding" : "0",
             "Pod::Weaver::Plugin::WikiDoc" : "0",
             "Pod::Weaver::Section::Contributors" : "0.001",
             "Pod::Weaver::Section::Support" : "1.001",
@@ -103,11 +104,11 @@
    "provides" : {
       "Dist::Zilla::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Dist/Zilla/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.043"
+         "version" : "0.044"
       },
       "Pod::Weaver::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Pod/Weaver/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.043"
+         "version" : "0.044"
       }
    },
    "release_status" : "stable",
@@ -123,7 +124,7 @@
          "web" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden"
       }
    },
-   "version" : "0.043",
+   "version" : "0.044",
    "x_contributors" : [
       "Christian Walde <walde.christian@googlemail.com>",
       "Eric Johnson <eric.git@iijo.org>",
