@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.044     2013-03-26 15:47:58 America/New_York
+
     - Add Encoding plugin to Pod::Weaver
 
 0.043     2013-03-02 23:08:40 America/New_York
