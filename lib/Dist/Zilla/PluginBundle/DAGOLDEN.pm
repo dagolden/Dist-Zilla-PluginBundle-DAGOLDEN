@@ -34,7 +34,7 @@ use Dist::Zilla::Plugin::TaskWeaver 0.101620       ();
 use Dist::Zilla::Plugin::Test::Compile      ();
 use Dist::Zilla::Plugin::Test::MinimumVersion 2.000003 ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
-use Dist::Zilla::Plugin::Test::PodSpelling 2.001002 ();
+use Dist::Zilla::Plugin::Test::PodSpelling 2.006000 (); # x_contributor support
 use Test::Portability::Files 0.06 (); # buggy before that
 use Dist::Zilla::Plugin::Test::Portability   ();
 use Dist::Zilla::Plugin::Test::ReportPrereqs ();
