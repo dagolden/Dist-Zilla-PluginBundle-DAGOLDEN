@@ -99,6 +99,17 @@ has no_coverage => (
     },
 );
 
+has no_minimum_perl => (
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{no_minimum_perl}
+          ? $_[0]->payload->{no_minimum_perl}
+          : 0;
+    },
+);
+
 has is_task => (
     is      => 'ro',
     isa     => 'Bool',
@@ -212,7 +223,11 @@ sub configure {
 
         # generated t/ tests
         [ 'Test::Compile' => { fake_home => 1 } ],
-        [ 'Test::MinimumVersion' => { max_target_perl => '5.010' } ],
+        (
+            $self->no_minimum_perl
+            ? ()
+            : [ 'Test::MinimumVersion' => { max_target_perl => '5.010' } ]
+        ),
         'Test::ReportPrereqs',
 
         # generated xt/ tests
@@ -377,8 +392,8 @@ following dist.ini:
 
   ; generated files
   [License]           ; boilerplate license
-  [ReadmeFromPod]     ; from Pod (runs after PodWeaver)
-  [ReadmeAnyFromPod]  ; create README.pod in repo directory
+  [ReadmeAnyFromPod]     ; from Pod (runs after PodWeaver)
+  [ReadmeAnyFromPod / ReadmeInRoo ]  ; create README.pod in repo directory
   type = pod
   filename = README.pod
   location = root
@@ -496,6 +511,7 @@ testing a dist.ini without risking a real release.
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
 * {no_coverage} -- omit PodCoverage tests
+* {no_minimum_perl} -- omit Test::MinimumPerl tests
 * {no_bugtracker} -- DEPRECATED
 
 When running without git, C<GatherDir> is used instead of C<Git::GatherDir>,

@@ -1,12 +1,14 @@
 =pod
 
+=encoding utf-8
+
 =head1 NAME
 
 Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN does it
 
 =head1 VERSION
 
-version 0.044
+version 0.045
 
 =head1 SYNOPSIS
 
@@ -41,8 +43,8 @@ following dist.ini:
  
    ; generated files
    [License]           ; boilerplate license
-   [ReadmeFromPod]     ; from Pod (runs after PodWeaver)
-   [ReadmeAnyFromPod]  ; create README.pod in repo directory
+   [ReadmeAnyFromPod]     ; from Pod (runs after PodWeaver)
+   [ReadmeAnyFromPod / ReadmeInRoo ]  ; create README.pod in repo directory
    type = pod
    filename = README.pod
    location = root
@@ -199,6 +201,10 @@ C<<< no_spellcheck >>> -- omit Test::PodSpelling tests
 =item *
 
 C<<< no_coverage >>> -- omit PodCoverage tests
+
+=item *
+
+C<<< no_minimum_perl >>> -- omit Test::MinimumPerl tests
 
 =item *
 
