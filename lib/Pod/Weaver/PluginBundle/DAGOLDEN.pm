@@ -132,8 +132,8 @@ It also has region collectors for:
 * [Pod::Weaver]
 * [Pod::Weaver::Plugin::WikiDoc]
 * [Pod::Elemental::Transformer::List]
-* [Pod::Section::Contributors]
-* [Pod::Section::Support]
+* [Pod::Weaver::Section::Contributors]
+* [Pod::Weaver::Section::Support]
 * [Dist::Zilla::Plugin::PodWeaver]
 
 =end wikidoc
