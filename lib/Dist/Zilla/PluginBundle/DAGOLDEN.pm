@@ -42,6 +42,7 @@ use Dist::Zilla::Plugin::Test::Version       ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
+with 'Dist::Zilla::Role::PluginBundle::PluginRemover';
 
 sub mvp_multivalue_args { qw/stopwords/ }
 
@@ -523,6 +524,11 @@ plugins used like this:
 
   [@DAGOLDEN]
   ExecDir.dir = scripts ; overrides ExecDir
+
+This PluginBundle also supports PluginRemover, so dropping a plugin is as easy as this:
+
+  [@DAGOLDEN]
+  -remove = PluginIDontWant
 
 = COMMON PATTERNS
 
