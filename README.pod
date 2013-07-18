@@ -8,7 +8,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.046
+version 0.047
 
 =head1 SYNOPSIS
 
@@ -71,6 +71,10 @@ following dist.ini:
    ; metadata
    [AutoPrereqs]       ; find prereqs from code
    skip = ^t::lib
+ 
+   [Authority]
+   authority = cpan:DAGOLDEN
+   do_munging = 0
  
    [MinimumPerl]       ; determine minimum perl version
  
@@ -181,6 +185,10 @@ testing a dist.ini without risking a real release.
 =item *
 
 C<<< weaver_config >>> -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
+
+=item *
+
+C<<< authority >>> -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
 
 =item *
 

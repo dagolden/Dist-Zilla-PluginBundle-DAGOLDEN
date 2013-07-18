@@ -16,6 +16,7 @@ use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
 use Dist::Zilla::Plugin::AutoMetaResources      ();
+use Dist::Zilla::Plugin::Authority 1.006 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests        ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
@@ -164,6 +165,15 @@ has git_remote => (
     },
 );
 
+has authority => (
+    is      => 'ro',
+    isa     => 'Str',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{authority} ? $_[0]->payload->{authority} : 'cpan:DAGOLDEN';
+    },
+);
+
 has no_bugtracker => ( # XXX deprecated
     is      => 'ro',
     isa     => 'Bool',
@@ -253,6 +263,11 @@ sub configure {
         'Test::Version',
 
         # metadata
+        [ 'Authority' => {
+                authority => $self->authority,
+                do_munging => 0,
+            }
+        ],
         'MinimumPerl',
         (
             $self->auto_prereq
@@ -422,6 +437,10 @@ following dist.ini:
   [AutoPrereqs]       ; find prereqs from code
   skip = ^t::lib
 
+  [Authority]
+  authority = cpan:DAGOLDEN
+  do_munging = 0
+
   [MinimumPerl]       ; determine minimum perl version
 
   [MetaNoIndex]       ; sets 'no_index' in META
@@ -507,6 +526,7 @@ is '^release-(.+)$'
 * {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for
 testing a dist.ini without risking a real release.
 * {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
+* {authority} -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
 * {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
 * {no_git} -- bypass all git-dependent plugins
 * {no_critic} -- omit Test::Perl::Critic tests
