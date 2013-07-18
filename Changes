@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.047     2013-07-18 10:20:54 America/New_York
+
     - Add 'authority' config option to drive the Authority plugin
       (no file munging is done, just the META.* files are affected)
 
