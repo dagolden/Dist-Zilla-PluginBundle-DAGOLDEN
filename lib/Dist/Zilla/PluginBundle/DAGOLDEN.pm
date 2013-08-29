@@ -32,7 +32,7 @@ use Dist::Zilla::Plugin::OurPkgVersion 0.004 (); # TRIAL comment support
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::ReadmeAnyFromPod 0.120051 ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620       ();
-use Dist::Zilla::Plugin::Test::Compile      ();
+use Dist::Zilla::Plugin::Test::Compile 2.022     ();
 use Dist::Zilla::Plugin::Test::MinimumVersion 2.000003 ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::Test::PodSpelling 2.006000 (); # x_contributor support
