@@ -6,7 +6,7 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
     [INCOMPATIBLE CHANGE]
 
-    - Replaced AutoMetaResources with GitHub meta to support
+    - Replaced AutoMetaResources with GithubMeta to support
       non-lowercase repository names
 
     [ADDED]
