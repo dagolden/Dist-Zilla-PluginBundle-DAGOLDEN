@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.050     2013-09-06 17:42:59 America/New_York
+
     [INCOMPATIBLE CHANGE]
 
     - Removed support for copying README.pod and META.json from
