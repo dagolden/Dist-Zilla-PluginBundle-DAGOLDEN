@@ -8,7 +8,7 @@ Dist::Zilla::PluginBundle::DAGOLDEN - Dist::Zilla configuration the way DAGOLDEN
 
 =head1 VERSION
 
-version 0.048
+version 0.049
 
 =head1 SYNOPSIS
 
@@ -85,10 +85,11 @@ following dist.ini:
    directory = corpus
    package = DB        ; just in case
  
-   [AutoMetaResources] ; set META resources
-   bugtracker.rt      = 1
-   repository.github  = user:dagolden
-   homepage           = https://metacpan.org/release/%{dist}
+   [GithubMeta]        ; set META resources
+   user = dagolden
+   remote = origin
+   remote = github
+   issues = 1
  
    [MetaProvides::Package] ; add 'provides' to META files
    meta_noindex = 1        ; respect prior no_index directives
@@ -163,8 +164,27 @@ Default is 0.
 
 =item *
 
-C<<< auto_prereq >>> -- this indicates whether AutoPrereq should be used or not.
-Default is 1.
+C<<< authority >>> -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
+
+=item *
+
+C<<< auto_prereq >>> -- this indicates whether AutoPrereq should be used or not.  Default is 1.
+
+=item *
+
+C<<< fake_release >>> -- swaps FakeRelease for UploadToCPAN. Mostly useful for testing a dist.ini without risking a real release.
+
+=item *
+
+C<<< git_remote >>> -- where to push after release
+
+=item *
+
+C<<< github_issues >>> -- whether to use github issue tracker. Defaults is 1.
+
+=item *
+
+C<<< stopwords >>> -- add stopword for Test::PodSpelling (can be repeated)
 
 =item *
 
@@ -174,25 +194,12 @@ C<<< Git::NextVersion >>>
 
 =item *
 
-C<<< version_regexp >>> -- given to C<<< Git::NextVersion >>>.  Default
-is '^release-(.+)$'
-
-=item *
-
-C<<< fake_release >>> -- swaps FakeRelease for UploadToCPAN. Mostly useful for
-testing a dist.ini without risking a real release.
-
-=item *
-
 C<<< weaver_config >>> -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
 
 =item *
 
-C<<< authority >>> -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
-
-=item *
-
-C<<< stopwords >>> -- add stopword for Test::PodSpelling (can be repeated)
+C<<< version_regexp >>> -- given to C<<< Git::NextVersion >>>.  Default
+is '^release-(.+)$'
 
 =item *
 

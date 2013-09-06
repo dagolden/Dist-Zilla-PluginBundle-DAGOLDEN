@@ -42,7 +42,7 @@
          "requires" : {
             "Dist::Zilla" : "4.3",
             "Dist::Zilla::Plugin::Authority" : "1.006",
-            "Dist::Zilla::Plugin::AutoMetaResources" : "0",
+            "Dist::Zilla::Plugin::Bugtracker" : "1.110",
             "Dist::Zilla::Plugin::CheckChangesHasContent" : "0",
             "Dist::Zilla::Plugin::CheckExtraTests" : "0",
             "Dist::Zilla::Plugin::CheckMetaResources" : "0.001",
@@ -50,6 +50,7 @@
             "Dist::Zilla::Plugin::ContributorsFromGit" : "0.004",
             "Dist::Zilla::Plugin::CopyFilesFromBuild" : "0",
             "Dist::Zilla::Plugin::Git::NextVersion" : "0",
+            "Dist::Zilla::Plugin::GithubMeta" : "0.36",
             "Dist::Zilla::Plugin::InsertCopyright" : "0.001",
             "Dist::Zilla::Plugin::MetaNoIndex" : "0",
             "Dist::Zilla::Plugin::MetaProvides::Package" : "1.14",
@@ -58,7 +59,7 @@
             "Dist::Zilla::Plugin::PodWeaver" : "0",
             "Dist::Zilla::Plugin::ReadmeAnyFromPod" : "0.120051",
             "Dist::Zilla::Plugin::TaskWeaver" : "0.101620",
-            "Dist::Zilla::Plugin::Test::Compile" : "2.022",
+            "Dist::Zilla::Plugin::Test::Compile" : "2.023",
             "Dist::Zilla::Plugin::Test::MinimumVersion" : "2.000003",
             "Dist::Zilla::Plugin::Test::Perl::Critic" : "0",
             "Dist::Zilla::Plugin::Test::PodSpelling" : "2.006000",
@@ -91,7 +92,6 @@
       "test" : {
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
-            "File::Spec" : "0",
             "File::Spec::Functions" : "0",
             "File::Temp" : "0",
             "File::pushd" : "0",
@@ -108,11 +108,11 @@
    "provides" : {
       "Dist::Zilla::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Dist/Zilla/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.048"
+         "version" : "0.049"
       },
       "Pod::Weaver::PluginBundle::DAGOLDEN" : {
          "file" : "lib/Pod/Weaver/PluginBundle/DAGOLDEN.pm",
-         "version" : "0.048"
+         "version" : "0.049"
       }
    },
    "release_status" : "stable",
@@ -128,7 +128,7 @@
          "web" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden"
       }
    },
-   "version" : "0.048",
+   "version" : "0.049",
    "x_authority" : "cpan:DAGOLDEN",
    "x_contributors" : [
       "Christian Walde <walde.christian@googlemail.com>",
