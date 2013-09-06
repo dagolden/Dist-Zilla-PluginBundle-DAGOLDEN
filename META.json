@@ -118,13 +118,12 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "mailto" : "bug-Dist-Zilla-PluginBundle-DAGOLDEN@rt.cpan.org",
-         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-PluginBundle-DAGOLDEN"
+         "web" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden/issues"
       },
-      "homepage" : "https://metacpan.org/release/Dist-Zilla-PluginBundle-DAGOLDEN",
+      "homepage" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/dagolden/dist-zilla-pluginbundle-dagolden.git",
+         "url" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden.git",
          "web" : "https://github.com/dagolden/dist-zilla-pluginbundle-dagolden"
       }
    },

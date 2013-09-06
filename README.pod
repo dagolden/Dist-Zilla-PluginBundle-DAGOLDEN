@@ -276,7 +276,7 @@ L<Dist::Zilla::Plugin::TaskWeaver>
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests through the issue tracker
-at L<https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-PluginBundle-DAGOLDEN>.
+at L<https://github.com/dagolden/dist-zilla-pluginbundle-dagolden/issues>.
 You will be notified automatically of any progress on your issue.
 
 =head2 Source Code
@@ -286,7 +286,7 @@ public review and contribution under the terms of the license.
 
 L<https://github.com/dagolden/dist-zilla-pluginbundle-dagolden>
 
-  git clone git://github.com/dagolden/dist-zilla-pluginbundle-dagolden.git
+  git clone https://github.com/dagolden/dist-zilla-pluginbundle-dagolden.git
 
 =head1 AUTHOR
 
