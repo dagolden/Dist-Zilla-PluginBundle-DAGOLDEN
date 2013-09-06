@@ -15,8 +15,8 @@ use Dist::Zilla 4.3; # authordeps
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
-use Dist::Zilla::Plugin::AutoMetaResources      ();
 use Dist::Zilla::Plugin::Authority 1.006 ();
+use Dist::Zilla::Plugin::Bugtracker 1.110 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests        ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
@@ -24,6 +24,7 @@ use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::ContributorsFromGit 0.004 ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild ();
 use Dist::Zilla::Plugin::Git::NextVersion   ();
+use Dist::Zilla::Plugin::GithubMeta 0.36 ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides DB/main/private packages
@@ -156,6 +157,15 @@ has weaver_config => (
     default => sub { $_[0]->payload->{weaver_config} || '@DAGOLDEN' },
 );
 
+has github_issues => (
+    is      => 'ro',
+    isa     => 'Str',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{git_issues} ? $_[0]->payload->{git_issues} : 1;
+    },
+);
+
 has git_remote => (
     is      => 'ro',
     isa     => 'Str',
@@ -282,12 +292,21 @@ sub configure {
         ],
         [ 'MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
         [
-            AutoMetaResources => {
-                'repository.github' => 'user:dagolden',
-                'bugtracker.rt'     => 1,
-                'homepage'          => 'https://metacpan.org/release/%{dist}',
+            GithubMeta => {
+                user   => 'dagolden',
+                remote => [ qw(origin github) ],
+                issues => $self->github_issues,
             }
         ],
+        (
+            ($self->github_issues && ! $self->no_git)
+            ? ()
+            : (
+                # fake out Pod::Weaver::Section::Support
+                [ 'Bugtracker' => { mailto => '' } ],
+                [ 'MetaResources' => { map {; "repository.$_" => "http://localhost/" } qw/url web/ } ],
+              )
+        ),
 
         'MetaYAML',                                           # core
         'MetaJSON',                                           # core
@@ -450,10 +469,11 @@ following dist.ini:
   directory = corpus
   package = DB        ; just in case
 
-  [AutoMetaResources] ; set META resources
-  bugtracker.rt      = 1
-  repository.github  = user:dagolden
-  homepage           = https://metacpan.org/release/%{dist}
+  [GithubMeta]        ; set META resources
+  user = dagolden
+  remote = origin
+  remote = github
+  issues = 1
 
   [MetaProvides::Package] ; add 'provides' to META files
   meta_noindex = 1        ; respect prior no_index directives
@@ -516,18 +536,18 @@ the following options:
 
 * {is_task} -- this indicates whether TaskWeaver or PodWeaver should be used.
 Default is 0.
-* {auto_prereq} -- this indicates whether AutoPrereq should be used or not.
-Default is 1.
+* {authority} -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
+* {auto_prereq} -- this indicates whether AutoPrereq should be used or not.  Default is 1.
+* {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for testing a dist.ini without risking a real release.
+* {git_remote} -- where to push after release
+* {github_issues} -- whether to use github issue tracker. Defaults is 1.
+* {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
 * {tag_format} -- given to {Git::Tag}.  Default is 'release-%v' to be more
 robust than just the version number when parsing versions for
 {Git::NextVersion}
+* {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
 * {version_regexp} -- given to {Git::NextVersion}.  Default
 is '^release-(.+)$'
-* {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for
-testing a dist.ini without risking a real release.
-* {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
-* {authority} -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
-* {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
 * {no_git} -- bypass all git-dependent plugins
 * {no_critic} -- omit Test::Perl::Critic tests
 * {no_spellcheck} -- omit Test::PodSpelling tests
