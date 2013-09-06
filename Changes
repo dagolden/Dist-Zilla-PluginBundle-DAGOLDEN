@@ -2,6 +2,17 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [INCOMPATIBLE CHANGE]
+
+    - Removed support for copying README.pod and META.json from
+      build directories to the root directory to reduce churn;
+      instead a 'cpanfile' is generated and copied, as it
+      contains only dependencies and changes less often.
+
+    [FIXED]
+
+    - Fix bug in use of 'github_issues' attribute
+
 0.049     2013-09-06 12:09:09 America/New_York
 
     [INCOMPATIBLE CHANGE]

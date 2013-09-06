@@ -23,6 +23,7 @@ use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::ContributorsFromGit 0.004 ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild ();
+use Dist::Zilla::Plugin::CPANFile ();
 use Dist::Zilla::Plugin::Git::NextVersion   ();
 use Dist::Zilla::Plugin::GithubMeta 0.36 ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
@@ -162,7 +163,7 @@ has github_issues => (
     isa     => 'Str',
     lazy    => 1,
     default => sub {
-        exists $_[0]->payload->{git_issues} ? $_[0]->payload->{git_issues} : 1;
+        exists $_[0]->payload->{github_issues} ? $_[0]->payload->{github_issues} : 1;
     },
 );
 
@@ -216,8 +217,8 @@ sub configure {
         # gather and prune
         (
             $self->no_git
-            ? [ 'GatherDir' => { exclude_filename => [qw/README.pod META.json/] } ] # core
-            : [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod META.json/] } ]
+            ? [ 'GatherDir' => { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] } ] # core
+            : [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] } ]
         ),
         'PruneCruft',                                                               # core
         'ManifestSkip',                                                             # core
@@ -233,13 +234,6 @@ sub configure {
 
         # generated distribution files
         'ReadmeAnyFromPod', # in build dir
-        [
-            ReadmeAnyFromPod => ReadmeInRoot => { # also generate in root for github, etc.
-                type     => 'pod',
-                filename => 'README.pod',
-                location => 'root',
-            }
-        ],
         'License',                                # core
 
         # generated t/ tests
@@ -310,6 +304,7 @@ sub configure {
 
         'MetaYAML',                                           # core
         'MetaJSON',                                           # core
+        'CPANFile',
 
         # build system
         'ExecDir',                                            # core
@@ -319,7 +314,7 @@ sub configure {
         # copy files from build back to root for inclusion in VCS
         [
             CopyFilesFromBuild => {
-                copy => 'META.json',
+                copy => 'cpanfile',
             }
         ],
 
@@ -330,7 +325,7 @@ sub configure {
         (
             $self->no_git
             ? ()
-            : [ 'Git::Check' => { allow_dirty => [qw/dist.ini Changes README.pod META.json/] } ]
+            : [ 'Git::Check' => { allow_dirty => [qw/dist.ini Changes cpanfile/] } ]
         ),
         'CheckMetaResources',
         'CheckPrereqsIndexed',
@@ -353,7 +348,7 @@ sub configure {
             : (
                 [
                     'Git::Commit' => 'Commit_Dirty_Files' =>
-                      { allow_dirty => [qw/dist.ini Changes README.pod META.json/] }
+                      { allow_dirty => [qw/dist.ini Changes cpanfile/] }
                 ],
                 [ 'Git::Tag' => { tag_format => $self->tag_format } ],
             )
@@ -428,10 +423,6 @@ following dist.ini:
   ; generated files
   [License]           ; boilerplate license
   [ReadmeAnyFromPod]     ; from Pod (runs after PodWeaver)
-  [ReadmeAnyFromPod / ReadmeInRoo ]  ; create README.pod in repo directory
-  type = pod
-  filename = README.pod
-  location = root
 
   ; t tests
   [Test::Compile]     ; make sure .pm files all compile
@@ -480,6 +471,7 @@ following dist.ini:
 
   [MetaYAML]          ; generate META.yml (v1.4)
   [MetaJSON]          ; generate META.json (v2)
+  [CPANFile]          ; generate cpanfile
 
   ; build system
   [ExecDir]           ; include 'bin/*' as executables
@@ -489,16 +481,15 @@ following dist.ini:
   ; manifest (after all generated files)
   [Manifest]          ; create MANIFEST
 
-  ; copy META.json back to repo dis
+  ; copy cpanfile back to repo dis
   [CopyFilesFromBuild]
-  copy = META.json
+  copy = cpanfile
 
   ; before release
   [Git::Check]        ; ensure all files checked in
   allow_dirty = dist.ini
   allow_dirty = Changes
-  allow_dirty = README.pod
-  allow_dirty = META.json
+  allow_dirty = cpanfile
 
   [CheckMetaResources]     ; ensure META has 'resources' data
   [CheckPrereqsIndexed]    ; ensure prereqs are on CPAN
