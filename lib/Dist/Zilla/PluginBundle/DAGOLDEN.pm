@@ -185,6 +185,15 @@ has authority => (
     },
 );
 
+has darkpan => (
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub {
+        exists $_[0]->payload->{darkpan} ? $_[0]->payload->{darkpan} : 0
+    },
+);
+
 has no_bugtracker => ( # XXX deprecated
     is      => 'ro',
     isa     => 'Bool',
@@ -285,19 +294,23 @@ sub configure {
             }
         ],
         [ 'MetaProvides::Package' => { meta_noindex => 1 } ], # AFTER MetaNoIndex
-        [
-            GithubMeta => {
-                user   => 'dagolden',
-                remote => [ qw(origin github) ],
-                issues => $self->github_issues,
-            }
-        ],
         (
-            ($self->github_issues && ! $self->no_git)
+            $self->darkpan
+            ? ()
+            : [
+                GithubMeta => {
+                    user   => 'dagolden',
+                    remote => [ qw(origin github) ],
+                    issues => $self->github_issues,
+                }
+              ],
+        ),
+        (
+            ( $self->github_issues && ! $self->no_git && ! $self->darkpan )
             ? ()
             : (
                 # fake out Pod::Weaver::Section::Support
-                [ 'Bugtracker' => { mailto => '' } ],
+                [ 'Bugtracker' => { mailto => '', $self->darkpan ? ( web => "http://localhost/" ) : () } ],
                 [ 'MetaResources' => { map {; "repository.$_" => "http://localhost/" } qw/url web/ } ],
               )
         ),
@@ -335,7 +348,7 @@ sub configure {
         'ConfirmRelease',                                     # core
 
         # release
-        ( $self->fake_release ? 'FakeRelease' : 'UploadToCPAN' ), # core
+        ( $self->fake_release || $self->darkpan ? 'FakeRelease' : 'UploadToCPAN' ), # core
 
         # after release
         # Note -- NextRelease is here to get the ordering right with
@@ -529,6 +542,7 @@ the following options:
 Default is 0.
 * {authority} -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
 * {auto_prereq} -- this indicates whether AutoPrereq should be used or not.  Default is 1.
+* {darkpan} -- for private code; uses FakeRelease and fills in dummy repo/bugtracker data
 * {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for testing a dist.ini without risking a real release.
 * {git_remote} -- where to push after release
 * {github_issues} -- whether to use github issue tracker. Defaults is 1.
