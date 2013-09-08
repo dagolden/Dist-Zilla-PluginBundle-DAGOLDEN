@@ -299,20 +299,26 @@ sub configure {
             ? ()
             : [
                 GithubMeta => {
-                    user   => 'dagolden',
                     remote => [ qw(origin github) ],
                     issues => $self->github_issues,
                 }
               ],
         ),
         (
-            ( $self->github_issues && ! $self->no_git && ! $self->darkpan )
-            ? ()
-            : (
+            ( $self->no_git || $self->darkpan || ! $self->github_issues )
+            ? (
                 # fake out Pod::Weaver::Section::Support
                 [ 'Bugtracker' => { mailto => '', $self->darkpan ? ( web => "http://localhost/" ) : () } ],
+              )
+            : ()
+        ),
+        (
+            ( $self->no_git || $self->darkpan )
+            ? (
+                # fake out Pod::Weaver::Section::Support
                 [ 'MetaResources' => { map {; "repository.$_" => "http://localhost/" } qw/url web/ } ],
               )
+            : ()
         ),
 
         'MetaYAML',                                           # core
@@ -474,7 +480,6 @@ following dist.ini:
   package = DB        ; just in case
 
   [GithubMeta]        ; set META resources
-  user = dagolden
   remote = origin
   remote = github
   issues = 1
@@ -574,15 +579,6 @@ This PluginBundle also supports PluginRemover, so dropping a plugin is as easy a
 
   [@DAGOLDEN]
   -remove = PluginIDontWant
-
-= COMMON PATTERNS
-
-== use github instead of RT
-
-  [@DAGOLDEN]
-  :version = 0.32
-  AutoMetaResources.bugtracker.github = user:dagolden
-  AutoMetaResources.bugtracker.rt = 0
 
 = SEE ALSO
 

@@ -2,6 +2,13 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [FIXED]
+
+    - Let GithubMeta find 'user' from repository data
+      (e.g. Perl-Toolchain-Gang)
+
+    - Fix resource generation when not using github for issues
+
 0.052     2013-09-08 09:47:50 America/New_York
 
     [PREREQS]
