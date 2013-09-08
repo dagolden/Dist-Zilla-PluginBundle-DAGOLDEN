@@ -2,6 +2,11 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [PREREQS]
+
+    - Bumped Dist::Zilla to 4.300038 for fixed MetaYML
+      (properly UTF-8 encodes now)
+
 0.051     2013-09-06 23:23:48 America/New_York
 
     [ADDED]

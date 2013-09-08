@@ -10,7 +10,7 @@ use Moose 0.99;
 use Moose::Autobox;
 use namespace::autoclean 0.09;
 
-use Dist::Zilla 4.3; # authordeps
+use Dist::Zilla 4.300038; # fixed MetaYML encoding
 
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
