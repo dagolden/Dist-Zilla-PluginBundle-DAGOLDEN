@@ -7,6 +7,12 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
     - Bumped Dist::Zilla to 4.300038 for fixed MetaYML
       (properly UTF-8 encodes now)
 
+    - Bump [Test::PodSpelling] prereq for new version
+      that uses Pod::Wordlist instead of Pod::Wordlist::hanekomu
+
+    - Added Pod::Wordlist prereq for version that merges
+      hanekomu words
+
 0.051     2013-09-06 23:23:48 America/New_York
 
     [ADDED]
