@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.052     2013-09-08 09:47:50 America/New_York
+
     [PREREQS]
 
     - Bumped Dist::Zilla to 4.300038 for fixed MetaYML
