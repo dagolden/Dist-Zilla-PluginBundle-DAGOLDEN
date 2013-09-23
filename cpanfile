@@ -49,6 +49,7 @@ requires "warnings" => "0";
 
 on 'test' => sub {
   requires "ExtUtils::MakeMaker" => "0";
+  requires "File::Spec" => "0";
   requires "File::Spec::Functions" => "0";
   requires "File::Temp" => "0";
   requires "File::pushd" => "0";
