@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.054     2013-09-23 16:19:18 America/New_York
+
     [CHANGED]
 
     - Dropped ExtUtils::MakeMaker configure_requires in generated
