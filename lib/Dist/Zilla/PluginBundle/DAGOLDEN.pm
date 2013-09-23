@@ -328,7 +328,7 @@ sub configure {
         # build system
         'ExecDir',                                            # core
         'ShareDir',                                           # core
-        'MakeMaker',                                          # core
+        [ 'MakeMaker' => { eumm_version => '6.17' } ],        # core
 
         # copy files from build back to root for inclusion in VCS
         [
@@ -495,6 +495,7 @@ following dist.ini:
   [ExecDir]           ; include 'bin/*' as executables
   [ShareDir]          ; include 'share/' for File::ShareDir
   [MakeMaker]         ; create Makefile.PL
+  eumm_version = 6.17
 
   ; manifest (after all generated files)
   [Manifest]          ; create MANIFEST
