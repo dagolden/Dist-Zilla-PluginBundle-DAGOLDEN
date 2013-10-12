@@ -39,7 +39,7 @@ requires "Pod::Weaver::Plugin::Encoding" => "0";
 requires "Pod::Weaver::Plugin::WikiDoc" => "0";
 requires "Pod::Weaver::Section::Contributors" => "0.001";
 requires "Pod::Weaver::Section::Support" => "1.001";
-requires "Pod::Wordlist" => "1.06";
+requires "Pod::Wordlist" => "1.10";
 requires "Test::Portability::Files" => "0.06";
 requires "autodie" => "2.00";
 requires "namespace::autoclean" => "0.09";
@@ -63,7 +63,7 @@ on 'test' => sub {
 };
 
 on 'configure' => sub {
-  requires "ExtUtils::MakeMaker" => "6.30";
+  requires "ExtUtils::MakeMaker" => "6.17";
 };
 
 on 'develop' => sub {
