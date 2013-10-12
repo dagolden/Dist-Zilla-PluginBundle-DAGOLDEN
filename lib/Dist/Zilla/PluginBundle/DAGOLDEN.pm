@@ -15,7 +15,7 @@ use Dist::Zilla 4.300038; # fixed MetaYML encoding
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
-use Dist::Zilla::Plugin::Authority 1.006 ();
+use Dist::Zilla::Plugin::Authority 1.006  ();
 use Dist::Zilla::Plugin::Bugtracker 1.110 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::CheckExtraTests        ();
@@ -23,22 +23,22 @@ use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::ContributorsFromGit 0.004 ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild ();
-use Dist::Zilla::Plugin::CPANFile ();
+use Dist::Zilla::Plugin::CPANFile           ();
 use Dist::Zilla::Plugin::Git::NextVersion   ();
-use Dist::Zilla::Plugin::GithubMeta 0.36 ();
+use Dist::Zilla::Plugin::GithubMeta 0.36       ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
-use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides DB/main/private packages
+use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
-use Dist::Zilla::Plugin::OurPkgVersion 0.004 (); # TRIAL comment support
+use Dist::Zilla::Plugin::OurPkgVersion 0.004 ();        # TRIAL comment support
 use Dist::Zilla::Plugin::PodWeaver ();
-use Dist::Zilla::Plugin::ReadmeAnyFromPod 0.120051 ();
-use Dist::Zilla::Plugin::TaskWeaver 0.101620       ();
-use Dist::Zilla::Plugin::Test::Compile 2.023     ();
+use Dist::Zilla::Plugin::ReadmeAnyFromPod 0.120051     ();
+use Dist::Zilla::Plugin::TaskWeaver 0.101620           ();
+use Dist::Zilla::Plugin::Test::Compile 2.023           ();
 use Dist::Zilla::Plugin::Test::MinimumVersion 2.000003 ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::Test::PodSpelling 2.006001 (); # Pod::Wordlist
-use Test::Portability::Files 0.06 (); # buggy before that
+use Test::Portability::Files 0.06                   (); # buggy before that
 use Dist::Zilla::Plugin::Test::Portability   ();
 use Dist::Zilla::Plugin::Test::ReportPrereqs ();
 use Dist::Zilla::Plugin::Test::Version       ();
@@ -190,7 +190,7 @@ has darkpan => (
     isa     => 'Bool',
     lazy    => 1,
     default => sub {
-        exists $_[0]->payload->{darkpan} ? $_[0]->payload->{darkpan} : 0
+        exists $_[0]->payload->{darkpan} ? $_[0]->payload->{darkpan} : 0;
     },
 );
 
@@ -226,11 +226,17 @@ sub configure {
         # gather and prune
         (
             $self->no_git
-            ? [ 'GatherDir' => { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] } ] # core
-            : [ 'Git::GatherDir' => { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] } ]
+            ? [
+                'GatherDir' =>
+                  { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] }
+              ] # core
+            : [
+                'Git::GatherDir' =>
+                  { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] }
+            ]
         ),
-        'PruneCruft',                                                               # core
-        'ManifestSkip',                                                             # core
+        'PruneCruft',   # core
+        'ManifestSkip', # core
 
         # file munging
         'OurPkgVersion',
@@ -243,7 +249,7 @@ sub configure {
 
         # generated distribution files
         'ReadmeAnyFromPod', # in build dir
-        'License',                                # core
+        'License',          # core
 
         # generated t/ tests
         [ 'Test::Compile' => { fake_home => 1 } ],
@@ -256,13 +262,11 @@ sub configure {
 
         # generated xt/ tests
         (
-            $self->no_spellcheck
-            ? ()
+            $self->no_spellcheck ? ()
             : [ 'Test::PodSpelling' => { stopwords => $self->stopwords } ]
         ),
         (
-            $self->no_critic
-            ? ()
+            $self->no_critic ? ()
             : ('Test::Perl::Critic')
         ),
         'MetaTests',      # core
@@ -276,8 +280,9 @@ sub configure {
         'Test::Version',
 
         # metadata
-        [ 'Authority' => {
-                authority => $self->authority,
+        [
+            'Authority' => {
+                authority  => $self->authority,
                 do_munging => 0,
             }
         ],
@@ -299,16 +304,18 @@ sub configure {
             ? ()
             : [
                 GithubMeta => {
-                    remote => [ qw(origin github) ],
+                    remote => [qw(origin github)],
                     issues => $self->github_issues,
                 }
-              ],
+            ],
         ),
         (
-            ( $self->no_git || $self->darkpan || ! $self->github_issues )
-            ? (
+            ( $self->no_git || $self->darkpan || !$self->github_issues ) ? (
                 # fake out Pod::Weaver::Section::Support
-                [ 'Bugtracker' => { mailto => '', $self->darkpan ? ( web => "http://localhost/" ) : () } ],
+                [
+                    'Bugtracker' =>
+                      { mailto => '', $self->darkpan ? ( web => "http://localhost/" ) : () }
+                ],
               )
             : ()
         ),
@@ -316,29 +323,27 @@ sub configure {
             ( $self->no_git || $self->darkpan )
             ? (
                 # fake out Pod::Weaver::Section::Support
-                [ 'MetaResources' => { map {; "repository.$_" => "http://localhost/" } qw/url web/ } ],
+                [
+                    'MetaResources' => { map { ; "repository.$_" => "http://localhost/" } qw/url web/ }
+                ],
               )
             : ()
         ),
 
-        'MetaYAML',                                           # core
-        'MetaJSON',                                           # core
+        'MetaYAML', # core
+        'MetaJSON', # core
         'CPANFile',
 
         # build system
-        'ExecDir',                                            # core
-        'ShareDir',                                           # core
-        [ 'MakeMaker' => { eumm_version => '6.17' } ],        # core
+        'ExecDir',  # core
+        'ShareDir', # core
+        [ 'MakeMaker' => { eumm_version => '6.17' } ], # core
 
         # copy files from build back to root for inclusion in VCS
-        [
-            CopyFilesFromBuild => {
-                copy => 'cpanfile',
-            }
-        ],
+        [ CopyFilesFromBuild => { copy => 'cpanfile', } ],
 
         # manifest -- must come after all generated files
-        'Manifest',                                           # core
+        'Manifest',                                    # core
 
         # before release
         (
@@ -350,8 +355,8 @@ sub configure {
         'CheckPrereqsIndexed',
         'CheckChangesHasContent',
         'CheckExtraTests',
-        'TestRelease',                                        # core
-        'ConfirmRelease',                                     # core
+        'TestRelease',                                 # core
+        'ConfirmRelease',                              # core
 
         # release
         ( $self->fake_release || $self->darkpan ? 'FakeRelease' : 'UploadToCPAN' ), # core
