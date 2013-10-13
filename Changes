@@ -2,6 +2,19 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - Switches Test::Compile to use xt_mode (and sets minimum
+      prereqs to support that)
+
+    [PREREQS]
+
+    - Bumps Test::ReportPrereqs version to 0.008 for warnings
+      on unsatisfied prereqs
+
+    - Bumps Pod::Wordlist version to 1.10 for many stoplist
+      improvements
+    
 0.054     2013-09-23 16:19:18 America/New_York
 
     [CHANGED]

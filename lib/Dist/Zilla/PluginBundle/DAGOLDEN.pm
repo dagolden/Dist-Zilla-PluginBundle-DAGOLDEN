@@ -34,14 +34,14 @@ use Dist::Zilla::Plugin::OurPkgVersion 0.004 ();        # TRIAL comment support
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::ReadmeAnyFromPod 0.120051     ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620           ();
-use Dist::Zilla::Plugin::Test::Compile 2.023           ();
+use Dist::Zilla::Plugin::Test::Compile 2.036           (); # various features
 use Dist::Zilla::Plugin::Test::MinimumVersion 2.000003 ();
 use Dist::Zilla::Plugin::Test::Perl::Critic ();
-use Dist::Zilla::Plugin::Test::PodSpelling 2.006001 (); # Pod::Wordlist
-use Test::Portability::Files 0.06                   (); # buggy before that
-use Dist::Zilla::Plugin::Test::Portability   ();
-use Dist::Zilla::Plugin::Test::ReportPrereqs ();
-use Dist::Zilla::Plugin::Test::Version       ();
+use Dist::Zilla::Plugin::Test::PodSpelling 2.006001 ();    # Pod::Wordlist
+use Test::Portability::Files 0.06                   ();    # buggy before that
+use Dist::Zilla::Plugin::Test::Portability ();
+use Dist::Zilla::Plugin::Test::ReportPrereqs 0.008 ();     # warn on unsatisfied
+use Dist::Zilla::Plugin::Test::Version ();
 
 with 'Dist::Zilla::Role::PluginBundle::Easy';
 with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
@@ -252,7 +252,12 @@ sub configure {
         'License',          # core
 
         # generated t/ tests
-        [ 'Test::Compile' => { fake_home => 1 } ],
+        [
+            'Test::Compile' => {
+                fake_home => 1,
+                xt_mode   => 1,
+            }
+        ],
         (
             $self->no_minimum_perl
             ? ()
@@ -449,12 +454,8 @@ following dist.ini:
   [ReadmeAnyFromPod]     ; from Pod (runs after PodWeaver)
 
   ; t tests
-  [Test::Compile]     ; make sure .pm files all compile
-  fake_home = 1       ; fakes $ENV{HOME} just in case
-
   [Test::MinimumPerl]
   max_target_perl = 5.010
-
   [Test::ReportPrereqs] ; show prereqs in automated test output
 
   ; xt tests
@@ -466,6 +467,9 @@ following dist.ini:
   [Test::Portability] ; xt/release/portability.t (of file name)
   options = test_one_dot = 0
   [Test::Version]     ; xt/release/test-version.t
+  [Test::Compile]     ; make sure .pm files all compile
+  fake_home = 1       ; fakes $ENV{HOME} just in case
+  xt_mode = 1         ; puts files in xt, not t
 
   ; metadata
   [AutoPrereqs]       ; find prereqs from code
