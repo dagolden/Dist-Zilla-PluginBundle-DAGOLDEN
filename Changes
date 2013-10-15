@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.056     2013-10-15 19:27:21 America/New_York
+
     [ADDED]
 
     - Added an "=requires" collector for a REQUIREMENTS sections (handy for
