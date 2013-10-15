@@ -39,17 +39,17 @@ sub mvp_bundle_config {
         [ '@DAGOLDEN/Prelude',     _exp('Region'),  { region_name => 'prelude' } ],
         [ '@DAGOLDEN/Synopsis',    _exp('Generic'), { header      => 'SYNOPSIS' } ],
         [ '@DAGOLDEN/Description', _exp('Generic'), { header      => 'DESCRIPTION' } ],
+        [ '@DAGOLDEN/Usage',       _exp('Generic'), { header      => 'USAGE' } ],
         [ '@DAGOLDEN/Overview',    _exp('Generic'), { header      => 'OVERVIEW' } ],
-
-        [ '@DAGOLDEN/Stability', _exp('Generic'), { header => 'STABILITY' } ],
+        [ '@DAGOLDEN/Stability',   _exp('Generic'), { header      => 'STABILITY' } ],
     );
 
     for my $plugin (
-        [ 'Usage',        _exp('Collect'), { command => 'usage' } ],
-        [ 'Functions',    _exp('Collect'), { command => 'func' } ],
+        [ 'Requirements', _exp('Collect'), { command => 'requires' } ],
         [ 'Attributes',   _exp('Collect'), { command => 'attr' } ],
         [ 'Constructors', _exp('Collect'), { command => 'construct' } ],
         [ 'Methods',      _exp('Collect'), { command => 'method' } ],
+        [ 'Functions',    _exp('Collect'), { command => 'func' } ],
       )
     {
         $plugin->[2]{header} = uc $plugin->[0];
@@ -121,11 +121,11 @@ plugin bundle.
 
 It also has region collectors for:
 
+* requires
 * construct
 * attr
 * method
 * func
-* usage
 
 = SEE ALSO
 

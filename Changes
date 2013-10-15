@@ -2,6 +2,19 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [ADDED]
+
+    - Added an "=requires" collector for a REQUIREMENTS sections (handy for
+      roles or things with unusual external requirements)
+
+    [CHANGED]
+
+    - Made Pod weaving put USAGE before attribute/method/etc. collectors
+
+    [REMOVED]
+
+    - Removed '=usage' Pod::Weaver collector
+
 0.055     2013-10-13 15:44:51 America/New_York
 
     [CHANGED]
