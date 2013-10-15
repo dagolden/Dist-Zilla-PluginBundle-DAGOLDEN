@@ -409,23 +409,16 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-
-=for stopwords
-autoprereq dagolden fakerelease pluginbundle podweaver
-taskweaver uploadtocpan dist ini
-
 =for Pod::Coverage configure mvp_multivalue_args
 
-=begin wikidoc
-
-= SYNOPSIS
+=head1 SYNOPSIS
 
   # in dist.ini
   [@DAGOLDEN]
 
-= DESCRIPTION
+=head1 DESCRIPTION
 
-This is a [Dist::Zilla] PluginBundle.  It is roughly equivalent to the
+This is a L<Dist::Zilla> PluginBundle.  It is roughly equivalent to the
 following dist.ini:
 
   ; version provider
@@ -454,11 +447,11 @@ following dist.ini:
   [ReadmeAnyFromPod]     ; from Pod (runs after PodWeaver)
 
   ; t tests
-  [Test::MinimumPerl]
-  max_target_perl = 5.010
-  [Test::ReportPrereqs] ; show prereqs in automated test output
+  [Test::ReportPrereqs]   ; show prereqs in automated test output
 
   ; xt tests
+  [Test::MinimumVersion]  ; xt/release/minimum-version.t
+  max_target_perl = 5.010 ; don't use syntax/features past 5.10
   [Test::PodSpelling] ; xt/author/pod-spell.t
   [Test::Perl::Critic]; xt/author/critic.t
   [MetaTests]         ; xt/release/meta-yaml.t
@@ -467,9 +460,9 @@ following dist.ini:
   [Test::Portability] ; xt/release/portability.t (of file name)
   options = test_one_dot = 0
   [Test::Version]     ; xt/release/test-version.t
-  [Test::Compile]     ; make sure .pm files all compile
+  [Test::Compile]     ; xt/author/00-compile.t
   fake_home = 1       ; fakes $ENV{HOME} just in case
-  xt_mode = 1         ; puts files in xt, not t
+  xt_mode = 1         ; make sure all files compile
 
   ; metadata
   [AutoPrereqs]       ; find prereqs from code
@@ -548,54 +541,55 @@ following dist.ini:
   [Git::Push]         ; push repo to remote
   push_to = origin
 
-= USAGE
+=head1 USAGE
 
 To use this PluginBundle, just add it to your dist.ini.  You can provide
 the following options:
 
-* {is_task} -- this indicates whether TaskWeaver or PodWeaver should be used.
+=for :list
+* C<is_task> — this indicates whether C<TaskWeaver> or C<PodWeaver> should be used.
 Default is 0.
-* {authority} -- specifies the x_authority field for pause.  Defaults to 'cpan:DAGOLDEN'.
-* {auto_prereq} -- this indicates whether AutoPrereq should be used or not.  Default is 1.
-* {darkpan} -- for private code; uses FakeRelease and fills in dummy repo/bugtracker data
-* {fake_release} -- swaps FakeRelease for UploadToCPAN. Mostly useful for testing a dist.ini without risking a real release.
-* {git_remote} -- where to push after release
-* {github_issues} -- whether to use github issue tracker. Defaults is 1.
-* {stopwords} -- add stopword for Test::PodSpelling (can be repeated)
-* {tag_format} -- given to {Git::Tag}.  Default is 'release-%v' to be more
+* C<authority> — specifies the C<x_authority> field for pause.  Defaults to 'cpan:DAGOLDEN'.
+* C<auto_prereq> — this indicates whether C<AutoPrereqs> should be used or not.  Default is 1.
+* C<darkpan> — for private code; uses C<FakeRelease> and fills in dummy repo/bugtracker data
+* C<fake_release> — swaps C<FakeRelease> for C<UploadToCPAN>. Mostly useful for testing a dist.ini without risking a real release.
+* C<git_remote> — where to push after release
+* C<github_issues> — whether to use github issue tracker. Defaults is 1.
+* C<stopwords> — add stopword for C<Test::PodSpelling> (can be repeated)
+* C<tag_format> — given to C<Git::Tag>.  Default is 'release-%v' to be more
 robust than just the version number when parsing versions for
-{Git::NextVersion}
-* {weaver_config} -- specifies a Pod::Weaver bundle.  Defaults to @DAGOLDEN.
-* {version_regexp} -- given to {Git::NextVersion}.  Default
+L<Git::NextVersion>
+* C<weaver_config> — specifies a L<Pod::Weaver> bundle.  Defaults to @DAGOLDEN.
+* C<version_regexp> — given to L<Git::NextVersion>.  Default
 is '^release-(.+)$'
-* {no_git} -- bypass all git-dependent plugins
-* {no_critic} -- omit Test::Perl::Critic tests
-* {no_spellcheck} -- omit Test::PodSpelling tests
-* {no_coverage} -- omit PodCoverage tests
-* {no_minimum_perl} -- omit Test::MinimumPerl tests
-* {no_bugtracker} -- DEPRECATED
+* C<no_git> — bypass all git-dependent plugins
+* C<no_critic> — omit C<Test::Perl::Critic> tests
+* C<no_spellcheck> — omit C<Test::PodSpelling> tests
+* C<no_coverage> — omit PodCoverage tests
+* C<no_minimum_perl> — omit C<Test::MinimumVersion> tests
+* C<no_bugtracker> — DEPRECATED
 
 When running without git, C<GatherDir> is used instead of C<Git::GatherDir>,
 C<AutoVersion> is used instead of C<Git::NextVersion>, and all git check and
 commit operations are disabled.
 
-This PluginBundle now supports ConfigSlicer, so you can pass in options to the
+This PluginBundle now supports C<ConfigSlicer>, so you can pass in options to the
 plugins used like this:
 
   [@DAGOLDEN]
-  ExecDir.dir = scripts ; overrides ExecDir
+  Test::MinimumVersion.max_target_perl = 5.014
+  ExecDir.dir = scripts
 
-This PluginBundle also supports PluginRemover, so dropping a plugin is as easy as this:
+This PluginBundle also supports C<PluginRemover>, so dropping a plugin is as easy as this:
 
   [@DAGOLDEN]
-  -remove = PluginIDontWant
+  -remove = Test::Portability
 
-= SEE ALSO
+=head1 SEE ALSO
 
-* [Dist::Zilla]
-* [Dist::Zilla::Plugin::PodWeaver]
-* [Dist::Zilla::Plugin::TaskWeaver]
-
-=end wikidoc
+=for :list
+* L<Dist::Zilla>
+* L<Dist::Zilla::Plugin::PodWeaver>
+* L<Dist::Zilla::Plugin::TaskWeaver>
 
 =cut

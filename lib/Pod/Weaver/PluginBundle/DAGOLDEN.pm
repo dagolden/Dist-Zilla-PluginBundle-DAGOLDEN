@@ -88,11 +88,9 @@ sub mvp_bundle_config {
 
 =for Pod::Coverage mvp_bundle_config
 
-=begin wikidoc
+=head1 DESCRIPTION
 
-= DESCRIPTION
-
-This is a [Pod::Weaver] PluginBundle.  It is roughly equivalent to the
+This is a L<Pod::Weaver> PluginBundle.  It is roughly equivalent to the
 following weaver.ini:
 
   [-Encoding]
@@ -114,28 +112,28 @@ following weaver.ini:
   [-Transformer]
   transformer = List
 
-= USAGE
+=head1 USAGE
 
-This PluginBundle is used automatically with the C<@DAGOLDEN> [Dist::Zilla]
+This PluginBundle is used automatically with the C<@DAGOLDEN> L<Dist::Zilla>
 plugin bundle.
 
 It also has region collectors for:
 
+=for :list
 * requires
 * construct
 * attr
 * method
 * func
 
-= SEE ALSO
+=head1 SEE ALSO
 
-* [Pod::Weaver]
-* [Pod::Weaver::Plugin::WikiDoc]
-* [Pod::Elemental::Transformer::List]
-* [Pod::Weaver::Section::Contributors]
-* [Pod::Weaver::Section::Support]
-* [Dist::Zilla::Plugin::PodWeaver]
-
-=end wikidoc
+=for :list
+* L<Pod::Weaver>
+* L<Pod::Weaver::Plugin::WikiDoc>
+* L<Pod::Elemental::Transformer::List>
+* L<Pod::Weaver::Section::Contributors>
+* L<Pod::Weaver::Section::Support>
+* L<Dist::Zilla::Plugin::PodWeaver>
 
 =cut

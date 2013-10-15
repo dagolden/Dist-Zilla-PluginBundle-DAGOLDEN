@@ -15,6 +15,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
     - Removed '=usage' Pod::Weaver collector
 
+    [DOCS]
+
+    - Fixed typos and improved examples
+
 0.055     2013-10-13 15:44:51 America/New_York
 
     [CHANGED]
