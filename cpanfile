@@ -1,4 +1,4 @@
-requires "Dist::Zilla" => "4.300038";
+requires "Dist::Zilla" => "5";
 requires "Dist::Zilla::Plugin::Authority" => "1.006";
 requires "Dist::Zilla::Plugin::Bugtracker" => "1.110";
 requires "Dist::Zilla::Plugin::CPANFile" => "0";
@@ -16,7 +16,7 @@ requires "Dist::Zilla::Plugin::MetaProvides::Package" => "1.14";
 requires "Dist::Zilla::Plugin::MinimumPerl" => "0";
 requires "Dist::Zilla::Plugin::OurPkgVersion" => "0.004";
 requires "Dist::Zilla::Plugin::PodWeaver" => "0";
-requires "Dist::Zilla::Plugin::ReadmeAnyFromPod" => "0.120051";
+requires "Dist::Zilla::Plugin::ReadmeFromPod" => "0.19";
 requires "Dist::Zilla::Plugin::TaskWeaver" => "0.101620";
 requires "Dist::Zilla::Plugin::Test::Compile" => "2.036";
 requires "Dist::Zilla::Plugin::Test::MinimumVersion" => "2.000003";
@@ -33,7 +33,7 @@ requires "Dist::Zilla::Role::PluginBundle::PluginRemover" => "0";
 requires "Moose" => "0.99";
 requires "Moose::Autobox" => "0";
 requires "Pod::Elemental::Transformer::List" => "0.101620";
-requires "Pod::Weaver" => "3.101635";
+requires "Pod::Weaver" => "4";
 requires "Pod::Weaver::Config::Assembler" => "0";
 requires "Pod::Weaver::Plugin::Encoding" => "0";
 requires "Pod::Weaver::Plugin::WikiDoc" => "0";
@@ -56,6 +56,11 @@ on 'test' => sub {
   requires "Test::DZil" => "0";
   requires "Test::More" => "0.96";
   requires "perl" => "5.008001";
+};
+
+on 'test' => sub {
+  recommends "CPAN::Meta" => "0";
+  recommends "CPAN::Meta::Requirements" => "0";
 };
 
 on 'configure' => sub {

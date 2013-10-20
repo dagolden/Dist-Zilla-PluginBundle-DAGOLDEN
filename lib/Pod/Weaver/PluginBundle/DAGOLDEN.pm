@@ -4,7 +4,7 @@ use warnings;
 package Pod::Weaver::PluginBundle::DAGOLDEN;
 # VERSION
 
-use Pod::Weaver 3.101635; # fixed ABSTRACT scanning
+use Pod::Weaver 4; # he played knick-knack on my door
 use Pod::Weaver::Config::Assembler;
 
 # Dependencies
@@ -30,11 +30,11 @@ END
 sub mvp_bundle_config {
     my @plugins;
     push @plugins, (
-        [ '@DAGOLDEN/Encoding', _exp('-Encoding'), {} ],
-        [ '@DAGOLDEN/WikiDoc',  _exp('-WikiDoc'),  {} ],
-        [ '@DAGOLDEN/CorePrep', _exp('@CorePrep'), {} ],
-        [ '@DAGOLDEN/Name',     _exp('Name'),      {} ],
-        [ '@DAGOLDEN/Version',  _exp('Version'),   {} ],
+        [ '@DAGOLDEN/SingleEncoding', _exp('-SingleEncoding'), {} ],
+        [ '@DAGOLDEN/WikiDoc',        _exp('-WikiDoc'),        {} ],
+        [ '@DAGOLDEN/CorePrep',       _exp('@CorePrep'),       {} ],
+        [ '@DAGOLDEN/Name',           _exp('Name'),            {} ],
+        [ '@DAGOLDEN/Version',        _exp('Version'),         {} ],
 
         [ '@DAGOLDEN/Prelude',     _exp('Region'),  { region_name => 'prelude' } ],
         [ '@DAGOLDEN/Synopsis',    _exp('Generic'), { header      => 'SYNOPSIS' } ],
