@@ -10,7 +10,7 @@ use Pod::Weaver::Config::Assembler;
 # Dependencies
 use Pod::Weaver::Plugin::WikiDoc  ();
 use Pod::Weaver::Plugin::Encoding ();
-use Pod::Elemental::Transformer::List 0.101620 ();
+use Pod::Elemental::Transformer::List 0.102000 ();
 use Pod::Weaver::Section::Support 1.001        ();
 use Pod::Weaver::Section::Contributors 0.001   ();
 

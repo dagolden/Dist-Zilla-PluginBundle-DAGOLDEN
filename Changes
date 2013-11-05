@@ -2,6 +2,11 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - Requires Pod::Elemental::Transformer::List 0.102000
+      (bullet lists that wrap with leading whitespace)
+
 0.058     2013-11-04 21:05:24 America/New_York
 
     [ADDED]
