@@ -31,7 +31,8 @@ use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::OurPkgVersion 0.004 ();        # TRIAL comment support
-use Dist::Zilla::Plugin::PodWeaver ();
+use Dist::Zilla::Plugin::PodWeaver           ();
+use Dist::Zilla::Plugin::Prereqs::AuthorDeps ();
 use Dist::Zilla::Plugin::ReadmeFromPod 0.19            (); # for dzil v5
 use Dist::Zilla::Plugin::TaskWeaver 0.101620           ();
 use Dist::Zilla::Plugin::Test::Compile 2.036           (); # various features
@@ -335,6 +336,7 @@ sub configure {
             : ()
         ),
 
+        'Prereqs::AuthorDeps',
         'MetaYAML', # core
         'MetaJSON', # core
         'CPANFile',
@@ -489,9 +491,10 @@ following dist.ini:
   [MetaProvides::Package] ; add 'provides' to META files
   meta_noindex = 1        ; respect prior no_index directives
 
-  [MetaYAML]          ; generate META.yml (v1.4)
-  [MetaJSON]          ; generate META.json (v2)
-  [CPANFile]          ; generate cpanfile
+  [Prereqs::AuthorDeps]   ; add authordeps as develop/requires
+  [MetaYAML]              ; generate META.yml (v1.4)
+  [MetaJSON]              ; generate META.json (v2)
+  [CPANFile]              ; generate cpanfile
 
   ; build system
   [ExecDir]           ; include 'bin/*' as executables
