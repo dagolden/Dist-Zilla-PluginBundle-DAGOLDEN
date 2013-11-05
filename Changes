@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [ADDED]
+
+    - Adds PromptIfStale to check build tool versions before release
+
     [CHANGED]
 
     - Requires Pod::Elemental::Transformer::List 0.102000

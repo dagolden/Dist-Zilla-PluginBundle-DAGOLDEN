@@ -32,6 +32,7 @@ use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::OurPkgVersion 0.004 ();        # TRIAL comment support
 use Dist::Zilla::Plugin::PodWeaver           ();
+use Dist::Zilla::Plugin::PromptIfStale       ();
 use Dist::Zilla::Plugin::Prereqs::AuthorDeps ();
 use Dist::Zilla::Plugin::ReadmeFromPod 0.19            (); # for dzil v5
 use Dist::Zilla::Plugin::TaskWeaver 0.101620           ();
@@ -346,11 +347,19 @@ sub configure {
         'ShareDir', # core
         [ 'MakeMaker' => { eumm_version => '6.17' } ], # core
 
+        # are we up to date?
+        [
+            'PromptIfStale' => {
+                modules           => [qw/Dist::Zilla Dist::Zilla::PluginBundle::DAGOLDEN/],
+                check_all_plugins => 1,
+            }
+        ],
+
         # copy files from build back to root for inclusion in VCS
         [ CopyFilesFromBuild => { copy => 'cpanfile', } ],
 
         # manifest -- must come after all generated files
-        'Manifest',                                    # core
+        'Manifest', # core
 
         # before release
         (
@@ -362,8 +371,8 @@ sub configure {
         'CheckPrereqsIndexed',
         'CheckChangesHasContent',
         'RunExtraTests',
-        'TestRelease',                                 # core
-        'ConfirmRelease',                              # core
+        'TestRelease',    # core
+        'ConfirmRelease', # core
 
         # release
         ( $self->fake_release || $self->darkpan ? 'FakeRelease' : 'UploadToCPAN' ), # core
@@ -510,6 +519,12 @@ following dist.ini:
   copy = cpanfile
 
   ; before release
+
+  [PromptIfStale]     ; check if our build tools are out of date
+  module = Dist::Zilla
+  module = Dist::Zilla::PluginBundle::DAGOLDEN
+  check_all_plugins = 1
+
   [Git::Check]        ; ensure all files checked in
   allow_dirty = dist.ini
   allow_dirty = Changes
