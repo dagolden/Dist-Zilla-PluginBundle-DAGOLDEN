@@ -18,7 +18,7 @@ use Dist::Zilla::PluginBundle::Git 1.121010 ();
 use Dist::Zilla::Plugin::Authority 1.006  ();
 use Dist::Zilla::Plugin::Bugtracker 1.110 ();
 use Dist::Zilla::Plugin::CheckChangesHasContent ();
-use Dist::Zilla::Plugin::CheckExtraTests        ();
+use Dist::Zilla::Plugin::RunExtraTests          ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::ContributorsFromGit 0.004 ();
@@ -359,7 +359,7 @@ sub configure {
         'CheckMetaResources',
         'CheckPrereqsIndexed',
         'CheckChangesHasContent',
-        'CheckExtraTests',
+        'RunExtraTests',
         'TestRelease',                                 # core
         'ConfirmRelease',                              # core
 
