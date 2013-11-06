@@ -37,7 +37,6 @@ requires "Moose::Autobox" => "0";
 requires "Pod::Elemental::Transformer::List" => "0.102000";
 requires "Pod::Weaver" => "4";
 requires "Pod::Weaver::Config::Assembler" => "0";
-requires "Pod::Weaver::Plugin::Encoding" => "0";
 requires "Pod::Weaver::Plugin::WikiDoc" => "0";
 requires "Pod::Weaver::Section::Contributors" => "0.001";
 requires "Pod::Weaver::Section::Support" => "1.001";
