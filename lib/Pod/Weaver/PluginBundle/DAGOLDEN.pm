@@ -92,8 +92,6 @@ sub mvp_bundle_config {
 This is a L<Pod::Weaver> PluginBundle.  It is roughly equivalent to the
 following weaver.ini:
 
-  [-Encoding]
-
   [-WikiDoc]
 
   [@Default]
