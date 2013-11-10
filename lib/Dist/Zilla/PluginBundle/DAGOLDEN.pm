@@ -31,9 +31,9 @@ use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::OurPkgVersion 0.004 ();        # TRIAL comment support
-use Dist::Zilla::Plugin::PodWeaver           ();
-use Dist::Zilla::Plugin::PromptIfStale       ();
-use Dist::Zilla::Plugin::Prereqs::AuthorDeps ();
+use Dist::Zilla::Plugin::PodWeaver ();
+use Dist::Zilla::Plugin::PromptIfStale 0.011           ();
+use Dist::Zilla::Plugin::Prereqs::AuthorDeps           ();
 use Dist::Zilla::Plugin::ReadmeFromPod 0.19            (); # for dzil v5
 use Dist::Zilla::Plugin::TaskWeaver 0.101620           ();
 use Dist::Zilla::Plugin::Test::Compile 2.036           (); # various features

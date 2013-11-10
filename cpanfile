@@ -16,7 +16,7 @@ requires "Dist::Zilla::Plugin::MinimumPerl" => "0";
 requires "Dist::Zilla::Plugin::OurPkgVersion" => "0.004";
 requires "Dist::Zilla::Plugin::PodWeaver" => "0";
 requires "Dist::Zilla::Plugin::Prereqs::AuthorDeps" => "0";
-requires "Dist::Zilla::Plugin::PromptIfStale" => "0";
+requires "Dist::Zilla::Plugin::PromptIfStale" => "0.011";
 requires "Dist::Zilla::Plugin::ReadmeFromPod" => "0.19";
 requires "Dist::Zilla::Plugin::RunExtraTests" => "0";
 requires "Dist::Zilla::Plugin::TaskWeaver" => "0.101620";
@@ -69,7 +69,7 @@ on 'configure' => sub {
 };
 
 on 'develop' => sub {
-  requires "Dist::Zilla" => "5.005";
+  requires "Dist::Zilla" => "5.006";
   requires "Dist::Zilla::Plugin::Bootstrap::lib" => "0";
   requires "Dist::Zilla::Plugin::Prereqs" => "0";
   requires "Dist::Zilla::PluginBundle::DAGOLDEN" => "0";
