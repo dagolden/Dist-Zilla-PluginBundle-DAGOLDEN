@@ -2,6 +2,7 @@ use strict;
 use warnings;
 
 package Dist::Zilla::PluginBundle::DAGOLDEN;
+# ABSTRACT: Dist::Zilla configuration the way DAGOLDEN does it
 # VERSION
 
 # Dependencies
@@ -246,7 +247,13 @@ sub configure {
         (
             $self->is_task
             ? 'TaskWeaver'
-            : [ 'PodWeaver' => { config_plugin => $self->weaver_config } ]
+            : [
+                'PodWeaver' => {
+                    config_plugin      => $self->weaver_config,
+                    replacer           => 'replace_with_comment',
+                    post_code_replacer => 'replace_with_nothing',
+                }
+            ]
         ),
 
         # generated distribution files
@@ -415,7 +422,6 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
-# ABSTRACT: Dist::Zilla configuration the way DAGOLDEN does it
 # COPYRIGHT
 
 __END__
@@ -452,6 +458,8 @@ following dist.ini:
   [InsertCopyright    ; add copyright at "# COPYRIGHT"
   [PodWeaver]         ; generate Pod
   config_plugin = @DAGOLDEN ; my own plugin allows Pod::WikiDoc
+  replacer = replace_with_comment
+  post_code_replacer = replace_with_nothing
 
   ; generated files
   [License]           ; boilerplate license

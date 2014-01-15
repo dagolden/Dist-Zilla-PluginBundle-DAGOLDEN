@@ -34,6 +34,7 @@ requires "Dist::Zilla::Role::PluginBundle::Easy" => "0";
 requires "Dist::Zilla::Role::PluginBundle::PluginRemover" => "0";
 requires "Moose" => "0.99";
 requires "Moose::Autobox" => "0";
+requires "Pod::Elemental::PerlMunger" => "0.200000";
 requires "Pod::Elemental::Transformer::List" => "0.102000";
 requires "Pod::Weaver" => "4";
 requires "Pod::Weaver::Config::Assembler" => "0";
@@ -69,7 +70,7 @@ on 'configure' => sub {
 };
 
 on 'develop' => sub {
-  requires "Dist::Zilla" => "5.006";
+  requires "Dist::Zilla" => "5.011";
   requires "Dist::Zilla::Plugin::Bootstrap::lib" => "0";
   requires "Dist::Zilla::Plugin::Prereqs" => "0";
   requires "Dist::Zilla::PluginBundle::DAGOLDEN" => "0";
