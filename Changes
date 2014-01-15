@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.060     2014-01-15 09:35:50-05:00 America/New_York
+
     [CHANGED]
 
     - Pod weaving no longer modifies code line numbers; Pod mixed with
