@@ -58,11 +58,12 @@ on 'test' => sub {
   requires "Test::DZil" => "0";
   requires "Test::More" => "0.96";
   requires "perl" => "5.008001";
+  requires "version" => "0";
 };
 
 on 'test' => sub {
   recommends "CPAN::Meta" => "0";
-  recommends "CPAN::Meta::Requirements" => "0";
+  recommends "CPAN::Meta::Requirements" => "2.120900";
 };
 
 on 'configure' => sub {
