@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.062     2014-02-02 21:13:10-05:00 America/New_York
+
     [FIXED]
 
     - Fixed breakage from Config::MVP 2.200007
