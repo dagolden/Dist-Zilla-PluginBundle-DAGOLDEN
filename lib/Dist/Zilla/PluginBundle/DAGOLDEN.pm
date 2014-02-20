@@ -6,9 +6,7 @@ package Dist::Zilla::PluginBundle::DAGOLDEN;
 # VERSION
 
 # Dependencies
-use autodie 2.00;
 use Moose 0.99;
-use Moose::Autobox;
 use namespace::autoclean 0.09;
 
 use Dist::Zilla 5; # Number 5 is ALIVE!
@@ -277,7 +275,9 @@ sub configure {
         # generated xt/ tests
         (
             $self->no_spellcheck ? ()
-            : [ 'Test::PodSpelling' => $self->stopwords ? { stopwords => $self->stopwords } : () ]
+            : [
+                'Test::PodSpelling' => $self->stopwords ? { stopwords => $self->stopwords } : ()
+            ]
         ),
         (
             $self->no_critic ? ()
