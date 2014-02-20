@@ -44,9 +44,11 @@ use Dist::Zilla::Plugin::Test::Portability ();
 use Dist::Zilla::Plugin::Test::ReportPrereqs 0.008 ();     # warn on unsatisfied
 use Dist::Zilla::Plugin::Test::Version ();
 
-with 'Dist::Zilla::Role::PluginBundle::Easy';
-with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
-with 'Dist::Zilla::Role::PluginBundle::PluginRemover';
+with qw(
+  Dist::Zilla::Role::PluginBundle::Easy
+  Dist::Zilla::Role::PluginBundle::Config::Slicer
+  Dist::Zilla::Role::PluginBundle::PluginRemover
+);
 
 sub mvp_multivalue_args { qw/stopwords/ }
 
