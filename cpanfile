@@ -1,4 +1,4 @@
-requires "Dist::Zilla" => "5";
+requires "Dist::Zilla" => "5.014";
 requires "Dist::Zilla::Plugin::Authority" => "1.006";
 requires "Dist::Zilla::Plugin::Bugtracker" => "1.110";
 requires "Dist::Zilla::Plugin::CPANFile" => "0";
@@ -33,7 +33,6 @@ requires "Dist::Zilla::Role::PluginBundle::Config::Slicer" => "0";
 requires "Dist::Zilla::Role::PluginBundle::Easy" => "0";
 requires "Dist::Zilla::Role::PluginBundle::PluginRemover" => "0";
 requires "Moose" => "0.99";
-requires "Moose::Autobox" => "0";
 requires "Pod::Elemental::PerlMunger" => "0.200001";
 requires "Pod::Elemental::Transformer::List" => "0.102000";
 requires "Pod::Weaver" => "4";
@@ -43,7 +42,6 @@ requires "Pod::Weaver::Section::Contributors" => "0.001";
 requires "Pod::Weaver::Section::Support" => "1.001";
 requires "Pod::Wordlist" => "1.10";
 requires "Test::Portability::Files" => "0.06";
-requires "autodie" => "2.00";
 requires "namespace::autoclean" => "0.09";
 requires "perl" => "5.008001";
 requires "strict" => "0";
@@ -71,7 +69,7 @@ on 'configure' => sub {
 };
 
 on 'develop' => sub {
-  requires "Dist::Zilla" => "5.012";
+  requires "Dist::Zilla" => "5.014";
   requires "Dist::Zilla::Plugin::Bootstrap::lib" => "0";
   requires "Dist::Zilla::Plugin::Prereqs" => "0";
   requires "Dist::Zilla::PluginBundle::DAGOLDEN" => "0";

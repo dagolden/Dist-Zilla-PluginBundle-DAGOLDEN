@@ -6,6 +6,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
     - Removed ununsed autodie and Moose::AutoBox
 
+    - set default_jobs = 9 for MakeMaker plugin
+
 0.062     2014-02-02 21:13:10-05:00 America/New_York
 
     [FIXED]

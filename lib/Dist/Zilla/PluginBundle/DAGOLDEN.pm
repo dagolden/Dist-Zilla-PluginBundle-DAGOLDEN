@@ -9,7 +9,7 @@ package Dist::Zilla::PluginBundle::DAGOLDEN;
 use Moose 0.99;
 use namespace::autoclean 0.09;
 
-use Dist::Zilla 5; # Number 5 is ALIVE!
+use Dist::Zilla 5.014; # default_jobs
 
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
@@ -354,7 +354,7 @@ sub configure {
         # build system
         'ExecDir',  # core
         'ShareDir', # core
-        [ 'MakeMaker' => { eumm_version => '6.17' } ], # core
+        [ 'MakeMaker' => { eumm_version => '6.17', default_jobs => 9 } ], # core
 
         # are we up to date?
         [
@@ -520,6 +520,7 @@ following dist.ini:
   [ShareDir]          ; include 'share/' for File::ShareDir
   [MakeMaker]         ; create Makefile.PL
   eumm_version = 6.17
+  default_jobs = 9
 
   ; manifest (after all generated files)
   [Manifest]          ; create MANIFEST
