@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.063     2014-03-16 17:03:18+01:00 Europe/Paris
+
     [CHANGED]
 
     - Removed ununsed autodie and Moose::AutoBox
