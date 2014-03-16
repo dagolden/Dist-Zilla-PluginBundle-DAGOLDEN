@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - Switched from MinimumPerl to MinimumPerlFast
+
 0.063     2014-03-16 17:03:18+01:00 Europe/Paris
 
     [CHANGED]

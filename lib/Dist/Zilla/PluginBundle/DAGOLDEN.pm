@@ -28,7 +28,7 @@ use Dist::Zilla::Plugin::GithubMeta 0.36       ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
-use Dist::Zilla::Plugin::MinimumPerl ();
+use Dist::Zilla::Plugin::MinimumPerlFast ();
 use Dist::Zilla::Plugin::OurPkgVersion 0.004 ();        # TRIAL comment support
 use Dist::Zilla::Plugin::PodWeaver ();
 use Dist::Zilla::Plugin::PromptIfStale 0.011           ();
@@ -302,7 +302,7 @@ sub configure {
                 do_munging => 0,
             }
         ],
-        'MinimumPerl',
+        'MinimumPerlFast',
         (
             $self->auto_prereq
             ? [ 'AutoPrereqs' => { skip => "^t::lib" } ]
@@ -493,7 +493,7 @@ following dist.ini:
   authority = cpan:DAGOLDEN
   do_munging = 0
 
-  [MinimumPerl]       ; determine minimum perl version
+  [MinimumPerlFast]   ; determine minimum perl version
 
   [MetaNoIndex]       ; sets 'no_index' in META
   directory = t
