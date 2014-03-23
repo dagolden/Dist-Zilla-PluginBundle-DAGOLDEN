@@ -379,7 +379,7 @@ sub configure {
         'CheckMetaResources',
         'CheckPrereqsIndexed',
         'CheckChangesHasContent',
-        'RunExtraTests',
+        [ 'RunExtraTests' => { default_jobs => 9 } ],
         'TestRelease',    # core
         'ConfirmRelease', # core
 
@@ -544,7 +544,10 @@ following dist.ini:
   [CheckMetaResources]     ; ensure META has 'resources' data
   [CheckPrereqsIndexed]    ; ensure prereqs are on CPAN
   [CheckChangesHasContent] ; ensure Changes has been updated
-  [CheckExtraTests]   ; ensure xt/ tests pass
+
+  [RunExtraTests]   ; ensure xt/ tests pass
+  default_jobs = 9
+
   [TestRelease]       ; ensure t/ tests pass
   [ConfirmRelease]    ; prompt before uploading
 

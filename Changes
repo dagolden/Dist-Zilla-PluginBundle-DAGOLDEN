@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - set default_jobs = 9 for RunExtraTests plugin
+
 0.064     2014-03-16 22:28:53+01:00 Europe/Paris
 
     [CHANGED]
