@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [ADDED]
+
+    - Added Git::CheckFor::CorrectBranch plugin
+
 0.066     2014-03-28 17:05:19-04:00 America/New_York
 
     [CHANGED]
