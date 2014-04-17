@@ -7,6 +7,7 @@ requires "Dist::Zilla::Plugin::CheckMetaResources" => "0.001";
 requires "Dist::Zilla::Plugin::CheckPrereqsIndexed" => "0.002";
 requires "Dist::Zilla::Plugin::ContributorsFromGit" => "0.004";
 requires "Dist::Zilla::Plugin::CopyFilesFromBuild" => "0";
+requires "Dist::Zilla::Plugin::Git::CheckFor::CorrectBranch" => "0";
 requires "Dist::Zilla::Plugin::Git::NextVersion" => "0";
 requires "Dist::Zilla::Plugin::GithubMeta" => "0.36";
 requires "Dist::Zilla::Plugin::InsertCopyright" => "0.001";
@@ -69,7 +70,7 @@ on 'configure' => sub {
 };
 
 on 'develop' => sub {
-  requires "Dist::Zilla" => "5.014";
+  requires "Dist::Zilla" => "5.015";
   requires "Dist::Zilla::Plugin::Bootstrap::lib" => "0";
   requires "Dist::Zilla::Plugin::Prereqs" => "0";
   requires "Dist::Zilla::PluginBundle::DAGOLDEN" => "0";
