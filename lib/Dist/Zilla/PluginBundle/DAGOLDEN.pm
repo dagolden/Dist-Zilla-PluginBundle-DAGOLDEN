@@ -42,7 +42,7 @@ use Dist::Zilla::Plugin::Test::Perl::Critic ();
 use Dist::Zilla::Plugin::Test::PodSpelling 2.006001 ();    # Pod::Wordlist
 use Test::Portability::Files 0.06                   ();    # buggy before that
 use Dist::Zilla::Plugin::Test::Portability ();
-use Dist::Zilla::Plugin::Test::ReportPrereqs 0.008 ();     # warn on unsatisfied
+use Dist::Zilla::Plugin::Test::ReportPrereqs 0.015 (); # better reporting & bug fixes
 use Dist::Zilla::Plugin::Test::Version ();
 
 with qw(
