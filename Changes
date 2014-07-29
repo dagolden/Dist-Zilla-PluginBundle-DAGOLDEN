@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.069     2014-07-29 14:17:19-04:00 America/New_York
+
     [CHANGED]
 
     - Bumped Test::ReportPrereqs dependency to 0.016 because I'm an idiot
