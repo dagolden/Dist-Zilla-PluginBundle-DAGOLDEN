@@ -26,7 +26,7 @@ requires "Dist::Zilla::Plugin::Test::MinimumVersion" => "2.000003";
 requires "Dist::Zilla::Plugin::Test::Perl::Critic" => "0";
 requires "Dist::Zilla::Plugin::Test::PodSpelling" => "2.006001";
 requires "Dist::Zilla::Plugin::Test::Portability" => "0";
-requires "Dist::Zilla::Plugin::Test::ReportPrereqs" => "0.008";
+requires "Dist::Zilla::Plugin::Test::ReportPrereqs" => "0.015";
 requires "Dist::Zilla::Plugin::Test::Version" => "0";
 requires "Dist::Zilla::PluginBundle::Filter" => "0";
 requires "Dist::Zilla::PluginBundle::Git" => "1.121010";
@@ -50,19 +50,19 @@ requires "warnings" => "0";
 
 on 'test' => sub {
   requires "ExtUtils::MakeMaker" => "0";
+  requires "File::Spec" => "0";
   requires "File::Spec::Functions" => "0";
   requires "File::pushd" => "0";
   requires "List::Util" => "0";
   requires "Path::Tiny" => "0";
+  requires "Scalar::Util" => "0";
   requires "Test::DZil" => "0";
   requires "Test::More" => "0.96";
   requires "perl" => "5.008001";
-  requires "version" => "0";
 };
 
 on 'test' => sub {
-  recommends "CPAN::Meta" => "0";
-  recommends "CPAN::Meta::Requirements" => "2.120900";
+  recommends "CPAN::Meta" => "2.120900";
 };
 
 on 'configure' => sub {
@@ -70,7 +70,7 @@ on 'configure' => sub {
 };
 
 on 'develop' => sub {
-  requires "Dist::Zilla" => "5.015";
+  requires "Dist::Zilla" => "5";
   requires "Dist::Zilla::Plugin::Bootstrap::lib" => "0";
   requires "Dist::Zilla::Plugin::Prereqs" => "0";
   requires "Dist::Zilla::PluginBundle::DAGOLDEN" => "0";
@@ -83,4 +83,5 @@ on 'develop' => sub {
   requires "Test::More" => "0";
   requires "Test::Pod" => "1.41";
   requires "Test::Pod::Coverage" => "1.08";
+  requires "Test::Spelling" => "0.12";
 };
