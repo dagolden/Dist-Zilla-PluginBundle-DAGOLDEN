@@ -372,10 +372,12 @@ sub configure {
         'Manifest', # core
 
         # before release
-        'Git::CheckFor::CorrectBranch',
         (
-            $self->no_git
-            ? ()
+            $self->no_git ? ()
+            : ('Git::CheckFor::CorrectBranch')
+        ),
+        (
+            $self->no_git ? ()
             : [ 'Git::Check' => { allow_dirty => undef } ]
         ),
         'CheckMetaResources',
