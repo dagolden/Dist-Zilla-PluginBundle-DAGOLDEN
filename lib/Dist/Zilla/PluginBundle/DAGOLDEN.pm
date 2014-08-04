@@ -376,7 +376,7 @@ sub configure {
         (
             $self->no_git
             ? ()
-            : [ 'Git::Check' => { allow_dirty => [qw/dist.ini Changes cpanfile/] } ]
+            : [ 'Git::Check' => { allow_dirty => undef } ]
         ),
         'CheckMetaResources',
         'CheckPrereqsIndexed',
@@ -396,13 +396,7 @@ sub configure {
         (
             $self->no_git
             ? ()
-            : (
-                [
-                    'Git::Commit' => 'Commit_Dirty_Files' =>
-                      { allow_dirty => [qw/dist.ini Changes cpanfile/] }
-                ],
-                [ 'Git::Tag' => { tag_format => $self->tag_format } ],
-            )
+            : ( [ 'Git::Tag' => { tag_format => $self->tag_format } ], )
         ),
 
         # bumps Changes
@@ -412,8 +406,10 @@ sub configure {
             $self->no_git
             ? ()
             : (
-                [ 'Git::Commit' => 'Commit_Changes' => { commit_msg => "bump Changes" } ],
-
+                [
+                    'Git::Commit' => 'Commit_Changes' =>
+                      { commit_msg => "record release timestamp in Changes" }
+                ],
                 [ 'Git::Push' => { push_to => \@push_to } ],
             )
         ),

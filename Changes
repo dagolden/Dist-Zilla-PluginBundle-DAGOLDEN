@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - No longer allows dirty files at release time
+
 0.069     2014-07-29 14:17:19-04:00 America/New_York
 
     [CHANGED]
