@@ -12,7 +12,7 @@ use Pod::Weaver::Plugin::WikiDoc ();
 use Pod::Elemental::Transformer::List 0.102000 ();
 use Pod::Elemental::PerlMunger 0.200001        (); # replace with comment support
 use Pod::Weaver::Section::Support 1.001        ();
-use Pod::Weaver::Section::Contributors 0.001   ();
+use Pod::Weaver::Section::Contributors 0.008   ();
 
 sub _exp { Pod::Weaver::Config::Assembler->expand_package( $_[0] ) }
 

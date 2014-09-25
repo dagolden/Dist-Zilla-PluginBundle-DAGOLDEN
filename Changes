@@ -6,6 +6,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
     - No longer allows dirty files at release time
 
+    - Switched from ContributorsFromGit to Git::Contributors
+      and updated Pod::Weaver::Section::Contributors prereq
+      to match
+
 0.069     2014-07-29 14:17:19-04:00 America/New_York
 
     [CHANGED]
