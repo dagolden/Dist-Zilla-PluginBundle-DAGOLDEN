@@ -2,13 +2,21 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [*** INCOMPATIBLE CHANGES ***]
+
+    - Switched version handling from Git::NextVersion + OurPkgVersion to
+      RewriteVerson + BumpVersionAfterRelease so that files in the repo
+      will have a $VERSION.  This will require adding a $VERSION statement
+      back to all modules before releasing.  Also added an "auto_version"
+      option to allow AutoVersion + PkgVersion for distributions that need
+      it.
+
     [CHANGED]
 
     - No longer allows dirty files at release time
 
-    - Switched from ContributorsFromGit to Git::Contributors
-      and updated Pod::Weaver::Section::Contributors prereq
-      to match
+    - Switched from ContributorsFromGit to Git::Contributors and updated
+      Pod::Weaver::Section::Contributors prereq to match
 
 0.069     2014-07-29 14:17:19-04:00 America/New_York
 

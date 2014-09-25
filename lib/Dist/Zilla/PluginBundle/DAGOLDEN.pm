@@ -3,7 +3,8 @@ use warnings;
 
 package Dist::Zilla::PluginBundle::DAGOLDEN;
 # ABSTRACT: Dist::Zilla configuration the way DAGOLDEN does it
-# VERSION
+
+our $VERSION = '0.070';
 
 # Dependencies
 use Moose 0.99;
@@ -20,7 +21,7 @@ use Dist::Zilla::Plugin::CheckChangesHasContent ();
 use Dist::Zilla::Plugin::RunExtraTests          ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
-use Dist::Zilla::Plugin::Git::Contributors 0.007 ();
+use Dist::Zilla::Plugin::Git::Contributors 0.007   ();
 use Dist::Zilla::Plugin::CopyFilesFromBuild           ();
 use Dist::Zilla::Plugin::CPANFile                     ();
 use Dist::Zilla::Plugin::Git::NextVersion             ();
@@ -30,8 +31,7 @@ use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
-use Dist::Zilla::Plugin::OurPkgVersion 0.004 ();        # TRIAL comment support
-use Dist::Zilla::Plugin::PodWeaver ();
+use Dist::Zilla::Plugin::PodWeaver   ();
 use Dist::Zilla::Plugin::PromptIfStale 0.011           ();
 use Dist::Zilla::Plugin::Prereqs::AuthorDeps           ();
 use Dist::Zilla::Plugin::ReadmeFromPod 0.19            (); # for dzil v5
@@ -205,6 +205,13 @@ has no_bugtracker => ( # XXX deprecated
     default => 0,
 );
 
+has auto_version => (
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub { $_[0]->payload->{auto_version} },
+);
+
 sub configure {
     my $self = shift;
 
@@ -214,11 +221,7 @@ sub configure {
     $self->add_plugins(
 
         # version number
-        (
-            $self->no_git
-            ? 'AutoVersion'
-            : [ 'Git::NextVersion' => { version_regexp => $self->version_regexp } ]
-        ),
+        ( $self->auto_version ? 'AutoVersion' : 'RewriteVersion' ),
 
         # contributors
         (
@@ -243,7 +246,7 @@ sub configure {
         'ManifestSkip', # core
 
         # file munging
-        'OurPkgVersion',
+        ( $self->auto_version ? 'PkgVersion' : () ),
         'InsertCopyright',
         (
             $self->is_task
@@ -404,6 +407,9 @@ sub configure {
         # bumps Changes
         'NextRelease', # core (also munges files)
 
+        # bumps $VERSION, maybe
+        ( $self->auto_version ? () : 'BumpVersionAfterRelease' ),
+
         (
             $self->no_git
             ? ()
@@ -441,8 +447,7 @@ This is a L<Dist::Zilla> PluginBundle.  It is roughly equivalent to the
 following dist.ini:
 
   ; version provider
-  [Git::NextVersion]  ; get version from last release tag
-  version_regexp = ^release-(.+)$
+  [RewriteVersion] ; also munges
 
   ; collect contributors list
   [Git::Contributors]
@@ -458,7 +463,6 @@ following dist.ini:
   [ManifestSkip]      ; if -f MANIFEST.SKIP, skip those, too
 
   ; file modifications
-  [OurPkgVersion]     ; add $VERSION = ... to all files
   [InsertCopyright    ; add copyright at "# COPYRIGHT"
   [PodWeaver]         ; generate Pod
   config_plugin = @DAGOLDEN ; my own plugin allows Pod::WikiDoc
@@ -571,6 +575,7 @@ following dist.ini:
   ; dist.ini.  It will still act during pre-release as usual
 
   [NextRelease]
+  [BumpVersionAfterRelease]
 
   [Git::Commit / Commit_Changes] ; commit Changes (for new dev)
 
@@ -587,6 +592,7 @@ the following options:
 Default is 0.
 * C<authority> — specifies the C<x_authority> field for pause.  Defaults to 'cpan:DAGOLDEN'.
 * C<auto_prereq> — this indicates whether C<AutoPrereqs> should be used or not.  Default is 1.
+# C<auto_version> - this indicates whether C<AutoVersion> should be used or not. Default is 0.
 * C<darkpan> — for private code; uses C<FakeRelease> and fills in dummy repo/bugtracker data
 * C<fake_release> — swaps C<FakeRelease> for C<UploadToCPAN>. Mostly useful for testing a dist.ini without risking a real release.
 * C<git_remote> — where to push after release
@@ -605,9 +611,12 @@ is '^release-(.+)$'
 * C<no_minimum_perl> — omit C<Test::MinimumVersion> tests
 * C<no_bugtracker> — DEPRECATED
 
-When running without git, C<GatherDir> is used instead of C<Git::GatherDir>,
-C<AutoVersion> is used instead of C<Git::NextVersion>, and all git check and
-commit operations are disabled.
+When running without git, C<GatherDir> is used instead of C<Git::GatherDir>.
+and all git check and commit operations are disabled.
+
+By default, versions are taken/rewritten in the source file using C<RewriteVersion>
+and C<BumpVersionAfterRelease>. If the C<auto_version> option is true, the version
+is set by C<AutoVersion> and munged with C<PkgVersion>.
 
 This PluginBundle now supports C<ConfigSlicer>, so you can pass in options to the
 plugins used like this:

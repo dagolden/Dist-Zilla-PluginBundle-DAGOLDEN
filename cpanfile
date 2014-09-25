@@ -14,7 +14,6 @@ requires "Dist::Zilla::Plugin::InsertCopyright" => "0.001";
 requires "Dist::Zilla::Plugin::MetaNoIndex" => "0";
 requires "Dist::Zilla::Plugin::MetaProvides::Package" => "1.14";
 requires "Dist::Zilla::Plugin::MinimumPerl" => "0";
-requires "Dist::Zilla::Plugin::OurPkgVersion" => "0.004";
 requires "Dist::Zilla::Plugin::PodWeaver" => "0";
 requires "Dist::Zilla::Plugin::Prereqs::AuthorDeps" => "0";
 requires "Dist::Zilla::Plugin::PromptIfStale" => "0.011";

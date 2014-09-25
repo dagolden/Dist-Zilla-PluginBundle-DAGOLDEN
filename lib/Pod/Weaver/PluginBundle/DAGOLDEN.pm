@@ -2,7 +2,8 @@ use strict;
 use warnings;
 
 package Pod::Weaver::PluginBundle::DAGOLDEN;
-# VERSION
+
+our $VERSION = '0.070';
 
 use Pod::Weaver 4; # he played knick-knack on my door
 use Pod::Weaver::Config::Assembler;
