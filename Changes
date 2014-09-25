@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.070     2014-09-25 17:36:54-04:00 America/New_York
+
     [*** INCOMPATIBLE CHANGES ***]
 
     - Switched version handling from Git::NextVersion + OurPkgVersion to
