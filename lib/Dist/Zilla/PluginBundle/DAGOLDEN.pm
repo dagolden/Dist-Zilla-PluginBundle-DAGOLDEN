@@ -235,13 +235,10 @@ sub configure {
         # gather and prune
         (
             $self->no_git
-            ? [
-                'GatherDir' =>
-                  { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] }
+            ? [ 'GatherDir' => { exclude_filename => [qw/README.mkdn cpanfile Makefile.PL/] }
               ] # core
             : [
-                'Git::GatherDir' =>
-                  { exclude_filename => [qw/README.pod README.mkdn META.json cpanfile/] }
+                'Git::GatherDir' => { exclude_filename => [qw/README.mkdn cpanfile Makefile.PL/] }
             ]
         ),
         'PruneCruft',   # core
@@ -370,8 +367,11 @@ sub configure {
             }
         ],
 
-        # copy files from build back to root for inclusion in VCS
-        [ CopyFilesFromBuild => { copy => 'cpanfile', } ],
+        # copy files from build back to root for inclusion in VCS;
+        # for auto_version we want cpanfile.  For embedded version we want Makefile.PL
+        [
+            CopyFilesFromBuild => { copy => $self->auto_version ? 'cpanfile' : 'Makefile.PL' }
+        ],
 
         # manifest -- must come after all generated files
         'Manifest', # core
@@ -534,7 +534,7 @@ following dist.ini:
 
   ; copy cpanfile back to repo dis
   [CopyFilesFromBuild]
-  copy = cpanfile
+  copy = Makefile.PL
 
   ; before release
 
@@ -617,7 +617,9 @@ and all git check and commit operations are disabled.
 
 By default, versions are taken/rewritten in the source file using C<RewriteVersion>
 and C<BumpVersionAfterRelease>. If the C<auto_version> option is true, the version
-is set by C<AutoVersion> and munged with C<PkgVersion>.
+is set by C<AutoVersion> and munged with C<PkgVersion>.  For C<auto_version> the
+generated C<cpanfile> is copied to the repo on build; otherwise, C<Makefile.PL> is
+copied.
 
 This PluginBundle now supports C<ConfigSlicer>, so you can pass in options to the
 plugins used like this:

@@ -2,6 +2,13 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [*** INCOMPATIBLE CHANGES ***]
+
+    - No longer copies cpanfile after build (except under auto_version);
+      instead copies Makefile.PL.  With a Makefile.PL and embedded
+      $VERSION, this makes a repo checkout ready for end-users without
+      needing to know anything about Dist::Zilla.
+
 0.070     2014-09-25 17:36:54-04:00 America/New_York
 
     [*** INCOMPATIBLE CHANGES ***]
