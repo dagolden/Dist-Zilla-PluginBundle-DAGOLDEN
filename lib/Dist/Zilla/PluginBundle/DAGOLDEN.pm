@@ -17,8 +17,9 @@ use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
 use Dist::Zilla::Plugin::Authority 1.006  ();
 use Dist::Zilla::Plugin::Bugtracker 1.110 ();
-use Dist::Zilla::Plugin::CheckChangesHasContent ();
-use Dist::Zilla::Plugin::RunExtraTests          ();
+use Dist::Zilla::Plugin::BumpVersionAfterRelease ();
+use Dist::Zilla::Plugin::CheckChangesHasContent  ();
+use Dist::Zilla::Plugin::RunExtraTests           ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::Git::Contributors 0.007   ();
@@ -32,8 +33,9 @@ use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
 use Dist::Zilla::Plugin::MinimumPerl ();
 use Dist::Zilla::Plugin::PodWeaver   ();
-use Dist::Zilla::Plugin::PromptIfStale 0.011           ();
-use Dist::Zilla::Plugin::Prereqs::AuthorDeps           ();
+use Dist::Zilla::Plugin::PromptIfStale 0.011 ();
+use Dist::Zilla::Plugin::Prereqs::AuthorDeps ();
+use Dist::Zilla::Plugin::RewriteVersion ();
 use Dist::Zilla::Plugin::ReadmeFromPod 0.19            (); # for dzil v5
 use Dist::Zilla::Plugin::TaskWeaver 0.101620           ();
 use Dist::Zilla::Plugin::Test::Compile 2.036           (); # various features

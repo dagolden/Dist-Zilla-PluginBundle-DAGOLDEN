@@ -1,6 +1,7 @@
 requires "Dist::Zilla" => "5.014";
 requires "Dist::Zilla::Plugin::Authority" => "1.006";
 requires "Dist::Zilla::Plugin::Bugtracker" => "1.110";
+requires "Dist::Zilla::Plugin::BumpVersionAfterRelease" => "0";
 requires "Dist::Zilla::Plugin::CPANFile" => "0";
 requires "Dist::Zilla::Plugin::CheckChangesHasContent" => "0";
 requires "Dist::Zilla::Plugin::CheckMetaResources" => "0.001";
@@ -18,6 +19,7 @@ requires "Dist::Zilla::Plugin::PodWeaver" => "0";
 requires "Dist::Zilla::Plugin::Prereqs::AuthorDeps" => "0";
 requires "Dist::Zilla::Plugin::PromptIfStale" => "0.011";
 requires "Dist::Zilla::Plugin::ReadmeFromPod" => "0.19";
+requires "Dist::Zilla::Plugin::RewriteVersion" => "0";
 requires "Dist::Zilla::Plugin::RunExtraTests" => "0";
 requires "Dist::Zilla::Plugin::TaskWeaver" => "0.101620";
 requires "Dist::Zilla::Plugin::Test::Compile" => "2.036";
