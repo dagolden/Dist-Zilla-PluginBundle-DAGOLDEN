@@ -417,8 +417,7 @@ sub configure {
             ? ()
             : (
                 [
-                    'Git::Commit' => 'Commit_Changes' =>
-                      { commit_msg => "record release timestamp in Changes" }
+                    'Git::Commit' => 'Commit_Changes' => { commit_msg => "commit post-release changes" }
                 ],
                 [ 'Git::Push' => { push_to => \@push_to } ],
             )
