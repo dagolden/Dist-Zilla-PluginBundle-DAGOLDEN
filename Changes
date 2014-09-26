@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.071     2014-09-26 11:56:23-04:00 America/New_York
+
     [*** INCOMPATIBLE CHANGES ***]
 
     - No longer copies cpanfile after build (except under auto_version);
