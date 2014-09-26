@@ -23,7 +23,7 @@ my %WriteMakefileArgs = (
     "Dist::Zilla" => "5.014",
     "Dist::Zilla::Plugin::Authority" => "1.006",
     "Dist::Zilla::Plugin::Bugtracker" => "1.110",
-    "Dist::Zilla::Plugin::BumpVersionAfterRelease" => 0,
+    "Dist::Zilla::Plugin::BumpVersionAfterRelease" => "0.003",
     "Dist::Zilla::Plugin::CPANFile" => 0,
     "Dist::Zilla::Plugin::CheckChangesHasContent" => 0,
     "Dist::Zilla::Plugin::CheckMetaResources" => "0.001",
@@ -78,7 +78,7 @@ my %WriteMakefileArgs = (
     "Test::DZil" => 0,
     "Test::More" => "0.96"
   },
-  "VERSION" => "0.071",
+  "VERSION" => "0.072",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -89,7 +89,7 @@ my %FallbackPrereqs = (
   "Dist::Zilla" => "5.014",
   "Dist::Zilla::Plugin::Authority" => "1.006",
   "Dist::Zilla::Plugin::Bugtracker" => "1.110",
-  "Dist::Zilla::Plugin::BumpVersionAfterRelease" => 0,
+  "Dist::Zilla::Plugin::BumpVersionAfterRelease" => "0.003",
   "Dist::Zilla::Plugin::CPANFile" => 0,
   "Dist::Zilla::Plugin::CheckChangesHasContent" => 0,
   "Dist::Zilla::Plugin::CheckMetaResources" => "0.001",

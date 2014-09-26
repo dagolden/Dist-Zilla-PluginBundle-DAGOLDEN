@@ -15,11 +15,11 @@ use Dist::Zilla 5.014; # default_jobs
 use Dist::Zilla::PluginBundle::Filter ();
 use Dist::Zilla::PluginBundle::Git 1.121010 ();
 
-use Dist::Zilla::Plugin::Authority 1.006  ();
-use Dist::Zilla::Plugin::Bugtracker 1.110 ();
-use Dist::Zilla::Plugin::BumpVersionAfterRelease ();
-use Dist::Zilla::Plugin::CheckChangesHasContent  ();
-use Dist::Zilla::Plugin::RunExtraTests           ();
+use Dist::Zilla::Plugin::Authority 1.006               ();
+use Dist::Zilla::Plugin::Bugtracker 1.110              ();
+use Dist::Zilla::Plugin::BumpVersionAfterRelease 0.003 (); # tweak Makefile.PL
+use Dist::Zilla::Plugin::CheckChangesHasContent ();
+use Dist::Zilla::Plugin::RunExtraTests          ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::Git::Contributors 0.007   ();
@@ -399,7 +399,6 @@ sub configure {
         # Note -- NextRelease is here to get the ordering right with
         # git actions.  It is *also* a file munger that acts earlier
 
-        # commit dirty Changes, dist.ini, README.pod, META.json
         (
             $self->no_git
             ? ()
@@ -413,11 +412,17 @@ sub configure {
         ( $self->auto_version ? () : 'BumpVersionAfterRelease' ),
 
         (
-            $self->no_git
-            ? ()
+            $self->no_git ? ()
             : (
                 [
-                    'Git::Commit' => 'Commit_Changes' => { commit_msg => "commit post-release changes" }
+                    'Git::Commit' => 'Commit_Changes' => {
+                        $self->auto_version ? ( commit_msg => "After release: timestamp Changes" )
+                        : (
+                            commit_msg        => "After release: bump \$VERSION and timestamp Changes",
+                            allow_dirty       => [qw/Changes Makefile.PL/],
+                            allow_dirty_match => '^lib',
+                        )
+                    }
                 ],
                 [ 'Git::Push' => { push_to => \@push_to } ],
             )

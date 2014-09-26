@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [FIXED]
+
+    - Fixed bug where version bumps weren't being committed after release
+
 0.071     2014-09-26 11:56:23-04:00 America/New_York
 
     [*** INCOMPATIBLE CHANGES ***]
