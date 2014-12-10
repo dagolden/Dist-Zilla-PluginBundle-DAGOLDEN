@@ -36,7 +36,7 @@ use Dist::Zilla::Plugin::PodWeaver   ();
 use Dist::Zilla::Plugin::PromptIfStale 0.011 ();
 use Dist::Zilla::Plugin::Prereqs::AuthorDeps ();
 use Dist::Zilla::Plugin::RewriteVersion ();
-use Dist::Zilla::Plugin::ReadmeFromPod 0.19            (); # for dzil v5
+use Dist::Zilla::Plugin::Pod2Readme     ();
 use Dist::Zilla::Plugin::TaskWeaver 0.101620           ();
 use Dist::Zilla::Plugin::Test::Compile 2.036           (); # various features
 use Dist::Zilla::Plugin::Test::MinimumVersion 2.000003 ();
@@ -260,8 +260,8 @@ sub configure {
         ),
 
         # generated distribution files
-        'ReadmeFromPod', # in build dir
-        'License',       # core
+        'Pod2Readme', # in build dir
+        'License',    # core
 
         # generated t/ tests
         [
@@ -477,7 +477,7 @@ following dist.ini:
 
   ; generated files
   [License]           ; boilerplate license
-  [ReadmeFromPod]     ; from Pod (runs after PodWeaver)
+  [Pod2Readme]        ; from Pod (runs after PodWeaver)
 
   ; t tests
   [Test::ReportPrereqs]   ; show prereqs in automated test output

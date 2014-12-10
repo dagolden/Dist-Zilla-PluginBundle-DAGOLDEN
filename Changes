@@ -2,6 +2,11 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - Swapped out ReadmeFromPod for Pod2Readme, which is simpler and
+      lighter.
+
 0.072     2014-09-26 16:23:55-04:00 America/New_York
 
     [FIXED]
