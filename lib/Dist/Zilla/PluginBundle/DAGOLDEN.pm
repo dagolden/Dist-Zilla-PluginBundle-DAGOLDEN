@@ -405,7 +405,15 @@ sub configure {
         (
             $self->no_git
             ? ()
-            : ( [ 'Git::Tag' => { tag_format => $self->tag_format } ], )
+            : (
+                [
+                    'Git::Commit' => 'Commit_Dirty_Files' => {
+                        commit_msg => "Update " . ( $self->auto_version ? 'cpanfile' : 'Makefile.PL' ),
+                        allow_dirty => [ $self->auto_version ? 'cpanfile' : 'Makefile.PL' ]
+                    }
+                ],
+                [ 'Git::Tag' => { tag_format => $self->tag_format } ],
+            )
         ),
 
         # bumps Changes
