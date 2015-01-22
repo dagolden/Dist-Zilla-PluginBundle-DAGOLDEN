@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.074     2015-01-22 17:07:41-05:00 America/New_York
+
     [CHANGED]
 
     - Allow dirty Makefile.PL/cpanfile and commit it before tagging.
