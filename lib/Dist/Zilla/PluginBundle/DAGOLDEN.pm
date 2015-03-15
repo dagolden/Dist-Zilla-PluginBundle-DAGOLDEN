@@ -475,6 +475,7 @@ following dist.ini:
   exclude_filename = README.mkdn  ; skip this generated file
   exclude_filename = META.json    ; skip this generated file
   exclude_filename = cpanfile     ; skip this generated file
+  exclude_filename = Makefile.PL  ; skip this generated file
 
   [PruneCruft]        ; default stuff to skip
   [ManifestSkip]      ; if -f MANIFEST.SKIP, skip those, too
