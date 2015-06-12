@@ -2,6 +2,8 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+0.075     2015-06-12 11:40:31-04:00 America/New_York
+
     [CHANGED]
 
     - Swapped in CopyFilesFromBuild::Filtered for the unfiltered version.
