@@ -23,7 +23,7 @@ use Dist::Zilla::Plugin::RunExtraTests          ();
 use Dist::Zilla::Plugin::CheckMetaResources 0.001  ();
 use Dist::Zilla::Plugin::CheckPrereqsIndexed 0.002 ();
 use Dist::Zilla::Plugin::Git::Contributors 0.007   ();
-use Dist::Zilla::Plugin::CopyFilesFromBuild           ();
+use Dist::Zilla::Plugin::CopyFilesFromBuild::Filtered ();
 use Dist::Zilla::Plugin::CPANFile                     ();
 use Dist::Zilla::Plugin::Git::NextVersion             ();
 use Dist::Zilla::Plugin::Git::CheckFor::CorrectBranch ();
@@ -370,7 +370,8 @@ sub configure {
         # copy files from build back to root for inclusion in VCS;
         # for auto_version we want cpanfile.  For embedded version we want Makefile.PL
         [
-            CopyFilesFromBuild => { copy => $self->auto_version ? 'cpanfile' : 'Makefile.PL' }
+            'CopyFilesFromBuild::Filtered' =>
+              { copy => $self->auto_version ? 'cpanfile' : 'Makefile.PL' }
         ],
 
         # manifest -- must come after all generated files
@@ -550,7 +551,7 @@ following dist.ini:
   [Manifest]          ; create MANIFEST
 
   ; copy cpanfile back to repo dis
-  [CopyFilesFromBuild]
+  [CopyFilesFromBuild::Filtered]
   copy = Makefile.PL
 
   ; before release
