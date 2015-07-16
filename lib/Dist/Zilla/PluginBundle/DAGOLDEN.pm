@@ -31,8 +31,8 @@ use Dist::Zilla::Plugin::GithubMeta 0.36       ();
 use Dist::Zilla::Plugin::InsertCopyright 0.001 ();
 use Dist::Zilla::Plugin::MetaNoIndex ();
 use Dist::Zilla::Plugin::MetaProvides::Package 1.14 (); # hides private packages
-use Dist::Zilla::Plugin::MinimumPerl ();
-use Dist::Zilla::Plugin::PodWeaver   ();
+use Dist::Zilla::Plugin::MinimumPerl       ();
+use Dist::Zilla::Plugin::SurgicalPodWeaver ();
 use Dist::Zilla::Plugin::PromptIfStale 0.011 ();
 use Dist::Zilla::Plugin::Prereqs::AuthorDeps ();
 use Dist::Zilla::Plugin::RewriteVersion ();
@@ -251,7 +251,7 @@ sub configure {
             $self->is_task
             ? 'TaskWeaver'
             : [
-                'PodWeaver' => {
+                'SurgicalPodWeaver' => {
                     config_plugin      => $self->weaver_config,
                     replacer           => 'replace_with_comment',
                     post_code_replacer => 'replace_with_nothing',
@@ -482,8 +482,8 @@ following dist.ini:
   [ManifestSkip]      ; if -f MANIFEST.SKIP, skip those, too
 
   ; file modifications
-  [InsertCopyright    ; add copyright at "# COPYRIGHT"
-  [PodWeaver]         ; generate Pod
+  [InsertCopyright]    ; add copyright at "# COPYRIGHT"
+  [SurgicalPodWeaver]         ; generate Pod
   config_plugin = @DAGOLDEN ; my own plugin allows Pod::WikiDoc
   replacer = replace_with_comment
   post_code_replacer = replace_with_nothing
@@ -607,7 +607,7 @@ To use this PluginBundle, just add it to your dist.ini.  You can provide
 the following options:
 
 =for :list
-* C<is_task> — this indicates whether C<TaskWeaver> or C<PodWeaver> should be used.
+* C<is_task> — this indicates whether C<TaskWeaver> or C<SurgicalPodWeaver> should be used.
 Default is 0.
 * C<authority> — specifies the C<x_authority> field for pause.  Defaults to 'cpan:DAGOLDEN'.
 * C<auto_prereq> — this indicates whether C<AutoPrereqs> should be used or not.  Default is 1.
@@ -649,13 +649,6 @@ plugins used like this:
 This PluginBundle also supports C<PluginRemover>, so dropping a plugin is as easy as this:
 
   [@DAGOLDEN]
-  -remove = Test::Portability
-
-=head1 SEE ALSO
-
-=for :list
-* L<Dist::Zilla>
-* L<Dist::Zilla::Plugin::PodWeaver>
-* L<Dist::Zilla::Plugin::TaskWeaver>
+  -remove = InsertCopyright
 
 =cut

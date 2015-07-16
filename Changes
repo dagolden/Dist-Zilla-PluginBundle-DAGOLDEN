@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [CHANGED]
+
+    - Swapped in SurgicalPodWeaver for PodWeaver
+
 0.075     2015-06-12 11:40:31-04:00 America/New_York
 
     [CHANGED]
