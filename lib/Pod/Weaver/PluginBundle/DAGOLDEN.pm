@@ -3,7 +3,7 @@ use warnings;
 
 package Pod::Weaver::PluginBundle::DAGOLDEN;
 
-our $VERSION = '0.077';
+our $VERSION = '0.078';
 
 use Pod::Weaver 4; # he played knick-knack on my door
 use Pod::Weaver::Config::Assembler;
