@@ -12,7 +12,6 @@ my %WriteMakefileArgs = (
     "ExtUtils::MakeMaker" => "6.17"
   },
   "DISTNAME" => "Dist-Zilla-PluginBundle-DAGOLDEN",
-  "EXE_FILES" => [],
   "LICENSE" => "apache",
   "MIN_PERL_VERSION" => "5.008001",
   "NAME" => "Dist::Zilla::PluginBundle::DAGOLDEN",
@@ -119,7 +118,7 @@ my %FallbackPrereqs = (
   "Dist::Zilla::Role::PluginBundle::Config::Slicer" => 0,
   "Dist::Zilla::Role::PluginBundle::Easy" => 0,
   "Dist::Zilla::Role::PluginBundle::PluginRemover" => 0,
-  "ExtUtils::MakeMaker" => "6.17",
+  "ExtUtils::MakeMaker" => 0,
   "File::Spec" => 0,
   "File::pushd" => 0,
   "Moose" => "0.99",
