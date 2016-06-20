@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [FIXED]
+
+    - Fixed failing test under Dist::Zilla 6.005 or later
+
 0.076     2015-07-16 11:27:10-04:00 America/New_York
 
     [CHANGED]
