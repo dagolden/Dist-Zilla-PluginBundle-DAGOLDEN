@@ -4,7 +4,7 @@ use warnings;
 package Dist::Zilla::PluginBundle::DAGOLDEN;
 # ABSTRACT: Dist::Zilla configuration the way DAGOLDEN does it
 
-our $VERSION = '0.078';
+our $VERSION = '0.079';
 
 # Dependencies
 use Moose 0.99;
