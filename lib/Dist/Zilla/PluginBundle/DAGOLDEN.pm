@@ -78,6 +78,13 @@ has no_git => (
     default => sub { $_[0]->payload->{no_git} },
 );
 
+has no_copy_files => (
+    is      => 'ro',
+    isa     => 'Bool',
+    lazy    => 1,
+    default => sub { $_[0]->payload->{no_copy_files} },
+);
+
 has no_critic => (
     is      => 'ro',
     isa     => 'Bool',
@@ -369,10 +376,16 @@ sub configure {
 
         # copy files from build back to root for inclusion in VCS;
         # for auto_version we want cpanfile.  For embedded version we want Makefile.PL
-        [
-            'CopyFilesFromBuild::Filtered' =>
-              { copy => $self->auto_version ? 'cpanfile' : 'Makefile.PL' }
-        ],
+        (
+            $self->no_copy_files
+            ? ()
+            : (
+                [
+                    'CopyFilesFromBuild::Filtered' =>
+                      { copy => $self->auto_version ? 'cpanfile' : 'Makefile.PL' }
+                ]
+            )
+        ),
 
         # manifest -- must come after all generated files
         'Manifest', # core
@@ -550,7 +563,7 @@ following dist.ini:
   ; manifest (after all generated files)
   [Manifest]          ; create MANIFEST
 
-  ; copy cpanfile back to repo dis
+  ; copy Makefile.PL back to repo dis
   [CopyFilesFromBuild::Filtered]
   copy = Makefile.PL
 
@@ -624,6 +637,7 @@ L<Git::NextVersion>
 * C<version_regexp> — given to L<Git::NextVersion>.  Default
 is '^release-(.+)$'
 * C<no_git> — bypass all git-dependent plugins
+* C<no_copy_files> — skip copying Makefile.PL or cpanfile
 * C<no_critic> — omit C<Test::Perl::Critic> tests
 * C<no_spellcheck> — omit C<Test::PodSpelling> tests
 * C<no_coverage> — omit PodCoverage tests

@@ -2,6 +2,10 @@ Revision history for Dist-Zilla-PluginBundle-DAGOLDEN
 
 {{$NEXT}}
 
+    [ADDED]
+
+    - Added 'no_copy_files' option to skip Makefile.PL or cpanfile copying
+
 0.077     2016-06-20 15:32:53-04:00 America/New_York
 
     [FIXED]
