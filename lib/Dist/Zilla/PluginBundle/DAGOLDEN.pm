@@ -232,13 +232,6 @@ sub configure {
         # version number
         ( $self->auto_version ? 'AutoVersion' : 'RewriteVersion' ),
 
-        # contributors
-        (
-            $self->no_git
-            ? ()
-            : 'Git::Contributors'
-        ),
-
         # gather and prune
         (
             $self->no_git
@@ -354,6 +347,12 @@ sub configure {
                 ],
               )
             : ()
+        ),
+        # contributors
+        (
+            $self->no_git
+            ? ()
+            : 'Git::Contributors'
         ),
 
         'Prereqs::AuthorDeps',
@@ -480,9 +479,6 @@ following dist.ini:
   ; version provider
   [RewriteVersion] ; also munges
 
-  ; collect contributors list
-  [Git::Contributors]
-
   ; choose files to include
   [Git::GatherDir]         ; everything from git ls-files
   exclude_filename = README.pod   ; skip this generated file
@@ -547,6 +543,8 @@ following dist.ini:
 
   [MetaProvides::Package] ; add 'provides' to META files
   meta_noindex = 1        ; respect prior no_index directives
+
+  [Git::Contributors]     ; collect contributors list
 
   [Prereqs::AuthorDeps]   ; add authordeps as develop/requires
   [MetaYAML]              ; generate META.yml (v1.4)
